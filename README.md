@@ -6,7 +6,7 @@ This webpage will be used to publish the documents of the term project of *CS353
 
 **Project Name:** FlowerGarden
 
-**Project Description:** Implementing a web based project tracking software.
+**Project Description:** Developing a database application.
 
 **Group Number:** 12
 
