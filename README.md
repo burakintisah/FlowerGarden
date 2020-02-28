@@ -1,37 +1,24 @@
-## Welcome to GitHub Pages
+# FlowerGarden
 
-You can use the [editor on GitHub](https://github.com/burakintisah/flowergarden.github.io/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+This webpage will be used to publish the documents of the term project of *CS353 - Database Systems* course in Bilkent University.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+## Project Info
 
-### Markdown
+**Project Name:** FlowerGarden
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+**Project Description:** Implementing a web based project tracking software.
 
-```markdown
-Syntax highlighted code block
+**Group Number:** 12
 
-# Header 1
-## Header 2
-### Header 3
+**Group Members**
+- [Meryem Banu CAVLAK](https://github.com/banucavlak)
+- [Esra Nur DENIZ](https://github.com/EsraNurDeniz)
+- [Osman Burak INTISAH](https://github.com/burakintisah)
+- [Munib Emre SEVİLGEN](https://github.com/emresevilgen)
 
-- Bulleted
-- List
+## Project Documents
+[Project Proposal]()
 
-1. Numbered
-2. List
+[Project Design Report]()
 
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/burakintisah/flowergarden.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+[Project Final Report]()
