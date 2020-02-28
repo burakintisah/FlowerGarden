@@ -1,6 +1,6 @@
 # FlowerGarden
 
-This webpage will be used to publish the documents of the term project of *CS353 - Database Systems* course in Bilkent University (Spring 2020).
+This webpage will be used to publish the documents of the term project of *CS353 - Database Systems* course in Bilkent University (2019-2020 Spring).
 
 ## Project Info
 
