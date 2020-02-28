@@ -12,8 +12,8 @@ This webpage will be used to publish the documents of the term project of *CS353
 
 **Group Members**
 - [Meryem Banu CAVLAK](https://github.com/banucavlak)
-- [Esra Nur DENIZ](https://github.com/EsraNurDeniz)
-- [Osman Burak INTISAH](https://github.com/burakintisah)
+- [Esra Nur DENİZ](https://github.com/EsraNurDeniz)
+- [Osman Burak İNTİŞAH](https://github.com/burakintisah)
 - [Munib Emre SEVİLGEN](https://github.com/emresevilgen)
 
 ## Project Documents
