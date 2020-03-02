@@ -17,7 +17,7 @@ This webpage will be used to publish the documents of the term project of *CS353
 - [Munib Emre SEVİLGEN](https://github.com/emresevilgen)
 
 ## Project Documents
-[Project Proposal]()
+[Project Proposal](https://github.com/burakintisah/FlowerGarden/blob/master/Project%20Proposal.pdf)
 
 [Project Design Report]()
 
