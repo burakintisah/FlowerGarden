@@ -19,6 +19,6 @@ This webpage will be used to publish the documents of the term project of *CS353
 ## Project Documents
 [Project Proposal](https://burakintisah.github.io/FlowerGarden/docs/ProjectProposal.pdf "ProjectProposal")
 
-[Project Design Report]()
+[Project Design Report](https://burakintisah.github.io/FlowerGarden/docs/ProjectProposal.pdf "DesignReport")
 
 [Project Final Report]()
