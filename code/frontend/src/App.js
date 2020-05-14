@@ -1,4 +1,38 @@
 import React, { Component } from 'react';
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css'
+import Navbar from './components/layouts/Navbar'
+import Footer from './components/layouts/Footer'
+
+import { Button, Form, FormGroup, Label, Input} from 'reactstrap';
+
+
+class App extends Component{
+
+  render (){
+    return (
+      
+    <div>
+      <Navbar/>
+      <br/>
+       Excepteur anim consectetur deserunt excepteur eu culpa. Sunt sunt velit Lorem enim pariatur. Veniam esse nulla Lorem ut occaecat officia reprehenderit minim culpa irure et aliquip eu. Culpa commodo ex laboris laborum veniam sint. Amet dolor eu sint aliquip adipisicing aliquip exercitation fugiat magna cillum labore nisi ea nulla. 
+      <Footer/>
+    </div>
+    );
+
+  }
+}
+
+export default App;
+
+
+
+
+
+
+
+
+/*import React, { Component } from 'react';
 import axios from 'axios';
 
 class App extends Component {
@@ -70,3 +104,4 @@ class App extends Component {
 }
 
 export default App;
+*/
