@@ -3,6 +3,7 @@ import { Jumbotron } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import styled from 'styled-components'
 
+
 class SignUp extends Component {
     constructor(props) {
         super(props);
@@ -72,7 +73,30 @@ class SignUp extends Component {
                         {/*Column 2 */}
                         <div className="col-md-6 col-sm-6">
                             Middle Name  <Input type="text" placeholder="" />
-                                *Phone  <Input type="text" placeholder="" />
+                            *Phone  <Input type="text" placeholder="" />
+                            
+                            <div hidden ={(this.state.selectedOption !=="courier") && (this.state.selectedOption !=="seller")}>*IBAN</div>
+                            <Input type="text" placeholder="" hidden =  { (this.state.selectedOption !=="courier") && (this.state.selectedOption !=="seller")}   />
+
+                            <div hidden ={this.state.selectedOption !=="seller"}>*Address</div>
+                            <Input type="text" placeholder="" hidden =  { this.state.selectedOption !=="seller"}   />
+
+                            <br></br>
+                            <div class="input-group mb-3" hidden =  { this.state.selectedOption !=="seller"} >
+                                <select class="custom-select" id="province" >
+                                    <option selected>Select a province</option>
+                                    <option value="1">Ankara</option>
+                                    <option value="2">İstanbul</option>
+                                    <option value="3">Eskişehir</option>
+                                </select>
+                                <select class="custom-select" id="district">
+                                    <option selected>Select a distric</option>
+                                    <option value="1">Çankaya</option>
+                                    <option value="2">Beytepe</option>
+                                    <option value="3">100. Yıl</option>
+                                </select>
+                            </div>
+
                             <br></br>
                                 Please select the desired account type:
 
@@ -128,7 +152,7 @@ class SignUp extends Component {
     }
 }
 
-
+/*hidden = {this.state.selectedOption==="customer"}*/
 
 const SignUpContainer = styled.div`
 .login-form{
