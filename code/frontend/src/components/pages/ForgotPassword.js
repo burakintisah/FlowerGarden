@@ -4,6 +4,8 @@ import styled from 'styled-components'
 import Footer from '../layouts/Footer'
 
 class ForgotPassword extends Component {
+
+    
     render() {
         return (
             <div>

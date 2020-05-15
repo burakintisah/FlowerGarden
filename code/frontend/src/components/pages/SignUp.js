@@ -62,7 +62,7 @@ class SignUp extends Component {
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <button class="btn btn-outline-secondary" type="button" id="button-addon1"> Sign Up </button>
+                                    <button class="btn btn-outline-secondary" type="button" id="button-addon1" > Sign Up </button>
                                 </div>
                                 <a className='ml-4 mt-2' href="\sign-up">Learn More</a>
 
