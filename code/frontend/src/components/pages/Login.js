@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import styled from 'styled-components'
 
-export default class Login extends Component {
+class Login extends Component {
     render() {
         return (
             <LoginContainer>
@@ -34,7 +34,7 @@ export default class Login extends Component {
     }
 }
 
-
+export default Login;
 
 
 const LoginContainer = styled.div`
