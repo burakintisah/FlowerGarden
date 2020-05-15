@@ -5,6 +5,7 @@ import Navbar from './components/layouts/Navbar'
 import Footer from './components/layouts/Footer'
 // React Router Import 
 import { Switch, Route } from 'react-router-dom'
+
 // Importing Pages
 import Login from './components/pages/Login';
 import Home from './components/pages/Home';

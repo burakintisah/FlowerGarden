@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom'
 function Navbar () {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-dark">
-            <Link className="navbar-brand text-white ml-5 " href="#">FlowerGarden   &nbsp;     
+            <Link className="navbar-brand text-white ml-5 " to="/" >FlowerGarden   &nbsp;     
                 <img src={logo} alt="logo" style={{width:'35px' }}/>
             </Link>
                 
@@ -34,8 +34,7 @@ function Navbar () {
                         <Link className="nav-link text-white text-uppercase ml-5" to="/notifications">Notifications&nbsp;<i class="fas fa-bell"></i></Link>
                     </li>
                     <li className="nav-item active">
-                        <Link className="nav-link text-white text-uppercase ml-5" to="/change-destination">Change Destination&nbsp; <i class="fas fa-home"></i>
-                        <span className="sr-only">(current)</span></Link>
+                        <Link className="nav-link text-white text-uppercase ml-5" to="/change-destination">Change Destination&nbsp; <i class="fas fa-home"></i></Link>
                     </li>
                     <li className="nav-item">
                         <Link className="nav-link text-white text-uppercase ml-5" to="/order-tracking">Order Tracking&nbsp;<i class="fas fa-truck-moving"></i></Link>
