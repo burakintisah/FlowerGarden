@@ -5,7 +5,6 @@ import Navbar from './components/layouts/Navbar'
 import Footer from './components/layouts/Footer'
 // React Router Import 
 import { Switch, Route } from 'react-router-dom'
-
 // Importing Pages
 import Login from './components/pages/Login';
 import Home from './components/pages/Home';
@@ -23,7 +22,16 @@ class App extends Component {
     return (
 
       <div>
-        <SignUp/>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/login" component={Login} />
+          <Route path="/sign-up" component={SignUp} />
+          <Route path="/notifications" component={Notifications} />
+          <Route path="/order-tracking" component={OrderTracking} />
+          <Route path="/profile" component={Profile} />
+          <Route path="/change-destination" component={ChangeDestination}/>
+          <Route component={NotFoundPage} />
+        </Switch>
       </div>
     );
 
@@ -31,18 +39,3 @@ class App extends Component {
 }
 
 export default App;
-
-
-/*        <Navbar />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/login" component={Login} />
-          <Route path="/sign-up" component={SignUp} />
-          <Route path="/notifications" component={Notifications} />
-          <Route path="/order-tracking" component={OrderTracking} />
-          <Route path="/my-account" component={Profile} />
-          <Route path="/change-destination" component={ChangeDestination}/>
-
-          <Route component={NotFoundPage} />
-        </Switch>
-        <Footer />*/

@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import { InfoConsumer } from '../context'
 import Info from '../Info'
+import Navbar from '../layouts/Navbar'
+import Footer from '../layouts/Footer'
 
 class Home extends Component {
     render() {
         return (
-
+            
             <div>
+                <Navbar />
                 <div className="container">
                     <div className="row mt-5">
                         <InfoConsumer>
@@ -18,8 +21,9 @@ class Home extends Component {
                         </InfoConsumer>
                     </div>
                 </div>
+                <Footer />
             </div>
-
+            
         )
     }
 }

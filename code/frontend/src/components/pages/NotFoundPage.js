@@ -1,13 +1,56 @@
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+import Navbar from '../layouts/Navbar'
+import Footer from '../layouts/Footer'
 
 class NotFoundPage extends Component {
     render() {
         return (
-            <div>
-                <h2> NotFoundPage page...</h2>
-            </div>
+            <ComponentNotFound className="container">
+                <Navbar/>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className ="error-template">
+
+                            <h1>Ops!</h1>
+                            <h2>Error 404 Not Found</h2>
+                            <div className="error-details">
+                                Sorry, an error occurred. The requested page was not found!
+                            </div>
+                            <div className="error-actions">
+                            <Link to= "/" className="btn btn-outline-primary btn-lg">
+                                <i className="fas fa-home"/>&nbsp;Back To Main
+                            </Link>
+                            <Link to= "/" className="btn btn-outline-primary btn-lg">
+                                <i className="fas fa-envelope"/>&nbsp;Support
+                            </Link>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <Footer/>
+               
+            </ComponentNotFound>
         )
     }
 }
 
 export default NotFoundPage;
+
+const ComponentNotFound = styled.div`
+    .error-template {
+        padding: 40px 15px;
+        text-align:center;
+    }
+
+    .error-actions {
+        margin-top: 15px;
+        margin-bottom: 15px;
+    }
+
+    .btn {
+        margin-right: 10px;
+    }
+`;

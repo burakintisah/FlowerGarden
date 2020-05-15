@@ -51,9 +51,9 @@ function Footer() {
                     </div>
                     {/*Footer Bottom*/}
                     <div className="footer-bottom mt-3">
-                        <p className="text-xs-center">
-                            &copy;{new Date().getFullYear()} Flower Garden - All Rights Reserved
-                        </p>
+                        <span className="text-xs-center">
+                           Copyright &copy;{new Date().getFullYear()} Flower Garden. All Rights Reserved
+                        </span>
                     </div>
                 </div>
             </div>
@@ -72,7 +72,7 @@ const FooterContainer = styled.footer`
     }
 
     .footer-bottom{
-        padding-top: 3erm;
+        padding-top: r;
         padding-bottom: 2rem;
     }
 
