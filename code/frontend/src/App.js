@@ -1,21 +1,23 @@
 import React, { Component } from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Navbar from './components/layouts/Navbar'
-import Footer from './components/layouts/Footer'
 // React Router Import 
 import { Switch, Route } from 'react-router-dom'
 // Importing Pages
 import Login from './components/pages/Login';
-import Home from './components/pages/Home';
-import Notifications from './components/pages/Notifications';
-import NotFoundPage from './components/pages/NotFoundPage';
 import SignUp from './components/pages/SignUp';
-import Profile from './components/pages/Profile';
-import ChangeDestination from './components/pages/ChangeDestination';
-import OrderTracking from './components/pages/OrderTracking'
+import NotFoundPage from './components/pages/NotFoundPage';
 import ForgotPassword from './components/pages/ForgotPassword'
 
+// Importing Customer Pages
+import Home from './components/pages/customer/Home';
+import Notifications from './components/pages/customer/Notifications';
+import Profile from './components/pages/customer/Profile';
+import OrderTracking from './components/pages/customer/OrderTracking'
+import ChangeDestination from './components/pages/customer/ChangeDestination'
+
+// Importing Seller Pages
+import SelectTimePlace from './components/pages/seller/selectTimePlace'
 
 
 class App extends Component {
@@ -33,6 +35,9 @@ class App extends Component {
           <Route path="/profile" component={Profile} />
           <Route path="/change-destination" component={ChangeDestination}/>
           <Route path="/forgot-password" component={ForgotPassword} />
+          
+          <Route path="/selectDistrict" component={SelectTimePlace} />
+
           <Route component={NotFoundPage} />
         </Switch>
       </div>

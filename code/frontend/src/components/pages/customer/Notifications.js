@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import Navbar from '../layouts/Navbar'
-import Footer from '../layouts/Footer'
+import Navbar from '../../layouts/NavbarCustomer'
+import Footer from '../../layouts/Footer'
 
 class Notifications extends Component {
     render() {
