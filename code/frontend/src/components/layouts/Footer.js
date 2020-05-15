@@ -6,49 +6,7 @@ function Footer() {
         <FooterContainer className="main-footer">
             <div className="footer-middle">
                 <div className="container">
-                    <div className="row">
-                        {/*Column 1 */}
-                        <div className="col-md-3 col-sm-6">
-                            <h4> Lorem Ipsum</h4>
-                            <ul className="list-unstyled">
-                                <li><a href="/">Lorem ipsum</a></li>
-                                <li><a href="/">Lorem ipsum</a></li>
-                                <li><a href="/">Lorem ipsum</a></li>
-                                <li><a href="/">Lorem ipsum</a></li>
-                            </ul>
-                        </div>
-                        {/*Column 2 */}
-                        <div className="col-md-3 col-sm-6">
-                            <h4> Lorem Ipsum</h4>
-                            <ul className="list-unstyled">
-                                <li><a href="/">Lorem ipsum</a></li>
-                                <li><a href="/">Lorem ipsum</a></li>
-                                <li><a href="/">Lorem ipsum</a></li>
-                                <li><a href="/">Lorem ipsum</a></li>
-                            </ul>
-                        </div>
-                        {/*Column 3 */}
-                        <div className="col-md-3 col-sm-6">
-                            <h4> Lorem Ipsum</h4>
-                            <ul className="list-unstyled">
-                                <li><a href="/">Lorem ipsum</a></li>
-                                <li><a href="/">Lorem ipsum</a></li>
-                                <li><a href="/">Lorem ipsum</a></li>
-                                <li><a href="/">Lorem ipsum</a></li>
-                            </ul>
-                        </div>
-                        {/*Column 4 */}
-                        <div className="col-md-3 col-sm-6">
-                            <h4> Lorem Ipsum</h4>
-                            <ul className="list-unstyled">
-                                <li><a href="/">Lorem ipsum</a></li>
-                                <li><a href="/">Lorem ipsum</a></li>
-                                <li><a href="/">Lorem ipsum</a></li>
-                                <li><a href="/">Lorem ipsum</a></li>
-                            </ul>
-                        </div>
-
-                    </div>
+                
                     {/*Footer Bottom*/}
                     <div className="footer-bottom mt-3">
                         <span className="text-xs-center">
@@ -66,14 +24,14 @@ export default Footer;
 
 const FooterContainer = styled.footer`
     .footer-middle {
-        background: var(--mainDark);
-        padding-top: 3rem;
-        color: var(--mainWhite)
+        background: var(--mainWhite);
+        color: var(--mainDark)
     }
 
     .footer-bottom{
-        padding-top: r;
+        padding-top: 3rem;
         padding-bottom: 2rem;
+        font-weight: bold;
     }
 
     ul li a {

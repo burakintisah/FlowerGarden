@@ -14,6 +14,8 @@ import SignUp from './components/pages/SignUp';
 import Profile from './components/pages/Profile';
 import ChangeDestination from './components/pages/ChangeDestination';
 import OrderTracking from './components/pages/OrderTracking'
+import ForgotPassword from './components/pages/ForgotPassword'
+
 
 
 class App extends Component {
@@ -30,6 +32,7 @@ class App extends Component {
           <Route path="/order-tracking" component={OrderTracking} />
           <Route path="/profile" component={Profile} />
           <Route path="/change-destination" component={ChangeDestination}/>
+          <Route path="/forgot-password" component={ForgotPassword} />
           <Route component={NotFoundPage} />
         </Switch>
       </div>
