@@ -13,9 +13,11 @@ class SignUp extends Component {
     }
 
     handleOptionChange = changeEvent => {
+        
         this.setState({
             selectedOption: changeEvent.target.value
         });
+        
     };
 
     render() {

@@ -40,7 +40,7 @@ function Navbar () {
                         <Link className="nav-link text-white text-uppercase ml-5" to="/order-tracking">Order Tracking&nbsp;<i class="fas fa-truck-moving"></i></Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link text-white text-uppercase ml-5" to="/my-account">My Account&nbsp;<i class="fas fa-user"></i></Link>
+                        <Link className="nav-link text-white text-uppercase ml-5" to="/profile">My Account&nbsp;<i class="fas fa-user"></i></Link>
                     </li>
                 </ul>
     
