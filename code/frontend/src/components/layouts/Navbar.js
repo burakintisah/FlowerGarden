@@ -1,12 +1,14 @@
 import React from 'react';
 import logo from '../../logo.svg'
+import { Link } from 'react-router-dom'
+
 
 function Navbar () {
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-dark">
-            <a className="navbar-brand text-white ml-5 " href="#">FlowerGarden   &nbsp;     
+            <Link className="navbar-brand text-white ml-5 " href="#">FlowerGarden   &nbsp;     
                 <img src={logo} alt="logo" style={{width:'35px' }}/>
-            </a>
+            </Link>
                 
                 <button className="navbar-toggler" 
                     type="button" 
@@ -15,7 +17,9 @@ function Navbar () {
                     aria-controls="navbarSupportedContent" 
                     aria-expanded="false" 
                     aria-label="Toggle navigation">
-                    <span className="navbar-toggler-icon"></span>
+                    <span >
+                        <i className = "fas fa-bars" style= {{color: '#fff'}}/>
+                    </span>
                 </button>
 
             <div className="collapse navbar-collapse" id="navbarSupportedContent">
@@ -27,17 +31,17 @@ function Navbar () {
                 
                 <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
-                        <a className="nav-link text-white text-uppercase ml-5" href="#">Notifications&nbsp;<i class="fas fa-bell"></i></a>
+                        <Link className="nav-link text-white text-uppercase ml-5" to="/notifications">Notifications&nbsp;<i class="fas fa-bell"></i></Link>
                     </li>
                     <li className="nav-item active">
-                        <a className="nav-link text-white text-uppercase ml-5" href="#">Change Destination&nbsp; <i class="fas fa-home"></i>
-                        <span className="sr-only">(current)</span></a>
+                        <Link className="nav-link text-white text-uppercase ml-5" to="/change-destination">Change Destination&nbsp; <i class="fas fa-home"></i>
+                        <span className="sr-only">(current)</span></Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link text-white text-uppercase ml-5" href="#">Order Tracking&nbsp;<i class="fas fa-truck-moving"></i></a>
+                        <Link className="nav-link text-white text-uppercase ml-5" to="/order-tracking">Order Tracking&nbsp;<i class="fas fa-truck-moving"></i></Link>
                     </li>
                     <li className="nav-item">
-                        <a className="nav-link text-white text-uppercase ml-5" href="#">My Account&nbsp;<i class="fas fa-user"></i></a>
+                        <Link className="nav-link text-white text-uppercase ml-5" to="/my-account">My Account&nbsp;<i class="fas fa-user"></i></Link>
                     </li>
                 </ul>
     
