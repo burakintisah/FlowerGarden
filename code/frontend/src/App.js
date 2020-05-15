@@ -22,7 +22,17 @@ class App extends Component {
     return (
 
       <div>
-        <Navbar />
+        <SignUp/>
+      </div>
+    );
+
+  }
+}
+
+export default App;
+
+
+/*        <Navbar />
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
@@ -34,11 +44,4 @@ class App extends Component {
 
           <Route component={NotFoundPage} />
         </Switch>
-        <Footer />
-      </div>
-    );
-
-  }
-}
-
-export default App;
+        <Footer />*/

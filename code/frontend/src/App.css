@@ -12,3 +12,42 @@
 .navbar-toggler {
   border: none;
 }
+
+
+.jumbotron {
+  background-image: url("background4.jpg");
+  background-repeat: no-repeat, repeat;
+  background-position: center;
+  background-size: cover;
+  padding-top: 0px;
+  font-weight: bold;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  padding: 0px;
+  border-radius: 50px;
+  box-shadow: 10px 10px 5px 0px rgba(0,0,0,0.75);
+}
+
+.jumbotron h1, p{
+  margin-left: 650px;
+  font-size: 80px;
+  background-blend-mode: luminosity ;
+  padding: 50px;
+  padding-bottom: 10px;
+}
+
+.jumbotron h2, p{
+ 
+  margin-left: 830px;
+  margin-bottom: 80px;
+  font-size: 50px;
+  background-blend-mode: luminosity ;
+  padding: 0px;
+}
+
+.jumbotron container, p{
+ 
+ background-color: #ffffff73;
+}
+
+
