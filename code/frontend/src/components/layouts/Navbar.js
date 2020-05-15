@@ -26,7 +26,7 @@ function Navbar () {
     
                 <form className="form-inline ml-auto">
                     <input className="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"/>
-                    <button className="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+                    <button className="btn btn-outline-primary my-2 my-sm-0 " type="submit">Search</button>
                 </form>
                 
                 <ul className="navbar-nav ml-auto">

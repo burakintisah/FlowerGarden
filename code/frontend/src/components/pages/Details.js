@@ -10,4 +10,4 @@ class Details extends Component {
     }
 }
 
-export default home;
+export default Details;
