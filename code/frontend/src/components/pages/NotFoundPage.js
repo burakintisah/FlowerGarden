@@ -7,32 +7,38 @@ import Footer from '../layouts/Footer'
 class NotFoundPage extends Component {
     render() {
         return (
-            <ComponentNotFound className="container">
-                <Navbar/>
-                <div className="row">
-                    <div className="col-md-12">
-                        <div className ="error-template">
+            <div>
+                <Navbar />
+                <ComponentNotFound className="container">
 
-                            <h1>Ops!</h1>
-                            <h2>Error 404 Not Found</h2>
-                            <div className="error-details">
-                                Sorry, an error occurred. The requested page was not found!
+                    <div className="row">
+                        <div className="col-md-12">
+                            <div className="error-template">
+
+                                <h1>Ops!</h1>
+                                <h2>Error 404 Not Found</h2>
+                                <div className="error-details">
+                                    Sorry, an error occurred. The requested page was not found!
                             </div>
-                            <div className="error-actions">
-                            <Link to= "/" className="btn btn-outline-primary btn-lg">
-                                <i className="fas fa-home"/>&nbsp;Back To Main
+                                <div className="error-actions">
+                                    <Link to="/" className="btn btn-outline-primary btn-lg">
+                                        <i className="fas fa-home" />&nbsp;Back To Main
                             </Link>
-                            <Link to= "/" className="btn btn-outline-primary btn-lg">
-                                <i className="fas fa-envelope"/>&nbsp;Support
+                                    <Link to="/" className="btn btn-outline-primary btn-lg">
+                                        <i className="fas fa-envelope" />&nbsp;Support
                             </Link>
+                                </div>
                             </div>
                         </div>
+
                     </div>
 
-                </div>
-                <Footer/>
-               
-            </ComponentNotFound>
+
+                </ComponentNotFound>
+                <Footer />
+
+            </div>
+
         )
     }
 }
