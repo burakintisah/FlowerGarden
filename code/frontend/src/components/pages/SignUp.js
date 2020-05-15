@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Jumbotron } from 'reactstrap';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import styled from 'styled-components'
+import Footer from '../layouts/Footer'
 
 
 class SignUp extends Component {
@@ -22,7 +23,7 @@ class SignUp extends Component {
 
     render() {
         return (
-
+            <div>
             <Jumbotron>
                 <h1>FlowerGarden</h1>
                 <h2> Sign Up</h2>
@@ -61,7 +62,7 @@ class SignUp extends Component {
 
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
-                                    <button class="btn btn-outline-secondary" type="button" id="button-addon1"> Sign Up </button>
+                                    <button class="btn btn-outline-secondary" type="button" id="button-addon1" > Sign Up </button>
                                 </div>
                                 <a className='ml-4 mt-2' href="\sign-up">Learn More</a>
 
@@ -149,6 +150,8 @@ class SignUp extends Component {
                 </div>
                 <br></br>
             </Jumbotron>
+            <Footer />
+            </div>
 
         )
     }

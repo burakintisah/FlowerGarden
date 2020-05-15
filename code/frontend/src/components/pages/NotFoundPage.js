@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import Navbar from '../layouts/Navbar'
+import Navbar from '../layouts/NavbarCustomer'
 import Footer from '../layouts/Footer'
 
 class NotFoundPage extends Component {

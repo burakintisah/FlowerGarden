@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { InfoConsumer } from '../context'
-import Info from '../Info'
-import Navbar from '../layouts/Navbar'
-import Footer from '../layouts/Footer'
+import { InfoConsumer } from '../../context'
+import Info from '../../Info'
+import Navbar from '../../layouts/NavbarCustomer'
+import Footer from '../../layouts/Footer'
 
 class Home extends Component {
     render() {
