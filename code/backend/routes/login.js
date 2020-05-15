@@ -2,36 +2,35 @@ var express = require('express');
 
 var router = express.Router();
 
-/* GET accounts listing. */
-router.get('/', function(req, res, next) {
-  dbconnection.query('SELECT * FROM Account ', function(err, data){
-    if(err)
-      res.send(err);
-    else
-      res.json(data);
-    console.log(res.data);
-
-  });
-});
-
 router.post('/', (req, res) => {
-  dbconnection.query('SELECT * FROM Account WHERE Account.email=\'' + req.body.email +'\'', function(err, data){
-    if(err)
-      res.send(err);
-    else {
-      if (data.length != 0) {
-        if (data[0].password == req.body.password) {
-          res.json({status:1, message:'Logged in.', data:data[0]});
-        }
-        else
-          res.json({status:0, message:'Password is incorrect.'});
-      }
-      else {
-        res.json({status:0, message:'Email is incorrect.'});
-      }
+  if (req.body.email == null) {
+    sendResponse(res, 0, 'Request Error: There is no email field.', null);
+    return;
+  }
+
+  if (req.body.email == "") {
+    sendResponse(res, 0, 'Request Error: Email field is empty.', null);
+    return;
+  }
+
+  dbconnection.query('SELECT email, password FROM account WHERE account.email=\'' + req.body.email + '\'', function (err, result, fields) {
+    if (err) {
+      sendResponse(res, 0, 'MySQL Error: ' + err.sqlMessage, null);
+      console.log('Error at: ' + err.sql);
+      return;
     }
+
+    if (result.length != 0) {
+      if (result[0].password == req.body.password) {
+        sendResponse(res, 1, 'Logged in.', result[0]);
+      }
+      else
+        sendResponse(res, 0, 'Password is incorrect.', null);
+    }
+    else
+      sendResponse(res, 0, 'Email is incorrect.', null);
+
   });
-  //console.log(res.body);
 });
 
 module.exports = router;
