@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Label, Input, Jumbotron } from 'reactstrap';
 import styled from 'styled-components'
 import Footer from '../layouts/Footer';
 import axios from 'axios'
-import { Link , Redirect} from 'react-router-dom';
+import { Redirect} from 'react-router-dom';
 
 class Login extends Component {
 
@@ -44,9 +44,11 @@ class Login extends Component {
 
     render() {
         const redirectToReferrer = this.state.redirectToReferrer;
+        //customer
         if (redirectToReferrer === true &&  this.state.account_type=== 0) {
-            return <Redirect to={`/customer/${this.state.account_id}`}/>
+            return <Redirect to={`/selectDistrict/${this.state.account_id}`}/>
         }
+        //seller
         if (redirectToReferrer === true &&  this.state.account_type=== 1) {
             return <Redirect to={`/seller/${this.state.account_id}`}/>
         }

@@ -15,6 +15,7 @@ import Notifications from './components/pages/customer/Notifications';
 import Profile from './components/pages/customer/Profile';
 import OrderTracking from './components/pages/customer/OrderTracking'
 import ChangeDestination from './components/pages/customer/ChangeDestination'
+import SelectDistrict from './components/pages/customer/selectDistrict'
 
 // Importing Seller Pages
 import SelectTimePlace from './components/pages/seller/selectTimePlace'
@@ -29,13 +30,14 @@ class App extends Component {
         <Switch>
           <Route exact path="/" component={Login} />
           <Route path="/customer/:account_id" component={Home} />
+          <Route path="/selectDistrict" component={SelectDistrict} />
           <Route path="/sign-up" component={SignUp} />
           <Route path="/notifications" component={Notifications} />
           <Route path="/order-tracking" component={OrderTracking} />
           <Route path="/profile/:id" component={Profile} />
           <Route path="/change-destination" component={ChangeDestination}/>
           <Route path="/forgot-password" component={ForgotPassword} />
-          <Route path="/selectDistrict" component={SelectTimePlace} />
+          <Route path="/selectTimePlace" component={SelectTimePlace} />
           <Route path="/seller/:account_id" component={SellerHome} />
           <Route component={NotFoundPage} />
         </Switch>
