@@ -3,8 +3,8 @@ var express = require('express');
 var router = express.Router();
 
 router.post('/', (req, res) => {
-    var query = 'INSERT INTO account (first_name, middle_name, last_name, email, password, phone, last_login_date) VALUES (?)'
-    var values = [req.body.first_name, req.body.middle_name, req.body.last_name, req.body.email, req.body.password, req.body.phone, req.body.last_login_date];
+    var query = 'INSERT INTO account (first_name, middle_name, last_name, email, password, phone, last_login_date, account_type) VALUES (?)'
+    var values = [req.body.first_name, req.body.middle_name, req.body.last_name, req.body.email, req.body.password, req.body.phone, req.body.last_login_date, req.body.account_type];
     dbconnection.query(query, [values], function (err, result, fields) {
         if (err) {
             sendResponse(res, 0, 'MySQL Error: ' + err.sqlMessage, null);

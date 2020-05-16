@@ -4,9 +4,12 @@ import Footer from '../../layouts/Footer'
 import axios from 'axios'
 
 class Profile extends Component {
-    state = {
-        id: "emre@gmail.com",
-        password: "asdads"
+    constructor(props) {
+        super(props)
+        this.state = {
+            id: "emre@gmail.com",
+            password: "asdads"
+        }
     }
 
     componentDidMount() {
