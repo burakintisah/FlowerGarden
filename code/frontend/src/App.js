@@ -18,6 +18,8 @@ import ChangeDestination from './components/pages/customer/ChangeDestination'
 
 // Importing Seller Pages
 import SelectTimePlace from './components/pages/seller/selectTimePlace'
+import CreateArrangement from './components/pages/seller/CreateArrangement'
+import Arrangements from './components/pages/seller/Arrangements'
 
 
 class App extends Component {
@@ -26,7 +28,15 @@ class App extends Component {
     return (
 
       <div>
-        <Switch>
+          <CreateArrangement></CreateArrangement>
+      </div>
+    );
+
+  }
+}
+
+export default App;
+ /*        <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/login" component={Login} />
           <Route path="/sign-up" component={SignUp} />
@@ -40,10 +50,5 @@ class App extends Component {
 
           <Route component={NotFoundPage} />
         </Switch>
-      </div>
-    );
 
-  }
-}
-
-export default App;
+ */
