@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 
 function Navbar () {
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-dark">
             <Link className="navbar-brand text-white ml-5 " to="/" >FlowerGarden   &nbsp;     
@@ -40,7 +41,7 @@ function Navbar () {
                         <Link className="nav-link text-white text-uppercase ml-5" to="/order-tracking">Order Tracking&nbsp;<i class="fas fa-truck-moving"></i></Link>
                     </li>
                     <li className="nav-item">
-                        <Link className="nav-link text-white text-uppercase ml-5" to="/profile">My Account&nbsp;<i class="fas fa-user"></i></Link>
+                        <Link className="nav-link text-white text-uppercase ml-5" to={{pathname:"/profile"}}>My Account&nbsp;<i class="fas fa-user"></i></Link>
                     </li>
                 </ul>
     

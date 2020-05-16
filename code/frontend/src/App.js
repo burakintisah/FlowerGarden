@@ -18,7 +18,7 @@ import ChangeDestination from './components/pages/customer/ChangeDestination'
 
 // Importing Seller Pages
 import SelectTimePlace from './components/pages/seller/selectTimePlace'
-
+import SellerHome from './components/pages/seller/sellerHome'
 
 class App extends Component {
 
@@ -27,17 +27,16 @@ class App extends Component {
 
       <div>
         <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/login" component={Login} />
+          <Route exact path="/" component={Login} />
+          <Route path="/customer/:account_id" component={Home} />
           <Route path="/sign-up" component={SignUp} />
           <Route path="/notifications" component={Notifications} />
           <Route path="/order-tracking" component={OrderTracking} />
-          <Route path="/profile" component={Profile} />
+          <Route path="/profile/:id" component={Profile} />
           <Route path="/change-destination" component={ChangeDestination}/>
           <Route path="/forgot-password" component={ForgotPassword} />
-          
           <Route path="/selectDistrict" component={SelectTimePlace} />
-
+          <Route path="/seller/:account_id" component={SellerHome} />
           <Route component={NotFoundPage} />
         </Switch>
       </div>
