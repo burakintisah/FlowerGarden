@@ -13,7 +13,7 @@ router.post('/', (req, res) => {
     return;
   }
 
-  dbconnection.query('SELECT email, password FROM account WHERE account.email=\'' + req.body.email + '\'', function (err, result, fields) {
+  dbconnection.query('SELECT email, password, account_id, account_type FROM account WHERE account.email=\'' + req.body.email + '\'', function (err, result, fields) {
     if (err) {
       sendResponse(res, 0, 'MySQL Error: ' + err.sqlMessage, null);
       console.log('Error at: ' + err.sql);
