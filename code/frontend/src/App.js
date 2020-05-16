@@ -20,6 +20,9 @@ import SelectDistrict from './components/pages/customer/selectDistrict'
 // Importing Seller Pages
 import SelectTimePlace from './components/pages/seller/selectTimePlace'
 import SellerHome from './components/pages/seller/sellerHome'
+import CreateArrangement from './components/pages/seller/CreateArrangement'
+import Arrangements from './components/pages/seller/Arrangements'
+
 
 class App extends Component {
 
@@ -39,12 +42,13 @@ class App extends Component {
           <Route path="/forgot-password" component={ForgotPassword} />
           <Route path="/selectTimePlace" component={SelectTimePlace} />
           <Route path="/seller/:account_id" component={SellerHome} />
+          <Route path="/createarrangements" component={CreateArrangement} />
+          <Route path="/arrangements" component={Arrangements} />   
           <Route component={NotFoundPage} />
         </Switch>
-      </div>
+        </div>
     );
 
   }
 }
-
 export default App;
