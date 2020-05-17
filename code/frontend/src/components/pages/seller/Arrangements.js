@@ -12,33 +12,35 @@ import axios from 'axios';
 class SignUp extends Component {
   
         state = {
+            rows:null,
             account_id: null,
-            flowerName: null,
+            flowerID: null,
             redirectToReferrerDetails: false,
             redirectToReferrerCreate: false,
+            r:[],
+            c:  [
+                    {label: 'ID',field: 'arrangement_id'},
+                    {label: 'Flower Arrangement Name',field: 'arrangement_name'},
+                    {label: 'Volume',field: 'volume'},
+                    {label: 'Price',field: 'price'},
+                    {label: 'Occasions',field: 'occasion_name'}
 
-             data : {
-                columns:  [ {label: '#',field: 'id',},
-                           { label: 'Occasions',field: 'occasion',}
-                          ],
-                rows: [{'id': 1, 'occasion': 'Birthday'}
-                      ]
-                    }
+                ],
+             data : []
         }
         componentDidMount() {
           const { match: { params } } = this.props;
           this.setState({ account_id: params.account_id })
-          console.log(this.state.account_id)
-          axios.get('http://localhost:5000/arrangement/seller/${this.state.account_id}').then(res => {
-              //console.log(res.data.data)
+          axios.get('http://localhost:5000/arrangement/seller/'+params.account_id).then(res => {
               if (res.data.status === 1) {
-                  this.setState({ provinces: res.data.data })
-              }
-              
+                  this.setState({ r: res.data.data })
+                  console.log(res.data.data[0])
+                }
+                
           });
       }
 
-        takeFlowerName = event => { event.preventDefault(); this.setState({ flowerName: event.target.value }); console.log(this.state.flowerName); }
+        takeFlowerID = event => { event.preventDefault(); this.setState({ flowerID: event.target.value }); console.log(this.state.flowerID); }
         
         seeFlowerDetails = event => {
             event.preventDefault();
@@ -60,7 +62,10 @@ class SignUp extends Component {
         }
 
     render() {
-
+        this.state.data = {
+            columns: this.state.c,
+            rows: this.state.r
+          };
         const redirectToReferrer1 = this.state.redirectToReferrerCreate;
         if (redirectToReferrer1 === true) {
             return <Redirect to={`/createarrangements`}/>
@@ -69,11 +74,14 @@ class SignUp extends Component {
         if (redirectToReferrer2 === true) {
             return <Redirect to={`/arrangement-details`}/>
         }
-
         return (
             <div>
             <Navbar />
+            <h1 className='ml-3 mt-3'>FlowerGarden</h1>
+            <br/>
+            <br/>
             <Container>
+            <h2>Arrangement Details</h2>
             <MDBDataTable
                 striped
                 bordered
@@ -83,7 +91,7 @@ class SignUp extends Component {
             <br /> <br />
             <div class="input-group mb-3" className="mt-4" style={{float: 'right'}}>
                 <div class="input-group-prepend">
-                    <Input className="mr-5" style={{width: '350px'}} type="text" placeholder="Enter the name of the arrangement..."  onChange={this.takeFlowerName}/>
+                    <Input className="mr-5" style={{width: '350px'}} type="text" placeholder="Enter the ID of the arrangement..."  onChange={this.takeFlowerID}/>
                     <Button className="btn-lg btn-dark mr-5 ml-25"  onClick={this.seeFlowerDetails}>Arrangement Details</Button>
                     <Button className="btn-lg btn-dark mr-5 ml-10"  onClick={this.createArrangement}>Create Arrangement</Button>
                 </div>

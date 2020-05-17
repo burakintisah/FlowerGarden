@@ -9,7 +9,8 @@ router.post('/customer/', (req, res) => {
     + 'WHERE seller_id IN ( SELECT seller_id FROM seller_serves_to WHERE district_id = ?)) '
     + 'SELECT DISTINCT TD.arrangement_id, TD.image_path, TD.arrangement_name, TD.price, A.first_name, A.last_name, TD.details, TD.rate, TD.count '
     + 'FROM to_display as TD, occasion as O, seller_working_time as SWT, composed_of C, account as A '
-    + 'WHERE TD.arrangement_id = O.arrangement_id AND SWT.day=? AND SWT.hour=? AND A.account_id = TD.seller_id';
+    + 'WHERE A.account_id = TD.seller_id AND SWT.seller_id = A.account_id AND TD.arrangement_id = O.arrangement_id '
+    + 'AND C.arrangement_id = O.arrangement_id AND SWT.day=? AND SWT.hour=? ';
 
   var val = [req.body.district_id, req.body.day, req.body.hour];
 
@@ -30,7 +31,7 @@ router.post('/customer/', (req, res) => {
       flower_query = " OR flower_id=?";
       val.push(req.body.flowers[i].flower_id);
     }
-    query = query + flower_query +')';
+    query = query + flower_query + ')';
   }
 
   dbconnection.query(query, val, function (err, result, fields) {
@@ -43,24 +44,48 @@ router.post('/customer/', (req, res) => {
   });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   var query = "SELECT * FROM flower_arrangement WHERE arrangement_id = ?";
   var val = [req.params.id];
-  
-  dbconnection.query(query, val, function (err, result, fields) {
-    if (err) {
-      sendResponse(res, 0, 'MySQL Error: ' + err.sqlMessage, null);
-      console.log('Error at: ' + err.sql);
-      return;
-    }
-    sendResponse(res, 1, 'Done.', result[0]);
+
+  let rows = await dbconnection.promise().query(query, val).catch((err) => {
+    console.log('Error at: ' + err);
+    sendResponse(res, 0, err.sqlMessage, null);
   });
+  result = rows[0][0];
+
+  if (!result)
+    sendResponse(res, 0, "Incorrect arrangement_id", null);
+
+  query = "SELECT * FROM occasion WHERE arrangement_id = ?";
+  rows = await dbconnection.promise().query(query, val).catch((err) => {
+    console.log('Error at: ' + err);
+    sendResponse(res, 0, err.sqlMessage, null);
+  });
+  result.occasions = rows[0];
+
+  query = "SELECT * FROM composed_of NATURAL JOIN flower WHERE arrangement_id = ?";
+  rows = await dbconnection.promise().query(query, val).catch((err) => {
+    console.log('Error at: ' + err);
+    sendResponse(res, 0, err.sqlMessage, null);
+  });
+  result.flowers = rows[0];
+
+  query = "SELECT * FROM comment WHERE arrangement_id = ?";
+  rows = await dbconnection.promise().query(query, val).catch((err) => {
+    console.log('Error at: ' + err);
+    sendResponse(res, 0, err.sqlMessage, null);
+  });
+  result.comments = rows[0];
+
+  sendResponse(res, 1, 'Done.', result);
+
 });
 
 router.get('/seller/:id', (req, res) => {
-  var query = 'SELECT arrangement_id, arrangement_name, volume, price, occasion_name FROM flower_arrangement natural join occasion WHERE seller_id = ?';
+  var query = 'SELECT * FROM flower_arrangement natural join occasion WHERE seller_id = ?';
   var val = [req.params.id];
-  
+
   dbconnection.query(query, val, function (err, result, fields) {
     if (err) {
       sendResponse(res, 0, 'MySQL Error: ' + err.sqlMessage, null);
@@ -71,18 +96,54 @@ router.get('/seller/:id', (req, res) => {
   });
 });
 
-router.post('/create', (req, res) => {
+router.post('/create', async (req, res) => {
   var query = 'INSERT INTO flower_arrangement ( image_path, arrangement_name, volume, price, seller_id, details, rate, count, enabled) VALUES ( ? , ?, ?, ?, ?, ?, ?, ?, ? )';
-  var val = [req.body.image_path, req.body.volume, req.body.price, req.body.seller_id, req.body.details, req.body.rate, req.body.count, req.body.enabled];
+  var val = [req.body.image_path, req.body.arrangement_name, req.body.volume, req.body.price, req.body.seller_id, req.body.details, req.body.rate, req.body.count, req.body.enabled];
 
-  let rows = dbconnection.promise().query(query, val).catch((err, query) => {
-    console.log('Error at: ' + query);
-    sendResponse(res, 0,  err, null);
+  let rows = await dbconnection.promise().query(query, val).catch((err) => {
+    console.log('Error at: ' + err);
+    sendResponse(res, 0, err.sqlMessage, null);
 
   });
 
-  console.log(rows);
+  arrangement_id = rows[0].insertId;
+  var occasions = req.body.occasions;
+  query = 'INSERT INTO occasion (arrangement_id, occasion_name) VALUES (?, ?)';
 
+  for (i = 0; i < occasions.length; i++) {
+    val = [arrangement_id, occasions[i].occasion_name]
+    let rows = await dbconnection.promise().query(query, val).catch((err) => {
+      console.log('Error at: ' + err);
+      sendResponse(res, 0, err.sqlMessage, null);
+    });
+  }
+
+  var flowers = req.body.flowers;
+  query = 'INSERT INTO composed_of (count, flower_id, arrangement_id) VALUES ( ?, ?, ? )';
+  for (i = 0; i < occasions.length; i++) {
+    val = [flowers[i].count, flowers[i].flower_id, arrangement_id];
+    let rows = await dbconnection.promise().query(query, val).catch((err) => {
+      console.log('Error at: ' + err);
+      sendResponse(res, 0, err.sqlMessage, null);
+    });
+  }
+
+  sendResponse(res, 1, "Done.", { arrangement_id: arrangement_id });
+
+});
+
+router.get('/:id/delete', (req, res) => {
+  var query = 'UPDATE flower_arrangement SET enabled = false WHERE arrangement_id = ?';
+  var val = [req.params.id];
+
+  dbconnection.query(query, val, function (err, result, fields) {
+    if (err) {
+      sendResponse(res, 0, 'MySQL Error: ' + err.sqlMessage, null);
+      console.log('Error at: ' + err.sql);
+      return;
+    }
+    sendResponse(res, 1, 'Done.', null);
+  });
 });
 
 module.exports = router;

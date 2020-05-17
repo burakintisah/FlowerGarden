@@ -45,9 +45,9 @@ class App extends Component {
           <Route path="/forgot-password" component={ForgotPassword} />
           <Route path="/selectTimePlace" component={SelectTimePlace} />
           <Route path="/seller/:account_id" component={SellerHome} />
-          <Route path="/createarrangements" component={CreateArrangement} />
+          <Route path="/createarrangements/accountid=:account_id" component={CreateArrangement} />
           <Route path="/arrangements/accountid=:account_id" component={Arrangements} />   
-          <Route path="/arrangement-details" component={ArrangementDetails} />   
+          <Route path="/arrangement-details/accountid=:account_id/arrangementid=:arrangement_id" component={ArrangementDetails} />   
           <Route path="/sale-list" component={SaleList} />   
           <Route component={NotFoundPage} />
         </Switch>
