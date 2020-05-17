@@ -64,7 +64,7 @@ router.get('/:id', async (req, res) => {
   });
   result.occasions = rows[0];
 
-  query = "SELECT * FROM composed_of WHERE arrangement_id = ?";
+  query = "SELECT * FROM composed_of NATURAL JOIN flower WHERE arrangement_id = ?";
   rows = await dbconnection.promise().query(query, val).catch((err) => {
     console.log('Error at: ' + err);
     sendResponse(res, 0, err.sqlMessage, null);
@@ -130,6 +130,20 @@ router.post('/create', async (req, res) => {
 
   sendResponse(res, 1, "Done.", { arrangement_id: arrangement_id });
 
+});
+
+router.get('/:id/delete', (req, res) => {
+  var query = 'UPDATE flower_arrangement SET enabled = false WHERE arrangement_id = ?';
+  var val = [req.params.id];
+
+  dbconnection.query(query, val, function (err, result, fields) {
+    if (err) {
+      sendResponse(res, 0, 'MySQL Error: ' + err.sqlMessage, null);
+      console.log('Error at: ' + err.sql);
+      return;
+    }
+    sendResponse(res, 1, 'Done.', null);
+  });
 });
 
 module.exports = router;

@@ -23,6 +23,7 @@ router.post('/', async (req, res) => {
         else
             flowers[i].stock = 0;
     }
+    
     for (i = 0; i < flowers.length; i++) {
         if (flowers[i].stock < flowers[i].count) {
             sendResponse(res, 0, "Flower stock is not enough for flower with id " + flowers[i].flower_id + ". Order is not created.", null);
@@ -127,7 +128,7 @@ router.get('/:id', async (req, res) => {
         sendResponse(res, 0, "No order with the given order_id " + req.params.id, null);
         return;
     }
-    
+
     val = [order.seller_id]
     rows = await dbconnection.promise().query('SELECT first_name, middle_name, last_name FROM account  WHERE account_id = ?', val).catch((err) => {
         console.log('Error at: ' + err);
