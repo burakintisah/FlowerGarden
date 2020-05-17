@@ -24,7 +24,7 @@ class FlowerCard extends Component {
         const redirectToReferrer = this.state.redirectToReferrer;
         //customer
         if (redirectToReferrer === true) {
-            return <Redirect to={`/flowerdetails/accountid=${this.props.account_id}/arrangementid=${this.props.flower.arrangement_id}`} />
+            return <Redirect to={`/flowerdetails/accountid=${this.props.account_id}/districtid=${this.props.district_id}/arrangementid=${this.props.flower.arrangement_id}`} />
         };
 
         return (
@@ -35,7 +35,7 @@ class FlowerCard extends Component {
                     <CardBody>
                         <CardTitle className="text-uppercase font-weight-bolder">{this.props.flower.arrangement_name}</CardTitle>
                         <CardSubtitle>Seller: {this.props.flower.first_name}  {this.props.flower.last_name}</CardSubtitle>
-                        <CardSubtitle>{this.props.flower.details}</CardSubtitle>
+                        <CardSubtitle>Details: {this.props.flower.details}</CardSubtitle>
                         <br></br>
                         <div>
                             <Rating readonly="true"

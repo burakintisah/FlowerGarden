@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 import styled from 'styled-components'
 import Axios from 'axios';
 
-class OrderCreation extends Component {
+class OrderDetails extends Component {
 
     constructor(props) {
         super(props);
@@ -14,9 +14,9 @@ class OrderCreation extends Component {
             account_id: null,
             district_id:null,
             arrangement_id: null,
-            redirectToRecHome: false,
             arrangemetInfo: [],
-            sellerInfo: []
+            sellerInfo: [],
+            redirect: false
         }
     }
 
@@ -50,59 +50,17 @@ class OrderCreation extends Component {
 
         });
     }
-
-
-    orderClick = event => {
-        event.preventDefault();
-        //directing to the home page...
-        this.setState({ redirectToRecInfo: true })
-        console.log("BUTTON CLICKED")
-    }
-
     render() {
-
-        const redirectToRecInfo = this.state.redirectToRecInfo;
-        //customer
-        if (redirectToRecInfo === true) {
-            return <Redirect to={`/checkout/accountid=${this.state.account_id}/districtid=${this.state.district_id}/arrangementid=${this.state.arrangement_id}`} />
-        };
         return (
-            <OrderContainer>
+            <CheckoutContainer>
 
                 <Navbar />
+                <div>
+
                     <Row>
                         <Col>
                             <Container className="showOrder">
                                 <h1>Your Order</h1>
-                                <Row className="arr">
-                                    <Col><h4>Flower Arrangement</h4></Col>
-                                    <Col sm="1"><h4>Price</h4></Col>
-                                </Row>
-                                <Row className="arr">
-                                    <Col sm="4">
-                                        <img top width="100%"
-                                            src="https://www.thespruce.com/thmb/3lsEN6GZna9lSnFiFS3aJl2u0Ts=/960x0/filters:no_upscale():max_bytes(150000):strip_icc()/Floom_Shus_DDG_0382_copy-5af06f0d8e1b6e0039e6e7c7.jpg"
-                                            alt="..." class="img-thumbnail" />
-
-                                    </Col>
-                                    <Col>
-                                        <h4 className="text-capitalize ">{this.state.arrangemetInfo.arrangement_name}</h4>
-                                        <Row className='mt-3'>
-                                            <Col><h5>Count:</h5></Col>
-                                            <Col><h5>{this.state.arrangemetInfo.count}</h5></Col>
-                                        </Row>
-                                        <Row className='mt-1'>
-                                            <Col><h5>Seller:</h5></Col>
-                                            <Col><h5>{this.state.sellerInfo.first_name} {this.state.sellerInfo.last_name}</h5></Col>
-                                        </Row>
-                                        <Row className='mt-1'>
-                                            <Col ><h5>Details:</h5></Col>
-                                            <Col><h5>{this.state.arrangemetInfo.details}</h5></Col>
-                                        </Row>
-
-                                    </Col>
-                                    <Col sm="1 mt-5"><h4>${this.state.arrangemetInfo.price}</h4></Col>
-                                </Row>
                             </Container>
                         </Col>
                         <Col sm="4">
@@ -136,17 +94,22 @@ class OrderCreation extends Component {
 
                             </div>
                         </Col>
+
                     </Row>
+
+                </div >
                 <Footer />
-            </OrderContainer>
+            </CheckoutContainer>
+
         )
     }
 }
 
-export default OrderCreation;
+export default OrderDetails;
 
 
-const OrderContainer = styled.div`
+
+const CheckoutContainer = styled.div`
 .summary{
     width: 100%;
     max-width: 700px;

@@ -18,6 +18,8 @@ import ChangeDestination from './components/pages/customer/ChangeDestination'
 import SelectDistrict from './components/pages/customer/selectDistrict'
 import FlowerDetails from './components/pages/customer/FlowerDetails'
 import OrderCreaion from './components/pages/customer/OrderCreation'
+import Checkout from './components/pages/customer/Checkout'
+
 
 // Importing Seller Pages
 import SelectTimePlace from './components/pages/seller/selectTimePlace'
@@ -35,11 +37,12 @@ class App extends Component {
           <Route exact path="/" component={Login} />
           <Route path="/customer/accountid=:account_id/districtid=:district_id" component={Home} />
           <Route path="/selectDistrict/accountid=:account_id" component={SelectDistrict} />
-          <Route path="/flowerdetails/accountid=:account_id/arrangementid=:arrangement_id" component={FlowerDetails} />
-          <Route path="/order-creation/accountid=:account_id/arrangementid=:arrangement_id" component={OrderCreaion} />
+          <Route path="/flowerdetails/accountid=:account_id/districtid=:district_id/arrangementid=:arrangement_id" component={FlowerDetails} />
+          <Route path="/order-creation/accountid=:account_id/districtid=:district_id/arrangementid=:arrangement_id" component={OrderCreaion} />
+          <Route path="/checkout/accountid=:account_id/districtid=:district_id/arrangementid=:arrangement_id" component={Checkout} />
+          <Route path="/ordertracking/accountid=:account_id" component={OrderTracking} />
           <Route path="/sign-up" component={SignUp} />
           <Route path="/notifications" component={Notifications} />
-          <Route path="/order-tracking" component={OrderTracking} />
           <Route path="/profile/:id" component={Profile} />
           <Route path="/change-destination" component={ChangeDestination}/>
           <Route path="/forgot-password" component={ForgotPassword} />
