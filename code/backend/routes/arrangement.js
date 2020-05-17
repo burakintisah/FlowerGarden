@@ -30,7 +30,7 @@ router.post('/customer/', (req, res) => {
       flower_query = " OR flower_id=?";
       val.push(req.body.flowers[i].flower_id);
     }
-    query = query + flower_query +')';
+    query = query + flower_query + ')';
   }
 
   dbconnection.query(query, val, function (err, result, fields) {
@@ -46,7 +46,7 @@ router.post('/customer/', (req, res) => {
 router.get('/:id', (req, res) => {
   var query = "SELECT * FROM flower_arrangement WHERE arrangement_id = ?";
   var val = [req.params.id];
-  
+
   dbconnection.query(query, val, function (err, result, fields) {
     if (err) {
       sendResponse(res, 0, 'MySQL Error: ' + err.sqlMessage, null);
@@ -60,7 +60,7 @@ router.get('/:id', (req, res) => {
 router.get('/seller/:id', (req, res) => {
   var query = 'SELECT arrangement_id, arrangement_name, volume, price, occasion_name FROM flower_arrangement natural join occasion WHERE seller_id = ?';
   var val = [req.params.id];
-  
+
   dbconnection.query(query, val, function (err, result, fields) {
     if (err) {
       sendResponse(res, 0, 'MySQL Error: ' + err.sqlMessage, null);
@@ -71,17 +71,39 @@ router.get('/seller/:id', (req, res) => {
   });
 });
 
-router.post('/create', (req, res) => {
+router.post('/create', async (req, res) => {
   var query = 'INSERT INTO flower_arrangement ( image_path, arrangement_name, volume, price, seller_id, details, rate, count, enabled) VALUES ( ? , ?, ?, ?, ?, ?, ?, ?, ? )';
-  var val = [req.body.image_path, req.body.volume, req.body.price, req.body.seller_id, req.body.details, req.body.rate, req.body.count, req.body.enabled];
+  var val = [req.body.image_path, req.body.arrangement_name, req.body.volume, req.body.price, req.body.seller_id, req.body.details, req.body.rate, req.body.count, req.body.enabled];
 
-  let rows = dbconnection.promise().query(query, val).catch((err, query) => {
-    console.log('Error at: ' + query);
-    sendResponse(res, 0,  err, null);
+  let rows = await dbconnection.promise().query(query, val).catch((err) => {
+    console.log('Error at: ' + err);
+    sendResponse(res, 0, err.sqlMessage, null);
 
   });
 
-  console.log(rows);
+  arrangement_id = rows[0].insertId;
+  var occasions = req.body.occasions;
+  query = 'INSERT INTO occasion (arrangement_id, occasion_name) VALUES (?, ?)';
+
+  for (i = 0; i < occasions.length; i++) {
+    val = [arrangement_id, occasions[i].occasion_name]
+    let rows = await dbconnection.promise().query(query, val).catch((err) => {
+      console.log('Error at: ' + err);
+      sendResponse(res, 0, err.sqlMessage, null);
+    });
+  }
+
+  var flowers = req.body.flowers;
+  query = 'INSERT INTO composed_of (count, flower_id, arrangement_id) VALUES ( ?, ?, ? )';
+  for (i = 0; i < occasions.length; i++) {
+    val = [flowers[i].count, flowers[i].flower_id, arrangement_id];
+    let rows = await dbconnection.promise().query(query, val).catch((err) => {
+      console.log('Error at: ' + err);
+      sendResponse(res, 0, err.sqlMessage, null);
+    });
+  }
+
+  sendResponse(res, 1, "Done.", {arrangement_id: arrangement_id});
 
 });
 
