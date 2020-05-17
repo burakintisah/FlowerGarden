@@ -1,6 +1,4 @@
 import React, { Component } from 'react'
-import { InfoConsumer } from '../../context'
-import Info from '../../Info'
 import Navbar from '../../layouts/NavbarCustomer'
 import Footer from '../../layouts/Footer'
 import { Link } from 'react-router-dom'
@@ -28,17 +26,13 @@ class Home extends Component {
 
     componentDidMount() {
         const { match: { params } } = this.props;
-        console.log(this.state.district_id)
-        setInterval(()=>{
-            console.log('Updating time...')
-            this.setState({ district_id: params.district_id })
-        },1)
-        this.setState({ account_id: params.account_id })
-        this.setState({ province_id: params.province_id })
-        this.setState({ district_id: params.district_id })
-        console.log(this.state.district_id)
+        this.updateValues (params)
+        
+        //console.log(params.district_id)
+        this.setState({district_id: params.district_id})
+        
         var data = {
-            district_id: this.state.district_id,
+            district_id: params.district_id,
             day: this.state.day,
             hour: this.state.hour,
             occasions: this.state.occasions,
@@ -47,7 +41,7 @@ class Home extends Component {
         console.log("This is DATA")
         console.log(data)
 
-        axios.get("http://localhost:5000/arrangement").then(res => {
+        axios.post("http://localhost:5000/arrangement",data).then(res => {
             //console.log(res.data.data)
             if (res.data.status === 1) {
                 this.setState({ provinces: res.data.data })
@@ -57,6 +51,13 @@ class Home extends Component {
             }
 
         });
+    }
+
+    updateValues(params) {
+        this.setState({
+            account_id: params.account_id,
+            district_id: params.district_id
+        })
     }
 
     render() {

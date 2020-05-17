@@ -2,7 +2,7 @@ var express = require('express');
 
 var router = express.Router();
 
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
     var query = 'SELECT * FROM comment '
     if (req.body.arrangement_id || req.body.customer_id)
         query = query + "WHERE ";

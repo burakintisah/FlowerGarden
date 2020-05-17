@@ -45,17 +45,11 @@ class Login extends Component {
     changePassword = event => { event.preventDefault(); this.setState({ password: event.target.value }); console.log(this.state.password) }
 
     render() {
-        console.log("HHHHHHHHHHHHHHHHH")
-        console.log(this.state.account_id)
-        console.log(this.state.account_type)
-
-
-        console.log("HHHHHHHHHHHHHHHHH")
 
         const redirectToReferrer = this.state.redirectToReferrer;
         //customer
         if (redirectToReferrer === true && this.state.account_type === 0) {
-            return <Redirect to={`/selectDistrict/${this.state.account_id}`} />
+            return <Redirect to={`/selectDistrict/accountid=${this.state.account_id}`} />
         }
         //seller
         if (redirectToReferrer === true && this.state.account_type === 1) {

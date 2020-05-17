@@ -2,7 +2,7 @@ var express = require('express');
 
 var router = express.Router();
 
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
     val = [req.body.province_id]
   dbconnection.query('SELECT district_id, district_name FROM district WHERE province_id=?', val, function (err, result, fields) {
     if (err) {
@@ -10,13 +10,11 @@ router.get('/', (req, res) => {
       console.log('Error at: ' + err.sql);
       return;
     }
-    console.log(result);
-    console.log(req.body.province_id);
     if (result.length > 0)
         sendResponse(res, 1, 'Done.', result);
     else
-
         sendResponse(res, 0, 'Incorrect province_id.', null);
+
   });
 });
 

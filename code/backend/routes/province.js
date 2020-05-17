@@ -10,7 +10,6 @@ router.get('/', (req, res, next) => {
       return;
     }
     sendResponse(res, 1, 'Done.', result);
-
   });
 });
 

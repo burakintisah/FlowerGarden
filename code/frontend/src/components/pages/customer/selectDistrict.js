@@ -11,9 +11,9 @@ import axios from 'axios'
 class selectDistrict extends Component {
 
     state = {
-        province_id: 1,
+        province_id: null,
         provinces: null,
-        district_id: 1,
+        district_id: null,
         districts: null,
         account_id: null,
         redirectToReferrer: false
@@ -38,7 +38,7 @@ class selectDistrict extends Component {
         var data = { province_id: prov.value};
         console.log("DATA");
         console.log(data);
-        axios.get('http://localhost:5000/district', data).then(res => {
+        axios.post('http://localhost:5000/district', data).then(res => {
             console.log("Retrieved Data")
             console.log(res)
             if (res.data.status === 1) {
@@ -82,8 +82,8 @@ class selectDistrict extends Component {
             display_district = this.state.districts.map(item => {
                 const container = {};
 
-                container["value"] = item.province_id;
-                container["label"] = item.province_name;
+                container["value"] = item.district_id;
+                container["label"] = item.district_name;
 
                 return container;
             })
@@ -93,7 +93,7 @@ class selectDistrict extends Component {
         const redirectToReferrer = this.state.redirectToReferrer;
         //customer
         if (redirectToReferrer === true) {
-            return <Redirect to={`/customer/accountid=${this.state.account_id}/provinceid=${this.state.province_id}/districtid=${this.state.district_id}`} />
+            return <Redirect to={`/customer/accountid=${this.state.account_id}/districtid=${this.state.district_id}`} />
         };
 
 

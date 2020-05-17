@@ -15,6 +15,8 @@ var arrangementRouter = require('./routes/arrangement');
 var commentRouter = require('./routes/comment');
 var accountRouter = require('./routes/account');
 var ratingRouter = require('./routes/rating');
+var orderRouter = require('./routes/order');
+var flowerRouter = require('./routes/flower');
 
 
 var app = express();
@@ -66,6 +68,8 @@ app.use('/arrangement', arrangementRouter);
 app.use('/comment', commentRouter);
 app.use('/account', accountRouter);
 app.use('/rating', ratingRouter);
+app.use('/order', orderRouter);
+app.use('/flower', flowerRouter);
 
 
 // catch 404 and forward to error handler
