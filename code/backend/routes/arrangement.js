@@ -43,18 +43,31 @@ router.post('/customer/', (req, res) => {
   });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/:id', async (req, res) => {
   var query = "SELECT * FROM flower_arrangement WHERE arrangement_id = ?";
   var val = [req.params.id];
 
-  dbconnection.query(query, val, function (err, result, fields) {
-    if (err) {
-      sendResponse(res, 0, 'MySQL Error: ' + err.sqlMessage, null);
-      console.log('Error at: ' + err.sql);
-      return;
-    }
-    sendResponse(res, 1, 'Done.', result[0]);
+  let rows = await dbconnection.promise().query(query, val).catch((err) => {
+    console.log('Error at: ' + err);
+    sendResponse(res, 0, err.sqlMessage, null);
   });
+
+  result = rows[0][0];
+  query = "SELECT * FROM occasion WHERE arrangement_id = ?";
+  rows = await dbconnection.promise().query(query, val).catch((err) => {
+    console.log('Error at: ' + err);
+    sendResponse(res, 0, err.sqlMessage, null);
+  });
+
+  result.occasions = rows[0];
+  query = "SELECT * FROM composed_of WHERE arrangement_id = ?";
+  rows = await dbconnection.promise().query(query, val).catch((err) => {
+    console.log('Error at: ' + err);
+    sendResponse(res, 0, err.sqlMessage, null);
+  });
+  result.flowers = rows[0];
+  sendResponse(res, 1, 'Done.', result);
+
 });
 
 router.get('/seller/:id', (req, res) => {
@@ -103,7 +116,7 @@ router.post('/create', async (req, res) => {
     });
   }
 
-  sendResponse(res, 1, "Done.", {arrangement_id: arrangement_id});
+  sendResponse(res, 1, "Done.", { arrangement_id: arrangement_id });
 
 });
 
