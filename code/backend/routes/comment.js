@@ -48,7 +48,7 @@ router.post('/create', async (req, res) => {
 
     val = [req.body.arrangement_id];
 
-    let rows = await dbconnection.promise().query(query, val).catch((err) => {
+    rows = await dbconnection.promise().query(query, val).catch((err) => {
         console.log('Error at: ' + err);
         sendResponse(res, 0, err.sqlMessage, null);
     });
