@@ -12,44 +12,35 @@ router.post('/', (req, res) => {
             return;
         }
         else {
-            query = 'SELECT account_id FROM account WHERE account.email=\'' + req.body.email + '\'';
-            dbconnection.query(query, function (err2, result2, fields2) {
+            accountId = result.insertId;
+            var table = '';
+            query = '';
+
+            if (req.body.account_type == 0) {
+                query = 'INSERT INTO customer (account_id, credit_card) VALUES (?)'
+                values = [accountId, null];
+            } else if (req.body.account_type == 1) {
+                query = 'INSERT INTO courier (account_id, max_volume, iban_no) VALUES (?)'
+                values = [accountId, req.body.max_volume, req.body.iban_no];
+            } else if (req.body.account_type == 2) {
+                query = 'INSERT INTO seller (account_id, district_id, address_text, iban_no) VALUES (?)'
+                values = [accountId, req.body.district_id, req.body.address_text, req.body.iban_no];
+                console.log(query);
+            } else if (req.body.account_type == 3) {
+                query = 'INSERT INTO customer_service (account_id, count) VALUES (?)'
+                values = [accountId, req.body.count];
+            } else {
+                sendResponse(res, 0, 'Undefined account type.', null);
+                return;
+            }
+
+            dbconnection.query(query, [values], function (err3, result3, fields3) {
                 if (err) {
-                    sendResponse(res, 0, 'MySQL Error: ' + err2.sqlMessage, null);
-                    console.log('Error at: ' + err2.sql);
+                    sendResponse(res, 0, 'MySQL Error: ' + err3.sqlMessage, null);
+                    console.log('Error at: ' + err3.sql);
                     return;
-                } else {
-                    accountId = result2[0].account_id;
-                    var table = '';
-                    query = '';
-
-                    if (req.body.account_type == 0) {
-                        query = 'INSERT INTO customer (account_id, credit_card) VALUES (?)'
-                        values = [accountId, null];
-                    } else if (req.body.account_type == 1) {
-                        query = 'INSERT INTO courier (account_id, max_volume, iban_no) VALUES (?)'
-                        values = [accountId, req.body.max_volume, req.body.iban_no];
-                    } else if (req.body.account_type == 2) {
-                        query = 'INSERT INTO seller (account_id, district_id, address_text, iban_no) VALUES (?)'
-                        values = [accountId, req.body.district_id, req.body.address_text, req.body.iban_no];
-                        console.log(query);
-                    } else if (req.body.account_type == 3) {
-                        query = 'INSERT INTO customer_service (account_id, count) VALUES (?)'
-                        values = [accountId, req.body.count];
-                    } else {
-                        sendResponse(res, 0, 'Undefined account type.', null);
-                        return;
-                    }
-
-                    dbconnection.query(query, [values], function (err3, result3, fields3) {
-                        if (err) {
-                            sendResponse(res, 0, 'MySQL Error: ' + err3.sqlMessage, null);
-                            console.log('Error at: ' + err3.sql);
-                            return;
-                        }
-                        sendResponse(res, 1, 'Inserted', {account_id: accountId});
-                    });
                 }
+                sendResponse(res, 1, 'Inserted', { account_id: accountId });
             });
         }
     });

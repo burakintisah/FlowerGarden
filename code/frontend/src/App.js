@@ -29,10 +29,9 @@ class App extends Component {
   handleSubmit = event => {
     event.preventDefault();
     var data = {
-      email: this.state.email,
-      password: this.state.password 
+      province_id:1
     }
-    axios.post('/login', data)
+    axios.post('/district', data)
       .then(res => {
         console.log(res);
       })
@@ -66,8 +65,8 @@ class App extends Component {
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
           </div>
           <div class="form-group">
-            <label onChange={this.changePassword} for="exampleInputPassword1">Password</label>
-            <input value={this.state.password} type="password" class="form-control" id="exampleInputPassword1" />
+            <label for="exampleInputPassword1">Password</label>
+            <input onChange={this.changePassword} type="password" class="form-control" id="exampleInputPassword1" />
           </div>
           <div class="form-group form-check">
             <input type="checkbox" class="form-check-input" id="exampleCheck1" />

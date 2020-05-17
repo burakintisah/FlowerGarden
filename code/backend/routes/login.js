@@ -21,6 +21,7 @@ router.post('/', (req, res) => {
     }
 
     if (result.length != 0) {
+      console.log(result[0] + "--" + req.body.password );
       if (result[0].password == req.body.password) {
         sendResponse(res, 1, 'Logged in.', result[0]);
       }

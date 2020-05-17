@@ -2,7 +2,7 @@ var express = require('express');
 
 var router = express.Router();
 
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
     val = [req.body.province_id]
   dbconnection.query('SELECT district_id, district_name FROM district WHERE province_id=?', val, function (err, result, fields) {
     if (err) {

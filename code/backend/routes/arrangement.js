@@ -2,7 +2,7 @@ var express = require('express');
 
 var router = express.Router();
 
-router.get('/', (req, res) => {
+router.post('/', (req, res) => {
   var query = 'WITH to_display AS ('
     + 'SELECT arrangement_id, image_path, arrangement_name, volume, price, seller_id, details, rate, count '
     + 'FROM flower_arrangement '
