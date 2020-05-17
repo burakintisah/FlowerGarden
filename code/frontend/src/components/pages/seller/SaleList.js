@@ -14,68 +14,29 @@ class SaleList extends Component {
         state = {
             saleID: null,
             redirectToReferrer: false,
+            r: [],
+            headings:  [
+                {label: 'ID',field: 'arrangement_id'},
+                {label: 'Flower Arrangement Name',field: 'arrangement_name'},
+                {label: 'Sale Date',field: ''},
+                {label: 'Deliery Date',field: ''},
+                {label: 'Delivery Time',field: ''},
+                {label: 'Courier Name',field: ''},
+                {label: 'Acceptance Status',field: ''},
+                {label: 'Message',field: ''}
 
-             data : {
-                columns: [
-                    {
-                        label: 'ID',
-                        field: 'id',
-                    },
-                    {
-                        label: 'Flower Arrangement Name',
-                        field: 'name',
-                    },
-                    {
-                        label: 'Sale Date',
-                        field: 'saleDate',
-                    },
-                    {
-                        label: 'Delivery Date',
-                        field: 'deliveryDate',
-                    },
-                    {
-                        label: 'Delivery Time',
-                        field: 'deliveryTime',
-                    },
-                    {
-                        label: 'Courier Name',
-                        field: 'courierName',
-                    },
-                    {
-                        label: 'Acceptance Status',
-                        field: 'acceptanceStatus',
-                    },
-                    {
-                        label: 'Mesage',
-                        field: 'mesage',
-                    },
-   
-                ],
-                rows: [
-                    {
-                        'id': 1,
-                        'name': 'Name1',
-                        'saleDate': '3',
-                        'deliveryDate': '25',
-                        'deliveryTime': 'Birthday',
-                        'courierName': '3',
-                        'acceptanceStatus': '25',
-                        'mesage': 'dfsfsdvsv',
-                        
-                      },
-                  { 'id': "202034", 'name': "Daisy Dream", 'saleDate':"17.05.2020", 'deliveryDate': "17.05.2020" , 'deliveryTime': "13.15",  'courierName':"Deniz" , 'acceptanceStatus':"Accepted"}
-                  
-                ]
-              }
+            ],
+            data : []
         }
-        takeFlowerName = event => { event.preventDefault(); this.setState({ saleID: event.target.value });  }
+        takeSaleID = event => { event.preventDefault(); this.setState({ saleID: event.target.value });  }
         
-        seeFlowerDetails = event => {
+        seeSaleDetails = event => {
             event.preventDefault();
-            var data = { arrangement_name: this.state.saleID}
+            var data = { arrangement_id: this.state.saleID} // make it sale id
             axios.post('http://localhost:5000/', data).then(res => { 
                 console.log(res);   
                 if (res.data.status === 1){
+                    this.setState({ r: res.data.data })
                     this.setState({ redirectToReferrer: true})
                 }
                 else {
@@ -92,11 +53,19 @@ class SaleList extends Component {
         }
         detail sayfasına yönlendir
         */
+       this.state.data = {
+        columns: this.state.headings,
+        rows: this.state.r
+      };
 
         return (
             <div>
             <Navbar />
+            <h1 className='ml-3 mt-3'>FlowerGarden</h1>
+            <br/>
+            <br/>
             <Container>
+            <h2>Sale Details</h2>
             <MDBDataTable
                 striped
                 bordered

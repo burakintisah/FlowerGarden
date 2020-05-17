@@ -10,28 +10,23 @@ import { Multiselect } from 'multiselect-react-dropdown';
 var occasionList = [];
 //flowers ve occasion ı databaseden al
 class CreateArrangement extends Component{
-    
+    constructor(props) {
+        super(props);
+        this.onSelect = this.onSelect.bind(this);
+        this.onRemove = this.onRemove.bind(this);
+    } 
    state = {
+            account_id:null,
             name: null,
             price: null,
             volume: null,
             description: null,
-            selectedOption1: null,
-            selectedOption2: null,
-            selectedOption3: null,
-            selectedOption4: null,
-            selectedOption5: null,
-            selectedOption6: null,
-            selectedOption7: null,
-            count1: null,
-            count2: null,
-            count3: null,
-            count4: null,
-            count5: null,
-            count6: null,
-            count7: null,
-            flowers: [{ value: 'primrose', label: 'primrose'},{ value: 'gillyflower', label: 'gillyflower'},{ value: 'magnolia', label: 'magnolia'},{ value: 'lily', label: 'lily'}],
-            occasions: [{name: 'birthday'},{name: 'valantines day'}],
+            selectedOption1: null,selectedOption2: null,selectedOption3: null,selectedOption4: null,selectedOption5: null,selectedOption6: null,selectedOption7: null,
+            count1: null,count2: null,count3: null,count4: null,count5: null,count6: null, count7: null,
+            selectedFlowers:[],
+            selectedOccasions: [],
+            flowers: [],
+            occasions: [{'name': 'Anniversary' }, {'name' : 'Congratulations'}],
             redirectToReferrer: false
         }
     changeName = event => { event.preventDefault(); this.setState({ name: event.target.value }); console.log(this.state.name); }
@@ -56,31 +51,81 @@ class CreateArrangement extends Component{
     changeCount7 = event => { event.preventDefault(); this.setState({ count7: event.target.value }); console.log(this.state.count7); }
 
     onSelect(selectedList, selectedItem) {
-        console.log(occasionList);
-        occasionList.push(selectedItem)
+        this.state.selectedOccasions.push({"occasion_name": selectedItem.name })
+        console.log(this.state.selectedOccasions);
     }
 
     onRemove(selectedList, selectedItem) {
-        console.log(selectedItem);
-        occasionList.remove(selectedItem)
+        this.state.selectedOccasions.remove({"occasion_name": selectedItem.name })
+        console.log(this.state.selectedOccasions);
     }
+
+
+    componentDidMount() {
+        const { match: { params } } = this.props;
+        this.setState({ account_id: params.account_id })
+        
+        axios.get("http://localhost:5000/flower").then(res => {
+            console.log(res.data.data)
+            if (res.data.status === 1) {
+                this.setState({ flowers: res.data.data })
+            }
+            else {
+                console.log("No Flower Found")
+            }
+
+        });
+    }
+
     handleSubmit = event => {
         event.preventDefault();
-       /* var data = { arrangement_name: this.state.name, price: this.state.price, volume: this.state.volume, details: this.state.description, enabled: "true",occasionList }
-        axios.post('http://localhost:5000/login', data).then(res => { 
+        var flowerList= [];
+        if (this.state.selectedOption1 !== null && this.state.count1 !== null) flowerList.push({"flower_id": this.state.selectedOption1.value,"count": Number(this.state.count1) });
+        if (this.state.selectedOption2 !== null && this.state.count2 !== null) flowerList.push({"flower_id": this.state.selectedOption2.value,"count": Number(this.state.count2) });
+        if (this.state.selectedOption3 !== null && this.state.count3 !== null) flowerList.push({"flower_id": this.state.selectedOption3.value,"count": this.state.count3 });
+        if (this.state.selectedOption4 !== null && this.state.count4 !== null) flowerList.push({"flower_id": this.state.selectedOption4.value,"count": this.state.count4 });
+        if (this.state.selectedOption5 !== null && this.state.count5 !== null) flowerList.push({"flower_id": this.state.selectedOption5.value,"count": this.state.count5 });
+        if (this.state.selectedOption6 !== null && this.state.count6 !== null) flowerList.push({"flower_id": this.state.selectedOption6.value,"count": this.state.count6 });
+        if (this.state.selectedOption7 !== null && this.state.count7 !== null) flowerList.push({"flower_id": this.state.selectedOption7.value,"count": this.state.count7 });
+        
+        var data = {
+            rating: null,
+            image_path:null,
+            seller_id:Number(this.state.account_id), 
+            count: 1, 
+            arrangement_name: this.state.name, 
+            price: Number(this.state.price), 
+            volume: Number(this.state.volume),
+             details: this.state.description, 
+             enabled: 1,
+             occasions: this.state.selectedOccasions,
+             flowers: flowerList}
+             console.log(data);
+        axios.post('http://localhost:5000/arrangement/create', data).then(res => { 
             console.log(res); 
-            console.log(res.data.data.arrangement_name)
             if (res.data.status === 1){
                 this.setState({ redirectToReferrer: true})
             }
             else {
                 console.log("Could not create the arrangement")
             }
-            })*/
-            this.setState({ redirectToReferrer: true})
-
+            })
     }
     render () { 
+
+        var displayFlowers = []
+        if (this.state.flowers != null) {
+            displayFlowers = this.state.flowers.map(item => {
+                const container = {};
+
+                container["value"] = item.flower_id;
+                container["label"] = item.flower_name;
+
+                return container;
+            })
+
+        }
+
         const { selectedOption } = this.state;
 
         const redirectToReferrer = this.state.redirectToReferrer;
@@ -126,37 +171,37 @@ class CreateArrangement extends Component{
                                     <Select  
                                         value={selectedOption}
                                         onChange={this.flowerChange1}
-                                        options= {this.state.flowers}
+                                        options= {displayFlowers}
                                     /> 
                                     <Select  className="mt-2"
                                         value={selectedOption}
                                         onChange={this.flowerChange2}
-                                        options= {this.state.flowers}
+                                        options= {displayFlowers}
                                     /> 
                                     <Select  className="mt-2"
                                         value={selectedOption}
                                         onChange={this.flowerChange3}
-                                        options= {this.state.flowers}
+                                        options= {displayFlowers}
                                     /> 
                                     <Select  className="mt-2"
                                         value={selectedOption}
                                         onChange={this.flowerChange4}
-                                        options= {this.state.flowers}
+                                        options= {displayFlowers}
                                     /> 
                                     <Select  className="mt-2"
                                         value={selectedOption}
                                         onChange={this.flowerChange5}
-                                        options= {this.state.flowers}
+                                        options= {displayFlowers}
                                     /> 
                                     <Select  className="mt-2"
                                         value={selectedOption}
                                         onChange={this.flowerChange6}
-                                        options= {this.state.flowers}
+                                        options= {displayFlowers}
                                     /> 
                                     <Select  className="mt-2"
                                         value={selectedOption}
                                         onChange={this.flowerChange7}
-                                        options= {this.state.flowers}
+                                        options= {displayFlowers}
                                     /> 
                                     <br></br>
                                     <Multiselect 
@@ -188,9 +233,11 @@ class CreateArrangement extends Component{
         </div>  
                
         
-    )
+        )
     
     }
 }
 
 export default CreateArrangement;
+
+  
