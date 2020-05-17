@@ -1,9 +1,11 @@
-import React, { Component } from 'react'
-import Navbar from '../../layouts/NavbarCustomer'
-import Footer from '../../layouts/Footer'
-import { Link } from 'react-router-dom'
-import styled from 'styled-components'
-import axios from 'axios'
+import React, { Component } from 'react';
+import { Container, Row, Col } from 'reactstrap';
+import Navbar from '../../layouts/NavbarCustomer';
+import Footer from '../../layouts/Footer';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import axios from 'axios';
+import FlowerCard from './FlowerCard';
 
 class Home extends Component {
 
@@ -20,17 +22,16 @@ class Home extends Component {
             }],
             flowers: [{
                 "flower_id": 5
-            }]
+            }],
+            display_content: []
         }
     }
 
     componentDidMount() {
         const { match: { params } } = this.props;
-        this.updateValues (params)
-        
+        this.updateValues(params)
         //console.log(params.district_id)
-        this.setState({district_id: params.district_id})
-        
+
         var data = {
             district_id: params.district_id,
             day: this.state.day,
@@ -41,10 +42,10 @@ class Home extends Component {
         console.log("This is DATA")
         console.log(data)
 
-        axios.post("http://localhost:5000/arrangement",data).then(res => {
-            //console.log(res.data.data)
+        axios.post("http://localhost:5000/arrangement", data).then(res => {
+            console.log(res.data.data)
             if (res.data.status === 1) {
-                this.setState({ provinces: res.data.data })
+                this.setState({ display_content: res.data.data })
             }
             else {
                 console.log("No Arrangement Found")
@@ -58,28 +59,31 @@ class Home extends Component {
             account_id: params.account_id,
             district_id: params.district_id
         })
-    }
+    };
+
 
     render() {
+
+
+        let flowCards = this.state.display_content.map(flower => {
+            return (
+                <Col sm="4"> <FlowerCard flower={flower} /></Col>
+            )
+        });
+
         return (
-            <HomeContainer>
+            <div>
                 <Navbar />
-                <div className="container">
-                    <div className="row mt-5">
-                        <div className="card" style={{ width: '18rem' }}>
-                            <div className="card-body">
-                                <h3 className="card-title text-uppercase">{"headerTitle"}</h3>
-                                <h5 className="card-title"> {"headerSubTitle"}</h5>
-                                <p className="card-text details">{"Some quick example text to build on the card title and make up the bulk of the card's content."}</p>
-                                <Link className="btn btn-outline-primary text-uppercase">More Info</Link>
-                            </div>
-                        </div>
-
-
-                    </div>
-                </div>
+                <Container>
+                    
+                    <Row>
+                        {flowCards}
+                    </Row>
+                   
+                </Container >
                 <Footer />
-            </HomeContainer>
+            </div>
+
 
         )
     }
