@@ -51,21 +51,32 @@ router.get('/:id', async (req, res) => {
     console.log('Error at: ' + err);
     sendResponse(res, 0, err.sqlMessage, null);
   });
-
   result = rows[0][0];
+
+  if (!result)
+    sendResponse(res, 0, "Incorrect arrangement_id", null);
+
   query = "SELECT * FROM occasion WHERE arrangement_id = ?";
   rows = await dbconnection.promise().query(query, val).catch((err) => {
     console.log('Error at: ' + err);
     sendResponse(res, 0, err.sqlMessage, null);
   });
-
   result.occasions = rows[0];
+
   query = "SELECT * FROM composed_of WHERE arrangement_id = ?";
   rows = await dbconnection.promise().query(query, val).catch((err) => {
     console.log('Error at: ' + err);
     sendResponse(res, 0, err.sqlMessage, null);
   });
   result.flowers = rows[0];
+
+  query = "SELECT * FROM comment WHERE arrangement_id = ?";
+  rows = await dbconnection.promise().query(query, val).catch((err) => {
+    console.log('Error at: ' + err);
+    sendResponse(res, 0, err.sqlMessage, null);
+  });
+  result.comments = rows[0];
+
   sendResponse(res, 1, 'Done.', result);
 
 });
