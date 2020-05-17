@@ -23,7 +23,7 @@ router.post('/', async (req, res) => {
         else
             flowers[i].stock = 0;
     }
-    
+
     for (i = 0; i < flowers.length; i++) {
         if (flowers[i].stock < flowers[i].count) {
             sendResponse(res, 0, "Flower stock is not enough for flower with id " + flowers[i].flower_id + ". Order is not created.", null);
@@ -107,6 +107,39 @@ router.get('/customer/:id', async (req, res) => {
         orders[i].courier = { first_name: seller_info.first_name, middle_name: seller_info.middle_name, last_name: seller_info.last_name }
     }
     sendResponse(res, 1, "Done.", orders);
+});
+
+router.get('/seller/:id', async (req, res) => {
+    var query = 'SELECT O.order_id, F.arrangement_name, O.order_date, O.delivery_status, O.desired_delivery_date, O.desired_delivery_time, O.message, O.courier_id '
+        + 'FROM flowergarden.order as O NATURAL JOIN flower_arrangement as F WHERE O.seller_id = ?';
+
+    var val = [req.params.id];
+
+    let rows = await dbconnection.promise().query(query, val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    var sales = rows[0];
+    if (!sales || sales.length == 0) {
+        sendResponse(res, 0, "No sales with the given seller_id " + req.params.id, null);
+        return;
+    }
+    
+    for (i = 0; i < sales.length; ++i) {
+        if (!sales[i].courier_id)
+            continue;
+        val = [sales[i].courier_id]
+        rows = await dbconnection.promise().query('SELECT first_name, middle_name, last_name FROM account WHERE account_id = ?', val).catch((err) => {
+            console.log('Error at: ' + err);
+            sendResponse(res, 0, err.sqlMessage, null);
+        });
+        var courier_info = rows[0][0];
+        console.log(sales[i].courier_id);
+
+        sales[i].courier = { first_name: courier_info.first_name, middle_name: courier_info.middle_name, last_name: courier_info.last_name }
+    }
+    sendResponse(res, 1, "Done.", sales);
 });
 
 
