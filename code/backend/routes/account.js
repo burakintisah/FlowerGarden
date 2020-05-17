@@ -34,7 +34,7 @@ router.get('/customer/:id', (req, res) => {
     });
 });
 
-router.get('/customer/:id/saved_adresses/', (req, res) => {
+router.get('/customer/:id/saved_addresses/', (req, res) => {
     val = [req.params.id]
     dbconnection.query('SELECT * FROM saved_addresses WHERE customer_id = ?', val, function (err, result, fields) {
         if (err) {
@@ -62,7 +62,7 @@ router.post('/customer/:id/credit_card', (req, res) => {
     });
 });
 
-router.post('/customer/:id/saved_adresses', (req, res) => {
+router.post('/customer/:id/saved_addresses', (req, res) => {
     val = [req.body.address, req.body.district_id, req.body.customer_id];
     dbconnection.query('INSERT INTO saved_addresses (address, district_id, customer_id) VALUES (? , ?, ?)', val, function (err, result, fields) {
         if (err) {

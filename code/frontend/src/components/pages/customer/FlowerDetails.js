@@ -9,6 +9,7 @@ class FlowerDetails extends Component {
         super(props);
         this.state = {
             account_id: null,
+            district_id: null,
             arrangement_id: null,
             redirectToOrderPage: false
         }
@@ -18,7 +19,8 @@ class FlowerDetails extends Component {
         const { match: { params } } = this.props;
         this.setState({
             account_id: params.account_id,
-            arrangement_id: params.arrangement_id
+            arrangement_id: params.arrangement_id,
+            district_id: params.district_id
         })
 
     }

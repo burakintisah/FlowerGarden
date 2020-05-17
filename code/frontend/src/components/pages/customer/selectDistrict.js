@@ -28,14 +28,14 @@ class selectDistrict extends Component {
             if (res.data.status === 1) {
                 this.setState({ provinces: res.data.data })
             }
-            
+
         });
     }
 
     provinceSelect = prov => {
         // getting the districts according to province!!
         console.log(`Option selected:`, prov.value);
-        var data = { province_id: prov.value};
+        var data = { province_id: prov.value };
         console.log("DATA");
         console.log(data);
         axios.post('http://localhost:5000/district', data).then(res => {
@@ -47,23 +47,23 @@ class selectDistrict extends Component {
             else {
                 console.log("No district data!")
             }
-            
+
         });
     };
 
     districtSelect = dist => {
         // getting the districts according to province!!
         console.log(`Option selected:`, dist.value);
-        this.setState({ district_id: dist.value})
+        this.setState({ district_id: dist.value })
     };
 
     handleSubmit = event => {
         event.preventDefault();
         //directing to the home page...
-        if (this.state.district_id != null){
+        if (this.state.district_id != null) {
             this.setState({ redirectToReferrer: true })
         }
-       
+
     }
 
     render() {
@@ -158,8 +158,7 @@ const DistrictContainer = styled.div`
     margin-bottom:10%
   }
 .header {
-
-                        max - width: 700px;
+    max - width: 700px;
     margin: auto;
     margin-top:8%;
     margin-bottom: 10px;

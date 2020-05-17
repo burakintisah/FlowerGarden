@@ -12,7 +12,7 @@ const displayOccasions = [
     { value: 'Anniversary', label: 'Anniversary' },
     { value: 'Congratulations', label: 'Congratulations' },
     { value: 'Just', label: 'Just' }
-]
+];
 
 class Home extends Component {
 
@@ -24,18 +24,18 @@ class Home extends Component {
             day: "mon",
             hour: 12,
             occasions: [],
-            flowers: [],
+            flowersAll: [],
+            flowers:  [],
             display_content: []
         }
 
     }
 
 
-
     componentDidMount() {
         const { match: { params } } = this.props;
         this.updateValues(params)
-        //c onsole.log(params.district_id)
+        //console.log(params.district_id)
 
         var data = {
             district_id: params.district_id,
@@ -45,7 +45,7 @@ class Home extends Component {
             flowers: this.state.flowers
         }
 
-        axios.post("http://localhost:5000/arrangement", data).then(res => {
+        axios.post("http://localhost:5000/arrangement/customer", data).then(res => {
             console.log(res.data.data)
             if (res.data.status === 1) {
                 this.setState({ display_content: res.data.data })
@@ -60,7 +60,7 @@ class Home extends Component {
         axios.get("http://localhost:5000/flower").then(res => {
             console.log(res.data.data)
             if (res.data.status === 1) {
-                this.setState({ flowers: res.data.data })
+                this.setState({flowersAll :res.data.data})
             }
             else {
                 console.log("No Flower Found")
@@ -83,17 +83,19 @@ class Home extends Component {
             district_id: this.state.district_id,
             day: this.state.day,
             hour: this.state.hour,
-            flowers: [
-                {
-                    "flower_id": 5
-                }
-            ],
-            occasions: this.state.occasions,
-            //flowers: this.state.flowers
-
+            occasions: this.state.occasions.map(item => {
+                const result = {};
+                result["occasion_name"] = item.value;
+                return result;
+            }),
+            flowers: this.state.flowers.map(item => {
+                const result = {};
+                result["flower_id"] = item.value;
+                return result;
+            })
         }
         console.log(data)
-        axios.post("http://localhost:5000/arrangement", data).then(res => {
+        axios.post("http://localhost:5000/arrangement/customer", data).then(res => {
             console.log(res.data.data)
             if (res.data.status === 1) {
                 this.setState({ display_content: res.data.data })
@@ -112,29 +114,40 @@ class Home extends Component {
         console.groupEnd();
         this.setState({ occasions: newValue })
     };
+
     onChangeFlowers = (newValue, actionMeta) => {
         console.group('Value Changed');
         console.log(newValue);
         console.log(`action: ${actionMeta.action}`);
         console.groupEnd();
-        this.setState({ occasions: newValue })
+        this.setState({ flowers: newValue })
     };
 
     render() {
 
 
-        const displayFlowers = []
+        let displayFlowers = []
+        if (this.state.flowersAll != null) {
+            displayFlowers = this.state.flowersAll.map(item => {
+                const result = {};
+
+                result["value"] = item.flower_id;
+                result["label"] = item.flower_name;
+
+                return result;
+            })
+        }
 
         let flowCards = this.state.display_content.map(flower => {
             return (
-                <Col sm="2" mr-5 ><FlowerCard flower={flower} account_id={this.state.account_id} /></Col>
+                <Col sm="2" mr-5 ><FlowerCard flower={flower} account_id={this.state.account_id} district_id={this.state.district_id}/></Col>
             )
         });
 
         return (
-            
+
             <HomeContainer>
-                
+
                 <Navbar />
                 <div>
 
