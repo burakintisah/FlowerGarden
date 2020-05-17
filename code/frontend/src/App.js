@@ -46,7 +46,7 @@ class App extends Component {
           <Route path="/selectTimePlace" component={SelectTimePlace} />
           <Route path="/seller/:account_id" component={SellerHome} />
           <Route path="/createarrangements" component={CreateArrangement} />
-          <Route path="/arrangements" component={Arrangements} />   
+          <Route path="/arrangements/accountid=:account_id" component={Arrangements} />   
           <Route path="/arrangement-details" component={ArrangementDetails} />   
           <Route path="/sale-list" component={SaleList} />   
           <Route component={NotFoundPage} />

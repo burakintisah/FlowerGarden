@@ -12,85 +12,38 @@ import axios from 'axios';
 class SignUp extends Component {
   
         state = {
+            account_id: null,
             flowerName: null,
             redirectToReferrerDetails: false,
             redirectToReferrerCreate: false,
 
              data : {
-                columns: [
-                  {
-                    label: '#',
-                    field: 'id',
-                  },
-                  {
-                    label: 'Flower Arrangement Name',
-                    field: 'name',
-                  },
-                  {
-                    label: 'Volume',
-                    field: 'volume',
-                  },
-                  {
-                    label: 'Price',
-                    field: 'price',
-                    },
-                {
-                    label: 'Occasions',
-                    field: 'occasion',
-                }
-                ],
-                rows: [
-                  {
-                    'id': 1,
-                    'name': 'Name1',
-                    'volume': '3',
-                    'price': '25',
-                    'occasion': 'Birthday'
-                  },
-                  {
-                    'id': 2,
-                    'name': 'Name2',
-                    'volume': '4',
-                    'price': '40',
-                    'occasion': 'Birthday'
-                  },
-                  {
-                    'id': 3,
-                    'name': 'Name3',
-                    'volume': '5',
-                    'price': '30',
-                    'occasion': 'Birthday'
-                  },
-                  {
-                    'id': 4,
-                    'name': 'Name4',
-                    'volume': '1',
-                    'price': '55',
-                    'occasion': 'Birthday'
-                  },
-                  {
-                    'id': 5,
-                    'name': 'Name5',
-                    'volume': '5',
-                    'price': '20',
-                    'occasion': 'Birthday'
-                  },
-                  {
-                    'id': 6,
-                    'name': 'Name6',
-                    'volume': '6',
-                    'price': '75',
-                    'occasion': 'Birthday'
-                  }
-                ]
-              }
+                columns:  [ {label: '#',field: 'id',},
+                           { label: 'Occasions',field: 'occasion',}
+                          ],
+                rows: [{'id': 1, 'occasion': 'Birthday'}
+                      ]
+                    }
         }
+        componentDidMount() {
+          const { match: { params } } = this.props;
+          this.setState({ account_id: params.account_id })
+          console.log(this.state.account_id)
+          axios.get('http://localhost:5000/arrangement/seller/${this.state.account_id}').then(res => {
+              //console.log(res.data.data)
+              if (res.data.status === 1) {
+                  this.setState({ provinces: res.data.data })
+              }
+              
+          });
+      }
+
         takeFlowerName = event => { event.preventDefault(); this.setState({ flowerName: event.target.value }); console.log(this.state.flowerName); }
         
         seeFlowerDetails = event => {
             event.preventDefault();
             var data = { arrangement_name: this.state.flowerName}
-            axios.post('http://localhost:5000/login', data).then(res => { 
+            axios.post('http://localhost:5000/arrangement/{flowerName}', data).then(res => { 
                 console.log(res);   
                 if (res.data.status === 1){
                     this.setState({ redirectToReferrerDetails: true})

@@ -31,18 +31,19 @@
 }
 
 .jumbotron h1, p{
-  margin-left: 32%;
-  font-size: 80px;
+  margin-top: 5px;
+  margin-left: 35%;
+  font-size: 65px;
   background-blend-mode: luminosity ;
   padding: 50px;
   padding-bottom: 10px;
 }
 
 .jumbotron h2, p{
- 
-  margin-left: 43%;
+  margin-top: 0px;
+  margin-left: 45%;
   margin-bottom: 80px;
-  font-size: 50px;
+  font-size: 35px;
   background-blend-mode: luminosity ;
   padding: 0px;
 }
