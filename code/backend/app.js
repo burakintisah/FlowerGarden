@@ -11,6 +11,13 @@ var loginRouter = require('./routes/login');
 var signupRouter = require('./routes/signup');
 var provinceRouter = require('./routes/province');
 var districtRouter = require('./routes/district');
+var arrangementRouter = require('./routes/arrangement');
+var commentRouter = require('./routes/comment');
+var accountRouter = require('./routes/account');
+var ratingRouter = require('./routes/rating');
+var orderRouter = require('./routes/order');
+var flowerRouter = require('./routes/flower');
+
 
 var app = express();
 
@@ -57,6 +64,13 @@ app.use('/login', loginRouter);
 app.use('/signup', signupRouter);
 app.use('/province', provinceRouter);
 app.use('/district', districtRouter);
+app.use('/arrangement', arrangementRouter);
+app.use('/comment', commentRouter);
+app.use('/account', accountRouter);
+app.use('/rating', ratingRouter);
+app.use('/order', orderRouter);
+app.use('/flower', flowerRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

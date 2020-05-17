@@ -3,15 +3,15 @@ import { Button, Form, FormGroup, Label, Input, Jumbotron } from 'reactstrap';
 import styled from 'styled-components'
 import Footer from '../layouts/Footer';
 import axios from 'axios'
-import { Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
 
 
     state = {
-        email: "emre@gmail.com",
-        password:"12345" ,
-        account_id: 1,
+        email: "banu@gmail.com",
+        password: "23456",
+        account_id: null,
         account_type: 0,
         redirectToReferrer: false
     };
@@ -19,22 +19,24 @@ class Login extends Component {
     handleSubmit = event => {
         event.preventDefault();
         var data = { email: this.state.email, password: this.state.password }
-        axios.post('http://localhost:5000/login', data).then(res => { 
-            console.log(res); 
-            // console.log(res.data.data.email)
+        console.log(data)
+        axios.post('http://localhost:5000/login', data).then(res => {
+            console.log(res);
+            // console.log(res.data.data.account_id)
             // Here we are checking whether we were able to log in or not ! 
             // We can show some warning like no user etct  
-            if (res.data.status === 1){
-                this.setState({ redirectToReferrer: true})
+            if (res.data.status === 1) {
                 // After this we are able to change the state data with the taken information from server
-                //this.setState({ account_id: res.data.data.account_id })
-                //this.setState({ account_type: res.data.data.account_type })
+                var id = res.data.data.account_id
+                this.setState({ account_id: id })
+                this.setState({ account_type: res.data.data.account_type })
+                this.setState({ redirectToReferrer: true })
             }
             else {
                 console.log("There is no such user")
             }
-            
-            });
+
+        });
 
     }
 
@@ -43,20 +45,21 @@ class Login extends Component {
     changePassword = event => { event.preventDefault(); this.setState({ password: event.target.value }); console.log(this.state.password) }
 
     render() {
+
         const redirectToReferrer = this.state.redirectToReferrer;
         //customer
-        if (redirectToReferrer === true &&  this.state.account_type=== 0) {
-            return <Redirect to={`/selectDistrict/${this.state.account_id}`}/>
+        if (redirectToReferrer === true && this.state.account_type === 0) {
+            return <Redirect to={`/selectDistrict/accountid=${this.state.account_id}`} />
         }
         //seller
-        if (redirectToReferrer === true &&  this.state.account_type=== 1) {
-            return <Redirect to={`/seller/${this.state.account_id}`}/>
+        if (redirectToReferrer === true && this.state.account_type === 1) {
+            return <Redirect to={`/seller/${this.state.account_id}`} />
         }
-        if (redirectToReferrer === true &&  this.state.account_type=== 2) {
-            return <Redirect to={`/courier/${this.state.account_id}`}/>
+        if (redirectToReferrer === true && this.state.account_type === 2) {
+            return <Redirect to={`/courier/${this.state.account_id}`} />
         }
-        if (redirectToReferrer === true &&  this.state.account_type=== 3) {
-            return <Redirect to={`/service/${this.state.account_id}`}/>
+        if (redirectToReferrer === true && this.state.account_type === 3) {
+            return <Redirect to={`/service/${this.state.account_id}`} />
         }
 
         return (
@@ -68,11 +71,11 @@ class Login extends Component {
                         <Form className="login-form bk" onSubmit={this.handleSubmit}>
                             <FormGroup>
                                 <Label> Email</Label>
-                                <Input type="email" placeholder="Email" value = "emre@gmail.com" onChange={this.changeEmail} />
+                                <Input type="email" placeholder="Email" value="banu@gmail.com" onChange={this.changeEmail} />
                             </FormGroup>
                             <FormGroup>
                                 <Label> Password</Label>
-                                <Input type="password" placeholder="Password" value = "12345" onChange={this.changePassword} />
+                                <Input type="password" placeholder="Password" value="23456" onChange={this.changePassword} />
                             </FormGroup>
                             <Button className="btn-lg btn-dark btn-block">Log in</Button>
                             <div className='text-center mt-3 mb-3'>
@@ -81,7 +84,7 @@ class Login extends Component {
                                 <a href="\forgot-password">Forgot Password</a>
                             </div>
                         </Form>
-                        
+
                     </LoginContainer>
                 </Jumbotron>
 

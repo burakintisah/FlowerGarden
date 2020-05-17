@@ -31,8 +31,8 @@ class App extends Component {
       <div>
         <Switch>
           <Route exact path="/" component={Login} />
-          <Route path="/customer/:account_id" component={Home} />
-          <Route path="/selectDistrict" component={SelectDistrict} />
+          <Route path="/customer/accountid=:account_id/districtid=:district_id" component={Home} />
+          <Route path="/selectDistrict/accountid=:account_id" component={SelectDistrict} />
           <Route path="/sign-up" component={SignUp} />
           <Route path="/notifications" component={Notifications} />
           <Route path="/order-tracking" component={OrderTracking} />
