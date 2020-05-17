@@ -5,24 +5,30 @@ var router = express.Router();
 router.post('/', async (req, res) => {
     var val = [req.body.arrangement_id];
     var flowers;
-    await dbconnection.query('SELECT count, flower_id, arrangement_id FROM composed_of WHERE arrangement_id = ?', val, function (err, result, fields) {
+    let rows = await dbconnection.promise().query('SELECT count, flower_id, arrangement_id FROM composed_of WHERE arrangement_id = ?', val, function (err, result, fields) {
         if (err) {
             sendResponse(res, 0, 'MySQL Error: ' + err.sqlMessage, null);
             console.log('Error at: ' + err.sql);
             return;
         }
     });
-    //flowers = ret.results;
-    // var stocks = [];
+
+    flowers = rows[0];
+    var val = [req.body.arrangement_id, flowers[0].flower_id]
+    rows = await dbconnection.promise().query('SELECT flower_id, stock FROM flower_stock WHERE seller_id = ?  AND flower_id = ?', val).catch(sendResponse(res, 0, 'MySQL Error', null));
+    console.log(rows);
+
     // for (i = 0; i < flowers.length; ++i) {
-    //     const stock = await dbconnection.query('SELECT count, flower_id, arrangement_id FROM composed_of WHERE arrangement_id = ?', val, function (err, result, fields) {
+    //     var val = [req.body.arrangement_id, flowers[i].flower_id]
+    //     rows = await dbconnection.promise().query('SELECT flower_id, stock FROM flower_stock WHERE seller_id = ?  AND flower_id = ?', val, function (err, result, fields) {
     //         if (err) {
     //             sendResponse(res, 0, 'MySQL Error: ' + err.sqlMessage, null);
     //             console.log('Error at: ' + err.sql);
     //             return;
     //         }
     //     });
-    //     stocks.push(stock);
+    //     sendResponse(res, 0, 'MySQL Error: ' + err.sqlMessage, rows[0]);
+
     // }
 
     // console.log(stocks);
