@@ -2,7 +2,7 @@ var express = require('express');
 
 var router = express.Router();
 
-router.post('/', (req, res) => {
+router.post('/customer/', (req, res) => {
   var query = 'WITH to_display AS ('
     + 'SELECT arrangement_id, image_path, arrangement_name, volume, price, seller_id, details, rate, count '
     + 'FROM flower_arrangement '
@@ -55,6 +55,34 @@ router.get('/:id', (req, res) => {
     }
     sendResponse(res, 1, 'Done.', result[0]);
   });
+});
+
+router.get('/seller/:id', (req, res) => {
+  var query = 'SELECT arrangement_id, arrangement_name, volume, price, occasion_name FROM flower_arrangement natural join occasion WHERE seller_id = ?';
+  var val = [req.params.id];
+  
+  dbconnection.query(query, val, function (err, result, fields) {
+    if (err) {
+      sendResponse(res, 0, 'MySQL Error: ' + err.sqlMessage, null);
+      console.log('Error at: ' + err.sql);
+      return;
+    }
+    sendResponse(res, 1, 'Done.', result);
+  });
+});
+
+router.post('/create', (req, res) => {
+  var query = 'INSERT INTO flower_arrangement ( image_path, arrangement_name, volume, price, seller_id, details, rate, count, enabled) VALUES ( ? , ?, ?, ?, ?, ?, ?, ?, ? )';
+  var val = [req.body.image_path, req.body.volume, req.body.price, req.body.seller_id, req.body.details, req.body.rate, req.body.count, req.body.enabled];
+
+  let rows = dbconnection.promise().query(query, val).catch((err, query) => {
+    console.log('Error at: ' + query);
+    sendResponse(res, 0,  err, null);
+
+  });
+
+  console.log(rows);
+
 });
 
 module.exports = router;

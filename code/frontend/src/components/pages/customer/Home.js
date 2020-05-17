@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, Form, FormGroup, Label, Button } from 'reactstrap';
+import { Row, Col, Form, FormGroup, Label, Button } from 'reactstrap';
 import Select from 'react-select';
 import Navbar from '../../layouts/NavbarCustomer';
 import Footer from '../../layouts/Footer';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import axios from 'axios';
 import FlowerCard from './FlowerCard';
@@ -133,7 +132,9 @@ class Home extends Component {
         });
 
         return (
+            
             <HomeContainer>
+                
                 <Navbar />
                 <div>
 
