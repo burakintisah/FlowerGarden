@@ -22,13 +22,12 @@ import SelectTimePlace from './components/pages/seller/selectTimePlace'
 import SellerHome from './components/pages/seller/sellerHome'
 import CreateArrangement from './components/pages/seller/CreateArrangement'
 import Arrangements from './components/pages/seller/Arrangements'
-
+import ArrangementDetails from './components/pages/seller/ArrangementDetails.js'
+import SaleList from './components/pages/seller/SaleList'
 
 class App extends Component {
-
   render() {
     return (
-
       <div>
         <Switch>
           <Route exact path="/" component={Login} />
@@ -44,11 +43,12 @@ class App extends Component {
           <Route path="/seller/:account_id" component={SellerHome} />
           <Route path="/createarrangements" component={CreateArrangement} />
           <Route path="/arrangements" component={Arrangements} />   
+          <Route path="/arrangement-details" component={ArrangementDetails} />   
+          <Route path="/sale-list" component={SaleList} />   
           <Route component={NotFoundPage} />
         </Switch>
         </div>
     );
-
   }
 }
 export default App;

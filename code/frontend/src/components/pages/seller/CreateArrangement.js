@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
-import { Button, Form, FormGroup, Label, Input, Container } from 'reactstrap';
+import { Button, Input} from 'reactstrap';
 import Navbar from '../../layouts/NavbarSeller'
 import Footer from '../../layouts/Footer'
-
+import { Redirect} from 'react-router-dom';
 import Select from 'react-select';
 import axios from 'axios'
 import { Multiselect } from 'multiselect-react-dropdown';
 
 var occasionList = [];
+//flowers ve occasion ı databaseden al
 class CreateArrangement extends Component{
     
    state = {
@@ -29,7 +30,9 @@ class CreateArrangement extends Component{
             count5: null,
             count6: null,
             count7: null,
-            occasions: [{name: 'birthday'},{name: 'valantines day'}]
+            flowers: [{ value: 'primrose', label: 'primrose'},{ value: 'gillyflower', label: 'gillyflower'},{ value: 'magnolia', label: 'magnolia'},{ value: 'lily', label: 'lily'}],
+            occasions: [{name: 'birthday'},{name: 'valantines day'}],
+            redirectToReferrer: false
         }
     changeName = event => { event.preventDefault(); this.setState({ name: event.target.value }); console.log(this.state.name); }
     changePrice = event => { event.preventDefault(); this.setState({ price: event.target.value }); console.log(this.state.price); }
@@ -63,16 +66,28 @@ class CreateArrangement extends Component{
     }
     handleSubmit = event => {
         event.preventDefault();
-        var data = { arrangement_name: this.state.name, price: this.state.price, volume: this.state.volume, details: this.state.description, enabled: "true",occasionList }
-        axios.post('http://localhost:5000/create-arrangement', data).then(res => { 
+       /* var data = { arrangement_name: this.state.name, price: this.state.price, volume: this.state.volume, details: this.state.description, enabled: "true",occasionList }
+        axios.post('http://localhost:5000/login', data).then(res => { 
             console.log(res); 
             console.log(res.data.data.arrangement_name)
-            })
+            if (res.data.status === 1){
+                this.setState({ redirectToReferrer: true})
+            }
+            else {
+                console.log("Could not create the arrangement")
+            }
+            })*/
+            this.setState({ redirectToReferrer: true})
+
     }
-
-
     render () { 
         const { selectedOption } = this.state;
+
+        const redirectToReferrer = this.state.redirectToReferrer;
+        if (redirectToReferrer === true) {
+            return <Redirect to={`/arrangements`}/>
+        }
+
         return (
         <div>
             <Navbar></Navbar>
@@ -111,37 +126,37 @@ class CreateArrangement extends Component{
                                     <Select  
                                         value={selectedOption}
                                         onChange={this.flowerChange1}
-                                        options= {[{ value: 'primrose', label: 'primrose'},{ value: 'gillyflower', label: 'gillyflower'},{ value: 'magnolia', label: 'magnolia'},{ value: 'lily', label: 'lily'}]}
+                                        options= {this.state.flowers}
                                     /> 
                                     <Select  className="mt-2"
                                         value={selectedOption}
                                         onChange={this.flowerChange2}
-                                        options= {[{ value: 'primrose', label: 'primrose'},{ value: 'gillyflower', label: 'gillyflower'},{ value: 'magnolia', label: 'magnolia'},{ value: 'lily', label: 'lily'}]}
+                                        options= {this.state.flowers}
                                     /> 
                                     <Select  className="mt-2"
                                         value={selectedOption}
                                         onChange={this.flowerChange3}
-                                        options= {[{ value: 'primrose', label: 'primrose'},{ value: 'gillyflower', label: 'gillyflower'},{ value: 'magnolia', label: 'magnolia'},{ value: 'lily', label: 'lily'}]}
+                                        options= {this.state.flowers}
                                     /> 
                                     <Select  className="mt-2"
                                         value={selectedOption}
                                         onChange={this.flowerChange4}
-                                        options= {[{ value: 'primrose', label: 'primrose'},{ value: 'gillyflower', label: 'gillyflower'},{ value: 'magnolia', label: 'magnolia'},{ value: 'lily', label: 'lily'}]}
+                                        options= {this.state.flowers}
                                     /> 
                                     <Select  className="mt-2"
                                         value={selectedOption}
                                         onChange={this.flowerChange5}
-                                        options= {[{ value: 'primrose', label: 'primrose'},{ value: 'gillyflower', label: 'gillyflower'},{ value: 'magnolia', label: 'magnolia'},{ value: 'lily', label: 'lily'}]}
+                                        options= {this.state.flowers}
                                     /> 
                                     <Select  className="mt-2"
                                         value={selectedOption}
                                         onChange={this.flowerChange6}
-                                        options= {[{ value: 'primrose', label: 'primrose'},{ value: 'gillyflower', label: 'gillyflower'},{ value: 'magnolia', label: 'magnolia'},{ value: 'lily', label: 'lily'}]}
+                                        options= {this.state.flowers}
                                     /> 
                                     <Select  className="mt-2"
                                         value={selectedOption}
                                         onChange={this.flowerChange7}
-                                        options= {[{ value: 'primrose', label: 'primrose'},{ value: 'gillyflower', label: 'gillyflower'},{ value: 'magnolia', label: 'magnolia'},{ value: 'lily', label: 'lily'}]}
+                                        options= {this.state.flowers}
                                     /> 
                                     <br></br>
                                     <Multiselect 
