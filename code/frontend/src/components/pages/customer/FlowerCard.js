@@ -9,7 +9,6 @@ class FlowerCard extends Component {
         super(props);
         this.state = {
             redirectToReferrer: false
-
         }
     }
 
@@ -25,7 +24,7 @@ class FlowerCard extends Component {
         const redirectToReferrer = this.state.redirectToReferrer;
         //customer
         if (redirectToReferrer === true) {
-            return <Redirect to={`/flowerdetails/accountid=${this.props.account_id}`} />
+            return <Redirect to={`/flowerdetails/accountid=${this.props.account_id}/arrangementid=${this.props.flower.arrangement_id}`} />
         };
 
         return (

@@ -8,14 +8,19 @@ class FlowerDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            account_id:null,
+            account_id: null,
+            arrangement_id: null,
             redirectToOrderPage: false
         }
     }
 
     componentDidMount() {
         const { match: { params } } = this.props;
-        this.setState({ account_id: params.account_id })
+        this.setState({
+            account_id: params.account_id,
+            arrangement_id: params.arrangement_id
+        })
+
     }
 
     render() {
@@ -27,9 +32,9 @@ class FlowerDetails extends Component {
         };
         return (
             <div>
-                <Navbar/>
+                <Navbar />
                 <h2> Flower Details page...</h2>
-                <Footer/>
+                <Footer />
             </div>
         )
     }
