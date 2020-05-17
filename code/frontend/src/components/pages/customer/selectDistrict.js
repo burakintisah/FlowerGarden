@@ -60,7 +60,10 @@ class selectDistrict extends Component {
     handleSubmit = event => {
         event.preventDefault();
         //directing to the home page...
-        this.setState({ redirectToReferrer: true })
+        if (this.state.district_id != null){
+            this.setState({ redirectToReferrer: true })
+        }
+       
     }
 
     render() {
