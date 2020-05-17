@@ -3,7 +3,7 @@ import axios from 'axios';
 
 class App extends Component {
 
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {};
   }
@@ -28,23 +28,31 @@ class App extends Component {
   //showAccounts = account => <div key={account.idAccount}> {account.name}</div>
   handleSubmit = event => {
     event.preventDefault();
-    var data = {
-      province_id:1
-    }
-    axios.post('/district', data)
-      .then(res => {
-        console.log(res);
-      })
-  } 
+    // var data = {
+    //   province_id:1
+    // }
+    // axios.post('/district', data)
+    //   .then(res => {
+    //     console.log(res);
+    //   })
+    this.setState({ account_id: 3 })
+    axios.get('http://localhost:5000/arrangement/seller/'+this.state.account_id).then(res => {
+      if (res.data.status === 1) {
+        this.setState({ r: res.data.data })
+        console.log(res.data)
+      }
+
+    });
+  }
 
   changeEmail = event => {
     event.preventDefault();
-    this.setState({email: event.target.value});
+    this.setState({ email: event.target.value });
   }
 
   changePassword = event => {
     event.preventDefault();
-    this.setState({password: event.target.value});
+    this.setState({ password: event.target.value });
   }
 
 
@@ -61,7 +69,7 @@ class App extends Component {
         <form onSubmit={this.handleSubmit}>
           <div class="form-group">
             <label for="exampleInputEmail1">Email address</label>
-    <input value={this.state.email} onChange={this.changeEmail} type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+            <input value={this.state.email} onChange={this.changeEmail} type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
             <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
           </div>
           <div class="form-group">
