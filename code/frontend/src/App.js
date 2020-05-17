@@ -16,6 +16,7 @@ import Profile from './components/pages/customer/Profile';
 import OrderTracking from './components/pages/customer/OrderTracking'
 import ChangeDestination from './components/pages/customer/ChangeDestination'
 import SelectDistrict from './components/pages/customer/selectDistrict'
+import FlowerDetails from './components/pages/customer/FlowerDetails'
 
 // Importing Seller Pages
 import SelectTimePlace from './components/pages/seller/selectTimePlace'
@@ -33,6 +34,7 @@ class App extends Component {
           <Route exact path="/" component={Login} />
           <Route path="/customer/accountid=:account_id/districtid=:district_id" component={Home} />
           <Route path="/selectDistrict/accountid=:account_id" component={SelectDistrict} />
+          <Route path="/flowerdetails/accountid=:account_id" component={FlowerDetails} />
           <Route path="/sign-up" component={SignUp} />
           <Route path="/notifications" component={Notifications} />
           <Route path="/order-tracking" component={OrderTracking} />
