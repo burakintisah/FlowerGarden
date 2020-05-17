@@ -34,7 +34,7 @@ router.get('/customer/:id', (req, res) => {
     });
 });
 
-router.get('/customer/:id/saved_adresses/', (req, res) => {
+router.get('/customer/:id/saved_addresses/', (req, res) => {
     val = [req.params.id]
     dbconnection.query('SELECT * FROM saved_addresses WHERE customer_id = ?', val, function (err, result, fields) {
         if (err) {

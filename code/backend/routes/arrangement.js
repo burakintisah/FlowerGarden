@@ -9,7 +9,8 @@ router.post('/customer/', (req, res) => {
     + 'WHERE seller_id IN ( SELECT seller_id FROM seller_serves_to WHERE district_id = ?)) '
     + 'SELECT DISTINCT TD.arrangement_id, TD.image_path, TD.arrangement_name, TD.price, A.first_name, A.last_name, TD.details, TD.rate, TD.count '
     + 'FROM to_display as TD, occasion as O, seller_working_time as SWT, composed_of C, account as A '
-    + 'WHERE TD.arrangement_id = O.arrangement_id AND SWT.day=? AND SWT.hour=? AND A.account_id = TD.seller_id';
+    + 'WHERE A.account_id = TD.seller_id AND SWT.seller_id = A.account_id AND TD.arrangement_id = O.arrangement_id '
+    + 'AND C.arrangement_id = O.arrangement_id AND SWT.day=? AND SWT.hour=? ';
 
   var val = [req.body.district_id, req.body.day, req.body.hour];
 

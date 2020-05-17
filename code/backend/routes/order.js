@@ -64,7 +64,89 @@ router.post('/', async (req, res) => {
         sendResponse(res, 0, err.sqlMessage, null);
     });
 
-    sendResponse(res, 1, "Done.", {order_id: order_id});
+    sendResponse(res, 1, "Done.", { order_id: order_id });
+});
+
+router.get('/customer/:id', async (req, res) => {
+    var query = 'SELECT order_id, payment, order_date, receiver_name, receiver_phone, district_id, address_text, '
+        + 'delivery_date, delivery_type, delivery_status, desired_delivery_date, desired_delivery_time, '
+        + 'message, seller_status, courier_status, seller_id, courier_id, customer_id, F.arrangement_name, '
+        + 'F.price FROM flowergarden.order natural join flower_arrangement as F WHERE customer_id = ?';
+
+    var val = [req.params.id];
+
+    let rows = await dbconnection.promise().query(query, val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    var orders = rows[0];
+    if (!orders || orders.length == 0) {
+        sendResponse(res, 0, "No order with the given customer_id " + req.params.id, null);
+        return;
+    }
+
+    for (i = 0; i < orders.length; ++i) {
+        val = [orders[i].seller_id]
+        rows = await dbconnection.promise().query('SELECT first_name, middle_name, last_name FROM account  WHERE account_id = ?', val).catch((err) => {
+            console.log('Error at: ' + err);
+            sendResponse(res, 0, err.sqlMessage, null);
+        });
+        var seller_info = rows[0][0];
+        orders[i].seller = { first_name: seller_info.first_name, middle_name: seller_info.middle_name, last_name: seller_info.last_name }
+    }
+
+    for (i = 0; i < orders.length; ++i) {
+        val = [orders[i].courier_id]
+        rows = await dbconnection.promise().query('SELECT first_name, middle_name, last_name FROM account  WHERE account_id = ?', val).catch((err) => {
+            console.log('Error at: ' + err);
+            sendResponse(res, 0, err.sqlMessage, null);
+        });
+        var courier_info = rows[0][0];
+        orders[i].courier = { first_name: seller_info.first_name, middle_name: seller_info.middle_name, last_name: seller_info.last_name }
+    }
+    sendResponse(res, 1, "Done.", orders);
+});
+
+
+router.get('/:id', async (req, res) => {
+    var query = 'SELECT order_id, payment, order_date, receiver_name, receiver_phone, district_id, address_text, '
+        + 'delivery_date, delivery_type, delivery_status, desired_delivery_date, desired_delivery_time, message, '
+        + 'seller_status, courier_status, seller_id, courier_id, customer_id, F.arrangement_name, F.price '
+        + 'FROM flowergarden.order natural join flower_arrangement as F WHERE order_id = ?';
+
+    var val = [req.params.id];
+
+    let rows = await dbconnection.promise().query(query, val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    var order = rows[0][0];
+    if (!order || order == "") {
+        sendResponse(res, 0, "No order with the given order_id " + req.params.id, null);
+        return;
+    }
+    
+    val = [order.seller_id]
+    rows = await dbconnection.promise().query('SELECT first_name, middle_name, last_name FROM account  WHERE account_id = ?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+    var seller_info = rows[0][0];
+    order.seller = { first_name: seller_info.first_name, middle_name: seller_info.middle_name, last_name: seller_info.last_name }
+
+
+    val = [order.courier_id];
+    rows = await dbconnection.promise().query('SELECT first_name, middle_name, last_name FROM account  WHERE account_id = ?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+    var courier_info = rows[0][0];
+    order.courier = { first_name: seller_info.first_name, middle_name: seller_info.middle_name, last_name: seller_info.last_name }
+
+    sendResponse(res, 1, "Done.", order);
+
 });
 
 module.exports = router;
