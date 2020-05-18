@@ -29,6 +29,7 @@ import CreateArrangement from './components/pages/seller/CreateArrangement'
 import Arrangements from './components/pages/seller/Arrangements'
 import ArrangementDetails from './components/pages/seller/ArrangementDetails.js'
 import SaleList from './components/pages/seller/SaleList'
+import SelectDistrictWorkingHours from './components/pages/seller/SelectDistrictWorkingHours'
 
 class App extends Component {
   render() {
@@ -53,7 +54,8 @@ class App extends Component {
           <Route path="/createarrangements/accountid=:account_id" component={CreateArrangement} />
           <Route path="/arrangements/accountid=:account_id" component={Arrangements} />   
           <Route path="/arrangement-details/accountid=:account_id/arrangementid=:arrangement_id" component={ArrangementDetails} />   
-          <Route path="/sale-list/seller/accountid=:account_id" component={SaleList} />   
+          <Route path="/sale-list/seller/accountid=:account_id" component={SaleList} />  
+          <Route path="/select-district-working-hours/seller/accountid=:account_id" component={SelectDistrictWorkingHours} />   
           <Route component={NotFoundPage} />
         </Switch>
         </div>
