@@ -42,7 +42,9 @@ class FlowerDetails extends Component {
                 descp: null,
                 arrangementRate: null,
                 sellerRate: null,
-                sellerName: null,
+                sellerFirstName:null,
+                sellerMiddleName:null,
+                sellerLastName:null,
                 //enabled: true,
                 count:null,
                 flowers: [],
@@ -68,7 +70,10 @@ class FlowerDetails extends Component {
                     this.setState({ price: res.data.data.price })
                     this.setState({ arrangementRate: res.data.data.rate })
                     //this.setState({ sellerRate: res.data.data. })
-                    //this.setState({ sellerName: res.data.data. })
+                    this.setState({ sellerFirstName: res.data.data.seller.first_name })
+                    this.setState({ sellerMiddleName: res.data.data.seller.middle_name })
+                    this.setState({ sellerLastName: res.data.data.seller.last_name })
+                    this.setState({ sellerRate: res.data.data.seller.rating})
                     this.setState({ volume: res.data.data.volume })
                     this.setState({ flowers: res.data.data.flowers })
                     this.setState({ commentArray: res.data.data.comments })
@@ -133,6 +138,7 @@ class FlowerDetails extends Component {
         if (redirectToOrderPage === true) {
             return <Redirect to={'/order-creation/accountid=' + this.state.account_id + '/districtid=' + this.state.district_id + '/arrangementid=' + this .state.account_id}/>
         }
+        var sellerName = this.state.sellerFirstName + " " + this.state.sellerMiddleName + " " + this.state.sellerLastName;
 
         var tags = this.intersperseOccasions(this.state.occasions);
         var flowerNames = this.intersperseFlowers(this.state.flowers);
@@ -218,6 +224,25 @@ class FlowerDetails extends Component {
                         <div >Volume: {this.state.volume}</div>
                         <br />
                         <div>{this.state.descp}  </div>
+                        <h2 className='mt-3'>Seller:</h2>
+                        Seller name: {sellerName}
+                        <br/>
+                        <br/>
+                        <Row>
+                            <Col>
+                                Average rating: 
+                            </Col>
+                            <Col>
+                            <Rating
+                                    readonly="true"
+                                    initialRating={this.state.sellerRate}
+                                    emptySymbol="fa fa-star-o fa-2x"
+                                    fullSymbol="fa fa-star fa-2x"
+                                    fractions={2}
+                                />
+                            </Col>
+                        </Row>
+
                     </div>
                 </div>
                 
