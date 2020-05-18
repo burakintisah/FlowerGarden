@@ -61,6 +61,7 @@ class CreateArrangement extends Component{
         //this.state.selectedOccasions.remove({"occasion_name": selectedItem.name })
         console.log(this.state.selectedOccasions);
     }
+    
 
 
     componentDidMount() {

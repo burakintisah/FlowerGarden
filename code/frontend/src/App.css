@@ -71,8 +71,30 @@
   .selecter {
     max-width:  160px;
 }
+
+.days
+{
+  min-width:300px;
+}
 .stars {
   margin-right:  0px;
   padding-right: 0px;
   margin-left:10px;
+}
+
+
+.workingHoursHeader
+{
+  margin-left: 5%;
+  margin-bottom: 2%;
+  font-size: 20px;
+  background-blend-mode: luminosity ;
+  padding: 0px;
+  text-align: left;
+}
+
+.saveButton
+{
+  margin-left: 40%;
+  margin-top: 100%;
 }
