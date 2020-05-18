@@ -207,6 +207,13 @@ router.get('/:id', async (req, res) => {
     });
     order.courier = rows[0][0];
 
+    val = [order.customer_id];
+    rows = await dbconnection.promise().query('SELECT first_name, middle_name, last_name, phone, email FROM account WHERE account_id = ?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+    order.customer = rows[0][0];
+
     sendResponse(res, 1, "Done.", order);
 
 });
