@@ -3,17 +3,18 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 import Select from 'react-select';
 import styled from 'styled-components'
-import Navbar from '../../layouts/NavbarCustomer'
+import Navbar from '../../layouts/NavbarCourier'
 import Footer from '../../layouts/Footer'
 import axios from 'axios'
 
+// THIS PAGE WILL BE SHOWN JUST AFTER COURIER SIGN UP PAGE
 
-class selectDistrict extends Component {
+class selectDistrictCourier extends Component {
 
     state = {
         province_id: null,
         provinces: null,
-        district_id: null,
+        district_ids: null,
         districts: null,
         account_id: null,
         redirectToReferrer: false
@@ -51,17 +52,45 @@ class selectDistrict extends Component {
         });
     };
 
-    districtSelect = dist => {
-        // getting the districts according to province!!
-        console.log(`Option selected:`, dist.value);
-        this.setState({ district_id: dist.value })
+    onChangeDistrict = (newValue, actionMeta) => {
+        console.group('Value Changed');
+        console.log(newValue);
+        console.log(`action: ${actionMeta.action}`);
+        console.groupEnd();
+        this.setState({ district_ids: newValue })
     };
 
     handleSubmit = event => {
         event.preventDefault();
         //directing to the home page...
-        if (this.state.district_id != null) {
+        
+        if (this.state.district_ids != null) {
+            
             this.setState({ redirectToReferrer: true })
+
+            var data = this.state.district_ids.map(item => {
+                const container = {};
+
+                container["courier_id"] = this.state.account_id;
+                container["district_id"] = item.value;
+
+                return container;
+            })
+
+            console.log(data)
+
+            /*
+            Axios.get(`http://localhost:5000/courier/`,data).then(res => {
+                console.log(res)
+                if (res.data.status === 1) {
+                    this.setState({ sellerInfo: res.data.data })
+                }
+                else {
+                    console.log("No Arrangement Found")
+                }
+
+            });
+            */
         }
 
     }
@@ -96,7 +125,7 @@ class selectDistrict extends Component {
         const redirectToReferrer = this.state.redirectToReferrer;
         //customer
         if (redirectToReferrer === true) {
-            return <Redirect push to={`/customer/accountid=${this.state.account_id}/districtid=${this.state.district_id}`} />
+            return <Redirect push to={`/deliverytracking/accountid=3`} />
         };
 
 
@@ -108,9 +137,7 @@ class selectDistrict extends Component {
                 <DistrictContainer >
                     <div className='header'>
                         <p className='ml-2'><h1> FlowerGarden</h1> </p>
-
-                        <h7> With FlowerGarden, your flower is just a few clicks away! </h7>
-                        <h9> Choose the destination district and order.</h9>
+                        <h4> Choose the districts you will serve..</h4>
                     </div>
                     <Form className="login-form bk" onSubmit={this.handleSubmit}>
                         <FormGroup>
@@ -121,7 +148,8 @@ class selectDistrict extends Component {
                         </FormGroup>
                         <FormGroup>
                             <Label> District </Label>
-                            <Select onChange={this.districtSelect}
+                            <Select onChange={this.onChangeDistrict}
+                                isMulti
                                 options={display_district}
                             />
                         </FormGroup>
@@ -130,7 +158,7 @@ class selectDistrict extends Component {
                                 <div className="col-md-6 col-sm-6">
                                 </div>
                                 <div className="col-md-6 ">
-                                    <Button className="btn-lg btn-dark btn-block mt-3 ml-3">Continue</Button>
+                                    <Button className="btn-lg btn-dark btn-block mt-3 ml-3" disabled = {this.state.district_ids === null}>Continue</Button>
                                 </div>
                             </div>
                         </div>
@@ -145,7 +173,7 @@ class selectDistrict extends Component {
     }
 }
 
-export default selectDistrict;
+export default selectDistrictCourier;
 
 const DistrictContainer = styled.div`
 .login-form{

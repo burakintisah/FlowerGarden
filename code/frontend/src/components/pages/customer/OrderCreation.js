@@ -6,6 +6,18 @@ import { Redirect } from 'react-router-dom';
 import styled from 'styled-components'
 import Axios from 'axios';
 
+
+const ColoredLine = ({ color }) => (
+    <hr
+        style={{
+            color: color,
+            backgroundColor: color,
+            height: 5,
+        }}
+    />
+);
+
+
 class OrderCreation extends Component {
 
     constructor(props) {
@@ -64,7 +76,7 @@ class OrderCreation extends Component {
         const redirectToRecInfo = this.state.redirectToRecInfo;
         //customer
         if (redirectToRecInfo === true) {
-            return <Redirect to={`/checkout/accountid=${this.state.account_id}/districtid=${this.state.district_id}/arrangementid=${this.state.arrangement_id}`} />
+            return <Redirect push to={`/checkout/accountid=${this.state.account_id}/districtid=${this.state.district_id}/arrangementid=${this.state.arrangement_id}`} />
         };
         return (
             <OrderContainer>
@@ -74,10 +86,12 @@ class OrderCreation extends Component {
                         <Col>
                             <Container className="showOrder">
                                 <h1>Your Order</h1>
+                                <ColoredLine color="black" />
                                 <Row className="arr">
                                     <Col><h4>Flower Arrangement</h4></Col>
                                     <Col sm="1"><h4>Price</h4></Col>
                                 </Row>
+                                <ColoredLine color="black" />
                                 <Row className="arr">
                                     <Col sm="4">
                                         <img top width="100%"
@@ -88,8 +102,8 @@ class OrderCreation extends Component {
                                     <Col>
                                         <h4 className="text-capitalize ">{this.state.arrangemetInfo.arrangement_name}</h4>
                                         <Row className='mt-3'>
-                                            <Col><h5>Count:</h5></Col>
-                                            <Col><h5>{this.state.arrangemetInfo.count}</h5></Col>
+                                            <Col><h5></h5></Col>
+                                            <Col><h5>{}</h5></Col>
                                         </Row>
                                         <Row className='mt-1'>
                                             <Col><h5>Seller:</h5></Col>

@@ -1,10 +1,22 @@
 import React, { Component } from 'react'
-import { Container, Row, Col, Form, FormGroup, Label, Button } from 'reactstrap';
+import { Container, Row, Col, Form, FormGroup, Label, Button, Input } from 'reactstrap';
 import Navbar from '../../layouts/NavbarCustomer'
 import Footer from '../../layouts/Footer'
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components'
 import Axios from 'axios';
+
+
+const ColoredLine = ({ color }) => (
+    <hr
+        style={{
+            color: color,
+            backgroundColor: color,
+            height: 5,
+        }}
+    />
+);
+
 
 class OrderDetails extends Component {
 
@@ -16,8 +28,13 @@ class OrderDetails extends Component {
 
             redirect: false,
             orderInfo: null,
+
+            rating: 4,
+            comment: "",
+            complaint: "",
         }
     }
+    
 
     componentDidMount() {
         const { match: { params } } = this.props;
@@ -37,11 +54,79 @@ class OrderDetails extends Component {
         });
 
     }
+
+    changeComment = event => { event.preventDefault(); this.setState({ comment: event.target.value }); console.log(this.state.comment); }
+    changeComplaint = event => { event.preventDefault(); this.setState({ complaint: event.target.value }); console.log(this.state.complaint); }
+
+    commentButton = event => {
+        event.preventDefault();
+        console.log("comment CLICKED");
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        today = yyyy + '-' + mm + '-' + dd;
+        var time = today + " 00:00:01"
+
+        var data = {
+            description: this.state.comment,
+            customer_id: this.state.account_id,
+            date: time,
+            rating: this.state.rating,
+            arrangement_id: 2
+        }
+
+        console.log(this.state.orderInfo)
+        Axios.post(`http://localhost:5000/comment/create`, data).then(res => {
+            console.log(res)
+            if (res.data.status === 1) {
+                this.setState({ arrangemetInfo: res.data.data })
+                window.confirm('Your comment received')
+                
+            }
+            else {
+                console.log(res.data.message)
+                window.confirm('Your comment received')
+            }
+        });
+
+    }
+    complaintButton = event => {
+        event.preventDefault();
+        console.log("complaint CLICKED");
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        today = yyyy + '-' + mm + '-' + dd;
+        var time = today + " 00:00:01"
+
+        var data = {
+            order_id: this.state.order_id,
+            complaint_date: today,
+            customer_service_id: 4,
+            response_date: null,
+            complaint_status: "Waiting"
+        }
+
+        console.log(this.state.orderInfo)
+        Axios.post(`http://localhost:5000/complaint/create `, data).then(res => {
+            console.log(res)
+            if (res.data.status === 1) {
+                this.setState({ arrangemetInfo: res.data.data })
+                window.confirm('Your complaint received')
+            }
+            else {
+                console.log(res.data.message)
+                window.confirm('Your complaint could not received')
+            }
+        });
+
+    }
+
     render() {
 
         if (this.state.orderInfo != null) {
-
-            console.log(this.state.orderInfo.seller)
             return (
                 <CheckoutContainer>
 
@@ -52,10 +137,12 @@ class OrderDetails extends Component {
                             <Col>
                                 <Container className="showOrder">
                                     <h1>Your Order</h1>
+                                    <ColoredLine color="black" />
                                     <Row className="arr">
                                         <Col><h5>Flower Arrangement</h5></Col>
                                         <Col sm="1"><h5>Price</h5></Col>
                                     </Row>
+                                    <ColoredLine color="black" />
                                     <Row className="arr">
                                         <Col sm="4">
                                             <img top width="100%"
@@ -76,6 +163,7 @@ class OrderDetails extends Component {
                                         </Col>
                                         <Col sm="1 mt-5"><h4>${this.state.orderInfo.price}</h4></Col>
                                     </Row>
+                                    <ColoredLine color="black" />
                                     <h5 className="arr">Receiver Information</h5>
                                     <Row>
                                         <Col sm="3"><h6 className="arr">Receiver Name: </h6></Col>
@@ -103,6 +191,15 @@ class OrderDetails extends Component {
                                         <Col sm="3"><h6 className="arr">Message: </h6></Col>
                                         <Col className="mt-1"><h7>{this.state.orderInfo.message}</h7></Col>
                                     </Row>
+
+                                    <Row className="mt-3">
+                                        <Col><Input type="text" placeholder="Comment" onChange={this.changeComment} /></Col>
+                                        <Col sm="3"><Button className="btn btn-dark btn-block" onClick={this.commentButton} disabled={this.state.comment==""}>Comment</Button></Col>
+                                    </Row>
+                                    <Row className="mt-3">
+                                        <Col><Input type="text" placeholder="Complaint" onChange={this.changeComplaint} /></Col>
+                                        <Col sm="3" ><Button className="btn btn-dark btn-block" onClick={this.complaintButton} disabled= {this.state.complaint==""}>Complaint</Button></Col>
+                                    </Row>
                                 </Container>
                             </Col>
                             <Col sm="4">
@@ -115,6 +212,7 @@ class OrderDetails extends Component {
                                             <h3 className="mb-2">Tax</h3>
                                             <br></br>
                                             <h3>-----------------------</h3>
+
                                             <br></br><br></br>
                                             <h3 >Total</h3>
                                         </Col>
@@ -124,6 +222,7 @@ class OrderDetails extends Component {
                                             <h3 className="mb-2">-</h3>
                                             <br></br>
                                             <h3>----</h3>
+
                                             <br></br><br></br>
                                             <h3>${this.state.orderInfo.price}</h3>
                                         </Col>
@@ -142,11 +241,6 @@ class OrderDetails extends Component {
                                                 <Col sm="6"><h5>Courier: </h5></Col>
                                                 <Col><h7>{this.state.orderInfo.courier.first_name} {this.state.orderInfo.courier.middle_name} {this.state.orderInfo.courier.last_name}</h7></Col>
 
-                                            </Row>
-
-                                            <Row className="mt-3">
-                                                <Col><Button className="btn-lg btn-dark btn-block" onClick={this.orderClick}>Comment</Button></Col>
-                                                <Col><Button className="btn-lg btn-dark btn-block" onClick={this.orderClick}>Complaint</Button></Col>
                                             </Row>
 
                                         </div>

@@ -69,10 +69,21 @@ class Checkout extends Component {
 
     componentDidMount() {
         const { match: { params } } = this.props;
+
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+        today = yyyy + '-' + mm + '-' + dd;
+        var time = today + " 00:00:01"
+        
         this.setState({
             account_id: params.account_id,
             arrangement_id: params.arrangement_id,
-            district_id: params.district_id
+            district_id: params.district_id,
+            delivery_date: today,
+            desired_delivery_date:today,
+            order_date: time,
         });
 
         Axios.get(`http://localhost:5000/arrangement/${params.arrangement_id}`).then(res => {
@@ -120,7 +131,7 @@ class Checkout extends Component {
             console.log(res)
             if (res.data.status === 1) {
 
-                displayCreditCard = [{ value: res.data.data.credit_card, label: res.data.data.credit_card}]
+                displayCreditCard = [{ value: res.data.data.credit_card, label: res.data.data.credit_card }]
 
 
             }
@@ -185,6 +196,7 @@ class Checkout extends Component {
             if (res.data.status === 1) {
                 this.setState({ orderid: res.data.data })
                 console.log(res.data.message)
+                this.setState({ redirect: true });
             }
             else {
                 console.log(res.data.message)
@@ -227,16 +239,16 @@ class Checkout extends Component {
             });
         }
 
-        this.setState({ redirect: true });
+        
 
     }
 
     render() {
- 
+
         const redirect = this.state.redirect;
         //customer
         if (redirect === true) {
-            return <Redirect to={`/ordertracking/accountid=${this.state.account_id}`} />
+            return <Redirect push to={`/ordertracking/accountid=${this.state.account_id}`} />
         };
 
         return (
