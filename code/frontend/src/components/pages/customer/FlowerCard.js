@@ -24,7 +24,7 @@ class FlowerCard extends Component {
         const redirectToReferrer = this.state.redirectToReferrer;
         //customer
         if (redirectToReferrer === true) {
-            return <Redirect to={`/flowerdetails/accountid=${this.props.account_id}/districtid=${this.props.district_id}/arrangementid=${this.props.flower.arrangement_id}`} />
+            return <Redirect push to={`/flowerdetails/accountid=${this.props.account_id}/districtid=${this.props.district_id}/arrangementid=${this.props.flower.arrangement_id}`} />
         };
 
         return (

@@ -30,6 +30,13 @@ import Arrangements from './components/pages/seller/Arrangements'
 import ArrangementDetails from './components/pages/seller/ArrangementDetails.js'
 import SaleList from './components/pages/seller/SaleList'
 
+// Importing Courier Pages
+import selectDistrictCourier from './components/pages/courier/selectDistrictCourier';
+import courierDeliveryList from './components/pages/courier/courierDeliveryList';
+import deliveryDetails from './components/pages/courier/deliveryDetalis';
+
+
+
 class App extends Component {
   render() {
     return (
@@ -39,7 +46,7 @@ class App extends Component {
           <Route path="/customer/accountid=:account_id/districtid=:district_id" component={Home} />
           <Route path="/selectDistrict/accountid=:account_id" component={SelectDistrict} />
           <Route path="/flowerdetails/accountid=:account_id/districtid=:district_id/arrangementid=:arrangement_id" component={FlowerDetails} />
-          <Route path="/order-creation/accountid=:account_id/districtid=:district_id/arrangementid=:arrangement_id" component={OrderCreation} />
+          <Route path="/ordercreation/accountid=:account_id/districtid=:district_id/arrangementid=:arrangement_id" component={OrderCreation} />
           <Route path="/checkout/accountid=:account_id/districtid=:district_id/arrangementid=:arrangement_id" component={Checkout} />
           <Route path="/ordertracking/accountid=:account_id" component={OrderTracking} />
           <Route path="/orderdetails/accountid=:account_id/orderid=:order_id" component={OrderDetails} />
@@ -54,6 +61,12 @@ class App extends Component {
           <Route path="/arrangements/accountid=:account_id" component={Arrangements} />   
           <Route path="/arrangement-details/accountid=:account_id/arrangementid=:arrangement_id" component={ArrangementDetails} />   
           <Route path="/sale-list/seller/accountid=:account_id" component={SaleList} />   
+          <Route path="/selectDistrict/courier/accountid=:account_id" component={selectDistrictCourier} />   
+          <Route path="/deliverytracking/accountid=:account_id" component={courierDeliveryList} />   
+          <Route path="/deliverydetails/accountid=:account_id/deliveryid=:delivery_id" component={deliveryDetails} />   
+
+
+
           <Route component={NotFoundPage} />
         </Switch>
         </div>

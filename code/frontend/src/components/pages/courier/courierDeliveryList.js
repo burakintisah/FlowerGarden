@@ -5,7 +5,7 @@ import { Button, Input } from 'reactstrap';
 import { MDBDataTable } from 'mdbreact';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import Navbar from '../../layouts/NavbarCustomer'
+import Navbar from '../../layouts/NavbarCourier'
 import Footer from '../../layouts/Footer'
 
 
@@ -21,21 +21,22 @@ class OrderTracking extends Component {
 
             c: [
                 { label: 'ID', field: 'order_id' },
-                { label: 'Flower Arrangement Name', field: 'arrangement_name' },
-                { label: 'Price', field: 'price' },
-                { label: 'Order Date', field: 'desired_delivery_date' },
-                { label: 'Delivery Status', field: 'delivery_status' },
-                { label: 'Seller', field: 'seller_status' },
-                { label: 'Courier', field: 'courier_status' },
+                { label: 'Delivery Date', field: 'arrangement_name' },
+                { label: 'Delivery Timeslot', field: 'price' },
+                { label: 'Volume', field: 'order_date' },
+                { label: 'Seller Name', field: 'delivery_status' },
+                { label: 'Receiver Address', field: 'seller_status' },
+                { label: 'Acceptance Status', field: 'courier_status' },
+                { label: 'Delivery Status Status', field: 'courier_status' },
             ],
             data: [],
 
-            selectedOrder: null,
+            selectedDelivery: null,
             redirectToOrderDetails: false
         }
     }
 
-    // All orders are taken!
+    // All deliveries are taken!
     componentDidMount() {
         const { match: { params } } = this.props;
         this.setState({ account_id: params.account_id })
@@ -52,18 +53,17 @@ class OrderTracking extends Component {
         });
     }
 
-    takeOrderId = event => { event.preventDefault(); this.setState({ selectedOrder: event.target.value }); console.log(this.state.selectedOrder); }
+    takeDeliveryId = event => { event.preventDefault(); this.setState({ selectedDelivery: event.target.value }); console.log(this.state.selectedDelivery); }
 
-    seeOrderDetails = event => {
+    seeDeliveyDetails = event => {
         this.setState({redirectToOrderDetails: true})
     }
 
     render() {
 
         if (this.state.redirectToOrderDetails === true){
-            return <Redirect push to={`/orderdetails/accountid=${this.state.account_id}/orderid=${this.state.selectedOrder}`} />
+            return <Redirect push to={`/deliverydetails/accountid=${this.state.account_id}/deliveryid=${this.state.selectedDelivery}`} />
         }
-
         this.state.data = {
             columns: this.state.c,
             rows: this.state.r
@@ -81,8 +81,8 @@ class OrderTracking extends Component {
                     <br /> <br />
                     <div class="input-group mb-3" className="mt-4" style={{ float: 'right' }}>
                         <div class="input-group-prepend">
-                            <Input className="mr-5" style={{ width: '350px' }} type="text" placeholder="Enter the id of the order..." onChange={this.takeOrderId} />
-                            <Button className="btn-lg btn-dark mr-5 ml-25" onClick={this.seeOrderDetails}>Order Details</Button>
+                            <Input className="mr-5" style={{ width: '350px' }} type="text" placeholder="Enter the id of the order..." onChange={this.takeDeliveryId} />
+                            <Button className="btn-lg btn-dark mr-5 ml-25" onClick={this.seeDeliveyDetails}>Delivery Details</Button>
                         </div>
                     </div>
                 </Container>
