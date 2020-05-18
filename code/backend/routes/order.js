@@ -178,7 +178,7 @@ router.get('/courier/:id', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     var query = 'SELECT *'
-        + 'FROM flowergarden.order natural join flower_arrangement as F WHERE order_id = ?';
+        + 'FROM flowergarden.order NATURAL JOIN flower_arrangement WHERE order_id = ?';
 
     var val = [req.params.id];
 
@@ -221,6 +221,23 @@ router.get('/:id/seller/accept', async (req, res) => {
         sendResponse(res, 0, err.sqlMessage, null);
     });
 
+    if (rows[0].affectedRows <= 0) {
+        sendResponse(res, 0, "Invalid order_id.", null);
+        return;
+    }
+
+    rows = await dbconnection.promise().query('SELECT customer_id FROM flowergarden.order WHERE order_id = ?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+    
+
+    val = [rows[0][0].customer_id, "Your order with id " + req.params.id + " is accepted by the seller.", new Date().toISOString().slice(0, 19).replace('T', ' ')]
+    rows = await dbconnection.promise().query('INSERT INTO notification(account_id, description, timestamp) VALUES ( ? , ? , ? )', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
     sendResponse(res, 1, "Done.", null);
 });
 
@@ -233,6 +250,11 @@ router.get('/:id/seller/reject', async (req, res) => {
         console.log('Error at: ' + err);
         sendResponse(res, 0, err.sqlMessage, null);
     });
+
+    if (!rows || rows[0].length<= 0) {
+        sendResponse(res, 0, "Invalid order_id.", null);
+        return;
+    }
 
     var arrangement_id = rows[0][0].arrangement_id;
     var seller_id = rows[0][0].seller_id;
@@ -287,8 +309,13 @@ router.post('/:id/seller/assign', async (req, res) => {
         sendResponse(res, 0, err.sqlMessage, null);
     });
 
+    if (rows[0].affectedRows <= 0) {
+        sendResponse(res, 0, "Invalid order_id.", null);
+        return;
+    }
+
     query = 'INSERT INTO notification(account_id, description, timestamp) VALUES ( ? , ? , ? )';
-    val = [req.body.courier_id, 'Would you like to deliver an order?', new Date().toISOString().slice(0, 19).replace('T', ' ')];
+    val = [req.body.courier_id, 'You are assigned to a delivery with id ' + req.params.id + ".", new Date().toISOString().slice(0, 19).replace('T', ' ')];
 
     rows = await dbconnection.promise().query(query, val).catch((err) => {
         console.log('Error at: ' + err);
@@ -349,7 +376,7 @@ router.get('/:id/seller/assign', async (req, res) => {
     sendResponse(res, 1, "Done.", rows[0]);
 });
 
-router.get('/:id/on_delivery', async (req, res) => {
+router.get('/:id/seller/on_delivery', async (req, res) => {
 
     var query = 'UPDATE flowergarden.order SET delivery_status = "On Delivery" WHERE order_id = ?';
 
@@ -359,6 +386,116 @@ router.get('/:id/on_delivery', async (req, res) => {
         console.log('Error at: ' + err);
         sendResponse(res, 0, err.sqlMessage, null);
     });
+
+    if (rows[0].affectedRows <= 0) {
+        sendResponse(res, 0, "Invalid order_id.", null);
+        return;
+    }
+
+    rows = await dbconnection.promise().query('SELECT customer_id FROM flowergarden.order WHERE order_id = ?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    val = [rows[0][0].customer_id, "Your order with id " + req.params.id + " is on delivery.", new Date().toISOString().slice(0, 19).replace('T', ' ')]
+    rows = await dbconnection.promise().query('INSERT INTO notification(account_id, description, timestamp) VALUES ( ? , ? , ? )', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    sendResponse(res, 1, "Done.", null);
+});
+
+router.get('/:id/courier/accept', async (req, res) => {
+    var query = 'UPDATE flowergarden.order SET courier_status = "Accepted" WHERE order_id = ?';
+
+    var val = [req.params.id];
+
+    rows = await dbconnection.promise().query(query, val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    if (rows[0].affectedRows <= 0) {
+        sendResponse(res, 0, "Invalid order_id.", null);
+        return;
+    }
+
+    rows = await dbconnection.promise().query('SELECT seller_id FROM flowergarden.order WHERE order_id = ?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    val = [rows[0][0].seller_id, "Your courier assignment is accepted for sale with id " + req.params.id  + ".", new Date().toISOString().slice(0, 19).replace('T', ' ')]
+    rows = await dbconnection.promise().query('INSERT INTO notification(account_id, description, timestamp) VALUES ( ? , ? , ? )', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    sendResponse(res, 1, "Done.", null);
+});
+
+router.get('/:id/courier/delivered', async (req, res) => {
+    var query = 'UPDATE flowergarden.order SET delivery_status = "Delivered" WHERE order_id = ?';
+
+    var val = [req.params.id];
+
+    rows = await dbconnection.promise().query(query, val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    if (rows[0].affectedRows <= 0) {
+        sendResponse(res, 0, "Invalid order_id.", null);
+        return;
+    }
+
+    rows = await dbconnection.promise().query('SELECT seller_id, customer_id FROM flowergarden.order WHERE order_id = ?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+    var customer_id = rows[0][0].customer_id;
+    val = [rows[0][0].seller_id, "Your sale with id " + req.params.id  + " is delivered.", new Date().toISOString().slice(0, 19).replace('T', ' ')]
+    rows = await dbconnection.promise().query('INSERT INTO notification(account_id, description, timestamp) VALUES ( ? , ? , ? )', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    val = [customer_id, "Your order with id " + req.params.id  + " is delivered.", new Date().toISOString().slice(0, 19).replace('T', ' ')]
+    rows = await dbconnection.promise().query('INSERT INTO notification(account_id, description, timestamp) VALUES ( ? , ? , ? )', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    sendResponse(res, 1, "Done.", null);
+});
+
+router.get('/:id/courier/reject', async (req, res) => {
+    var query = 'UPDATE flowergarden.order SET courier_id = NULL, courier_status = "Not Assigned" WHERE order_id = ?';
+
+    var val = [req.params.id];
+
+    rows = await dbconnection.promise().query(query, val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    if (rows[0].affectedRows <= 0) {
+        sendResponse(res, 0, "Invalid order_id.", null);
+        return;
+    }
+
+    rows = await dbconnection.promise().query('SELECT seller_id FROM flowergarden.order WHERE order_id = ?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    val = [rows[0][0].seller_id, "Your courier assignment is rejected for sale with id " + req.params.id  + ". Please assign again.", new Date().toISOString().slice(0, 19).replace('T', ' ')]
+    rows = await dbconnection.promise().query('INSERT INTO notification(account_id, description, timestamp) VALUES ( ? , ? , ? )', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
 
     sendResponse(res, 1, "Done.", null);
 });
