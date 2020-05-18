@@ -67,11 +67,11 @@ class SignUp extends Component {
         };
         const redirectToReferrer1 = this.state.redirectToReferrerCreate;
         if (redirectToReferrer1 === true) {
-            return <Redirect to={`/createarrangements/accountid=` + this.state.account_id}/>
+            return <Redirect push to={`/createarrangements/accountid=` + this.state.account_id}/>
         }
         const redirectToReferrer2 = this.state.redirectToReferrerDetails;
         if (redirectToReferrer2 === true) {
-            return <Redirect to={'/arrangement-details/accountid=' + this.state.account_id +'/arrangementid=' +this.state.flowerID}/>
+            return <Redirect push to={'/arrangement-details/accountid=' + this.state.account_id +'/arrangementid=' +this.state.flowerID}/>
         }
         return (
             <div>

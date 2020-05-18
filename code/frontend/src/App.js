@@ -23,8 +23,6 @@ import OrderDetails from './components/pages/customer/OrderDetails'
 
 
 // Importing Seller Pages
-import SelectTimePlace from './components/pages/seller/selectTimePlace'
-import SellerHome from './components/pages/seller/sellerHome'
 import CreateArrangement from './components/pages/seller/CreateArrangement'
 import Arrangements from './components/pages/seller/Arrangements'
 import ArrangementDetails from './components/pages/seller/ArrangementDetails.js'
@@ -35,6 +33,7 @@ import SelectDistrictWorkingHours from './components/pages/seller/SelectDistrict
 import selectDistrictCourier from './components/pages/courier/selectDistrictCourier';
 import courierDeliveryList from './components/pages/courier/courierDeliveryList';
 import deliveryDetails from './components/pages/courier/deliveryDetalis';
+import WorkingHoursCourier from './components/pages/courier/WorkingHoursCourier';
 
 
 
@@ -56,8 +55,6 @@ class App extends Component {
           <Route path="/profile/:id" component={Profile} />
           <Route path="/change-destination" component={ChangeDestination}/>
           <Route path="/forgot-password" component={ForgotPassword} />
-          <Route path="/selectTimePlace" component={SelectTimePlace} />
-          <Route path="/seller/:account_id" component={SellerHome} />
           <Route path="/createarrangements/accountid=:account_id" component={CreateArrangement} />
           <Route path="/arrangements/accountid=:account_id" component={Arrangements} />   
           <Route path="/arrangement-details/accountid=:account_id/arrangementid=:arrangement_id" component={ArrangementDetails} />   
@@ -65,10 +62,8 @@ class App extends Component {
           <Route path="/selectDistrict/courier/accountid=:account_id" component={selectDistrictCourier} />   
           <Route path="/deliverytracking/accountid=:account_id" component={courierDeliveryList} />   
           <Route path="/deliverydetails/accountid=:account_id/deliveryid=:delivery_id" component={deliveryDetails} />   
-
-
-
           <Route path="/select-district-working-hours/seller/accountid=:account_id" component={SelectDistrictWorkingHours} />   
+          <Route path="/select-district-and-working-hours/courier/accountid=:account_id" component={WorkingHoursCourier} />   
           <Route component={NotFoundPage} />
         </Switch>
         </div>

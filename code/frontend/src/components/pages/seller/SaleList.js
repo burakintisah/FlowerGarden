@@ -53,7 +53,7 @@ class SaleList extends Component {
 
         const redirectToReferrer = this.state.redirectToReferrer;
         if (redirectToReferrer === true) {
-            //return <Redirect to={'/sale-details/accountid=' + this.state.account_id + 'saleid=' + this.state.saleID}/>  buraya baaaaaaaaaaaaaak
+            //return <Redirect push to={'/sale-details/accountid=' + this.state.account_id + 'saleid=' + this.state.saleID}/>  buraya baaaaaaaaaaaaaak
         }
        
        this.state.data = {
