@@ -17,6 +17,7 @@ const ColoredLine = ({ color }) => (
     />
 );
 
+
 class OrderDetails extends Component {
 
     constructor(props) {
@@ -33,6 +34,7 @@ class OrderDetails extends Component {
             complaint: "",
         }
     }
+    
 
     componentDidMount() {
         const { match: { params } } = this.props;
@@ -79,14 +81,16 @@ class OrderDetails extends Component {
             console.log(res)
             if (res.data.status === 1) {
                 this.setState({ arrangemetInfo: res.data.data })
+                window.confirm('Your comment received')
+                
             }
             else {
                 console.log(res.data.message)
+                window.confirm('Your comment received')
             }
         });
 
     }
-
     complaintButton = event => {
         event.preventDefault();
         console.log("complaint CLICKED");
@@ -110,9 +114,11 @@ class OrderDetails extends Component {
             console.log(res)
             if (res.data.status === 1) {
                 this.setState({ arrangemetInfo: res.data.data })
+                window.confirm('Your complaint received')
             }
             else {
                 console.log(res.data.message)
+                window.confirm('Your complaint could not received')
             }
         });
 
@@ -188,11 +194,11 @@ class OrderDetails extends Component {
 
                                     <Row className="mt-3">
                                         <Col><Input type="text" placeholder="Comment" onChange={this.changeComment} /></Col>
-                                        <Col sm="3"><Button className="btn btn-dark btn-block" onClick={this.commentButton}>Comment</Button></Col>
+                                        <Col sm="3"><Button className="btn btn-dark btn-block" onClick={this.commentButton} disabled={this.state.comment==""}>Comment</Button></Col>
                                     </Row>
                                     <Row className="mt-3">
                                         <Col><Input type="text" placeholder="Complaint" onChange={this.changeComplaint} /></Col>
-                                        <Col sm="3" ><Button className="btn btn-dark btn-block" onClick={this.complaintButton}>Complaint</Button></Col>
+                                        <Col sm="3" ><Button className="btn btn-dark btn-block" onClick={this.complaintButton} disabled= {this.state.complaint==""}>Complaint</Button></Col>
                                     </Row>
                                 </Container>
                             </Col>

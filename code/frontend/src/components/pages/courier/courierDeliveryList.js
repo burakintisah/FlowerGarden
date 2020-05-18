@@ -89,7 +89,7 @@ class OrderTracking extends Component {
                     <div class="input-group mb-3" className="mt-4" style={{ float: 'right' }}>
                         <div class="input-group-prepend">
                             <Input className="mr-5" style={{ width: '350px' }} type="text" placeholder="Enter the id of the order..." onChange={this.takeDeliveryId} />
-                            <Button className="btn-lg btn-dark mr-5 ml-25" onClick={this.seeDeliveyDetails}>Delivery Details</Button>
+                            <Button className="btn-lg btn-dark mr-5 ml-25" onClick={this.seeDeliveyDetails} disabled={this.state.selectedDelivery===null}>Delivery Details</Button>
                         </div>
                     </div>
                 </Container>
