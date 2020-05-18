@@ -95,7 +95,7 @@ router.get('/seller/:id', async (req, res) => {
 
 });
 
-router.get('/seller/:id', async (req, res) => {
+router.get('/seller/:id/district_hour', async (req, res) => {
     val = [req.params.id];
     let rows = await dbconnection.promise().query('SELECT district_id, district_name, province_id, province_name FROM seller_serves_to NATURAL JOIN province NATURAL JOIN district WHERE seller_id=?', val).catch((err) => {
         console.log('Error at: ' + err);
@@ -116,7 +116,7 @@ router.get('/seller/:id', async (req, res) => {
 
 });
 
-router.post('/seller/:id', async (req, res) => {
+router.post('/seller/:id/district_hour', async (req, res) => {
 
     var val = [req.params.id];
     let rows = await dbconnection.promise().query('DELETE FROM seller_serves_to WHERE seller_id=?', val).catch((err) => {
