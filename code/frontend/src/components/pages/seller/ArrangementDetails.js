@@ -133,16 +133,17 @@ class ArrangementDetails extends Component {
             )
         });
 
+
+          
         return(
             <div>
                 <Navbar></Navbar>
                 <h1 className='ml-5 mt-3'>FlowerGarden</h1>
                 
-                {/*Column 1 */}
                 <div className="form-row">
                         {/*Column 1 */}
-                        <div className="form-group col-md-2 col-sm-2 ml-5" ></div>
-                    <div className="form-group col-md-2 col-sm-2 ml-5" >
+                        <div className="form-group col-md-2 col-sm-2 ml-3" ></div>
+                    <div className="form-group col-md-2 col-sm-2 ml-3" >
                         <br /><br />
                         <Col xs={3} md={2}>
                             <Image src={require('./arangement_details.jpg')} rounded="true" />
@@ -150,13 +151,14 @@ class ArrangementDetails extends Component {
                         
                     </div>
                     {/*Column 2 */}
-                    <div className="form-group col-md-2 col-sm-2 ml-5">
+                    <div className="form-group col-md-3 col-sm-3 ml-5">
                         <h1 className=" mt-3" mt-3>{this.state.arrangementName}</h1>                    
                         
                         <div class="input-group mb-3" style={{float: 'right'}}>
                             <div class="input-group-prepend">
-                               <h2 className="mr-1">${this.state.price}</h2>
-                                <Rating className="mr-2"
+                               <h2 className="mr-5">${this.state.price}</h2>
+                                <Rating
+                                className="mr-xl-5"
                                     readonly="true"
                                     initialRating={this.state.ratingVal}
                                     emptySymbol="fa fa-star-o fa-2x"
@@ -180,16 +182,17 @@ class ArrangementDetails extends Component {
 
                     </div>
                     {/*Column 3 */}
-                    <div className="form-group col-md-2 col-sm-2 ml-5">
+                    <div className="form-group col-md-3 col-sm-3 ml-5">
                         <h2 className='mt-3'>Arrangement Description:</h2>
-                        <br />
-                        <div>{this.state.descp}  </div>
+
                         <br />
                         <div>Contained Flowers:  </div>
                         <div> {flowerNames} </div>
                         <br />
                         Stock:
                         <div> {this.state.count} </div>
+                        <br />
+                        <div>{this.state.descp}  </div>
                     </div>
                 </div>
                 
@@ -201,6 +204,7 @@ class ArrangementDetails extends Component {
         );
     }
 }
+
 
 
 export default ArrangementDetails;

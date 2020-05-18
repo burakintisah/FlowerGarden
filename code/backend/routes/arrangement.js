@@ -78,6 +78,20 @@ router.get('/:id', async (req, res) => {
   });
   result.comments = rows[0];
 
+  val = [result.seller_id];
+  rows = await dbconnection.promise().query('SELECT first_name, middle_name, last_name FROM account  WHERE account_id = ?', val).catch((err) => {
+    console.log('Error at: ' + err);
+    sendResponse(res, 0, err.sqlMessage, null);
+  });
+  result.seller = rows[0][0];
+  
+  rows = await dbconnection.promise().query('SELECT AVG(F.rate) as rating FROM seller as S, flower_arrangement as F WHERE S.account_id = F.seller_id AND S.account_id = ?', val).catch((err) => {
+    console.log('Error at: ' + err);
+    sendResponse(res, 0, err.sqlMessage, null);
+  });
+  
+  result.seller.rating = rows[0][0].rating;
+
   sendResponse(res, 1, 'Done.', result);
 
 });

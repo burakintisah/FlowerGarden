@@ -14,6 +14,7 @@ class SaleList extends Component {
         state = {
             saleID: null,
             redirectToReferrer: false,
+            account_id:null,
             r: [],
             headings:  [
                 {label: 'ID',field: 'arrangement_id'},
@@ -50,12 +51,11 @@ class SaleList extends Component {
 
     render() {
 
-       /* const redirectToReferrer = this.state.redirectToReferrer;
+        const redirectToReferrer = this.state.redirectToReferrer;
         if (redirectToReferrer === true) {
-            return <Redirect to={`/`}/>
+            //return <Redirect to={'/sale-details/accountid=' + this.state.account_id + 'saleid=' + this.state.saleID}/>  buraya baaaaaaaaaaaaaak
         }
-        detail sayfasına yönlendir
-        */
+       
        this.state.data = {
         columns: this.state.headings,
         rows: this.state.r

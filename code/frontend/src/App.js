@@ -29,6 +29,7 @@ import CreateArrangement from './components/pages/seller/CreateArrangement'
 import Arrangements from './components/pages/seller/Arrangements'
 import ArrangementDetails from './components/pages/seller/ArrangementDetails.js'
 import SaleList from './components/pages/seller/SaleList'
+import SelectDistrictWorkingHours from './components/pages/seller/SelectDistrictWorkingHours'
 
 // Importing Courier Pages
 import selectDistrictCourier from './components/pages/courier/selectDistrictCourier';
@@ -67,6 +68,7 @@ class App extends Component {
 
 
 
+          <Route path="/select-district-working-hours/seller/accountid=:account_id" component={SelectDistrictWorkingHours} />   
           <Route component={NotFoundPage} />
         </Switch>
         </div>

@@ -68,4 +68,11 @@
   height: 150px;
   }
 
-  
+  .selecter {
+    max-width:  160px;
+}
+.stars {
+  margin-right:  0px;
+  padding-right: 0px;
+  margin-left:10px;
+}
