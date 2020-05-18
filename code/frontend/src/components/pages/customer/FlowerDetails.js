@@ -136,7 +136,7 @@ class FlowerDetails extends Component {
         const { selectedOption } = this.state;
         const redirectToOrderPage = this.state.redirectToReferrer;
         if (redirectToOrderPage === true) {
-            return <Redirect to={'/order-creation/accountid=' + this.state.account_id + '/districtid=' + this.state.district_id + '/arrangementid=' + this .state.account_id}/>
+            return <Redirect to={'/ordercreation/accountid=' + this.state.account_id + '/districtid=' + this.state.district_id + '/arrangementid=' + this .state.account_id}/>
         }
         var sellerName = this.state.sellerFirstName + " " + this.state.sellerMiddleName + " " + this.state.sellerLastName;
 

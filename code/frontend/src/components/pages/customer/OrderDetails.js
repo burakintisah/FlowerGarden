@@ -6,6 +6,17 @@ import { Redirect } from 'react-router-dom';
 import styled from 'styled-components'
 import Axios from 'axios';
 
+
+const ColoredLine = ({ color }) => (
+    <hr
+        style={{
+            color: color,
+            backgroundColor: color,
+            height: 5,
+        }}
+    />
+);
+
 class OrderDetails extends Component {
 
     constructor(props) {
@@ -52,10 +63,12 @@ class OrderDetails extends Component {
                             <Col>
                                 <Container className="showOrder">
                                     <h1>Your Order</h1>
+                                    <ColoredLine color="black" />
                                     <Row className="arr">
                                         <Col><h5>Flower Arrangement</h5></Col>
                                         <Col sm="1"><h5>Price</h5></Col>
                                     </Row>
+                                    <ColoredLine color="black" />
                                     <Row className="arr">
                                         <Col sm="4">
                                             <img top width="100%"
@@ -76,6 +89,7 @@ class OrderDetails extends Component {
                                         </Col>
                                         <Col sm="1 mt-5"><h4>${this.state.orderInfo.price}</h4></Col>
                                     </Row>
+                                    <ColoredLine color="black" />
                                     <h5 className="arr">Receiver Information</h5>
                                     <Row>
                                         <Col sm="3"><h6 className="arr">Receiver Name: </h6></Col>
@@ -114,7 +128,8 @@ class OrderDetails extends Component {
                                             <h3 className="mb-4">Delivery</h3>
                                             <h3 className="mb-2">Tax</h3>
                                             <br></br>
-                                            <h3>-----------------------</h3>
+                                            <ColoredLine color="black" />
+
                                             <br></br><br></br>
                                             <h3 >Total</h3>
                                         </Col>
@@ -123,7 +138,8 @@ class OrderDetails extends Component {
                                             <h3 className="mb-4">-</h3>
                                             <h3 className="mb-2">-</h3>
                                             <br></br>
-                                            <h3>----</h3>
+                                            <ColoredLine color="black" />
+
                                             <br></br><br></br>
                                             <h3>${this.state.orderInfo.price}</h3>
                                         </Col>

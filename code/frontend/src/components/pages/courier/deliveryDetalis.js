@@ -4,6 +4,17 @@ import Footer from '../../layouts/Footer'
 import { Row, Col, Container, Button } from 'reactstrap'
 import styled from 'styled-components'
 import axios from 'axios'
+
+const ColoredLine = ({ color }) => (
+    <hr
+        style={{
+            color: color,
+            backgroundColor: color,
+            height: 5,
+        }}
+    />
+);
+
 class DeliveryDetails extends Component {
 
     constructor(props) {
@@ -57,6 +68,7 @@ class DeliveryDetails extends Component {
                         <Container >
 
                             <h1>Delivery Information</h1>
+                            <ColoredLine color="black" />
                             <Row>
                                 <Col className="fon">Delivery ID:</Col>
                                 <Col></Col>
@@ -78,6 +90,7 @@ class DeliveryDetails extends Component {
                                 <Col></Col>
                             </Row>
                             <h1 className="info-margin">Customer Information</h1>
+                            <ColoredLine color="black" />
                             <Row>
                                 <Col className="fon">Customer Name:</Col>
                                 <Col></Col>
@@ -110,6 +123,7 @@ class DeliveryDetails extends Component {
                         <Container>
 
                             <h1>Seller Information</h1>
+                            <ColoredLine color="black" />
                             <Row>
                                 <Col className="fon">Seller Name:</Col>
                                 <Col></Col>
@@ -123,6 +137,7 @@ class DeliveryDetails extends Component {
                                 <Col></Col>
                             </Row>
                             <h1 className="info-margin">Receiver Information</h1>
+                            <ColoredLine color="black" />
                             <Row>
                                 <Col className="fon">Receiver Name:</Col>
                                 <Col></Col>

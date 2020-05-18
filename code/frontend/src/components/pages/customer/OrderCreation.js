@@ -6,6 +6,18 @@ import { Redirect } from 'react-router-dom';
 import styled from 'styled-components'
 import Axios from 'axios';
 
+
+const ColoredLine = ({ color }) => (
+    <hr
+        style={{
+            color: color,
+            backgroundColor: color,
+            height: 5,
+        }}
+    />
+);
+
+
 class OrderCreation extends Component {
 
     constructor(props) {
@@ -74,10 +86,12 @@ class OrderCreation extends Component {
                         <Col>
                             <Container className="showOrder">
                                 <h1>Your Order</h1>
+                                <ColoredLine color="black" />
                                 <Row className="arr">
                                     <Col><h4>Flower Arrangement</h4></Col>
                                     <Col sm="1"><h4>Price</h4></Col>
                                 </Row>
+                                <ColoredLine color="black" />
                                 <Row className="arr">
                                     <Col sm="4">
                                         <img top width="100%"
