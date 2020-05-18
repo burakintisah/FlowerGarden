@@ -154,4 +154,63 @@ router.post('/seller/:id/district_hour', async (req, res) => {
 
 });
 
+router.get('/courier/:id/district_hour', async (req, res) => {
+    val = [req.params.id];
+    let rows = await dbconnection.promise().query('SELECT district_id, district_name, province_id, province_name FROM courier_serves_to NATURAL JOIN province NATURAL JOIN district WHERE courier_id=?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    var result = { districts: rows[0] };
+
+    rows = await dbconnection.promise().query('SELECT hour, day FROM courier_working_time WHERE courier_id=?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+
+    result.working_times = rows[0];
+
+    sendResponse(res, 1, "Done.", result);
+
+});
+
+router.post('/courier/:id/district_hour', async (req, res) => {
+
+    var val = [req.params.id];
+    let rows = await dbconnection.promise().query('DELETE FROM courier_serves_to WHERE courier_id=?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    var districts = req.body.districts;
+
+    for (i = 0; i < districts.length; i++) {
+        val = [districts[i].district_id, req.params.id];
+        rows = await dbconnection.promise().query('INSERT INTO courier_serves_to  (district_id, courier_id) VALUES ( ?, ? )', val).catch((err) => {
+            console.log('Error at: ' + err);
+            sendResponse(res, 0, err.sqlMessage, null);
+        });
+    }
+
+    val = [req.params.id];
+    rows = await dbconnection.promise().query('DELETE FROM courier_working_time WHERE courier_id=?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    var working_times = req.body.working_times;
+
+    for (i = 0; i < working_times.length; i++) {
+        val = [working_times[i].hour, working_times[i].day, req.params.id];
+        rows = await dbconnection.promise().query('INSERT INTO courier_working_time  (hour, day, courier_id) VALUES ( ? , ? , ? )', val).catch((err) => {
+            console.log('Error at: ' + err);
+            sendResponse(res, 0, err.sqlMessage, null);
+        });
+    }
+
+    sendResponse(res, 1, "Done.", null);
+
+});
+
 module.exports = router;
