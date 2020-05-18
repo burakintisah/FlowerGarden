@@ -74,4 +74,84 @@ router.post('/customer/:id/saved_addresses', (req, res) => {
     });
 });
 
+router.get('/seller/:id', async (req, res) => {
+    val = [req.params.id];
+    let rows = await dbconnection.promise().query('SELECT district_id, district_name, province_id, province_name FROM seller_serves_to NATURAL JOIN province NATURAL JOIN district WHERE seller_id=?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    var result = { districts: rows[0] };
+
+    rows = await dbconnection.promise().query('SELECT hour, day FROM seller_working_time WHERE seller_id=?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+
+    result.working_times = rows[0];
+
+    sendResponse(res, 1, "Done.", result);
+
+});
+
+router.get('/seller/:id', async (req, res) => {
+    val = [req.params.id];
+    let rows = await dbconnection.promise().query('SELECT district_id, district_name, province_id, province_name FROM seller_serves_to NATURAL JOIN province NATURAL JOIN district WHERE seller_id=?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    var result = { districts: rows[0] };
+
+    rows = await dbconnection.promise().query('SELECT hour, day FROM seller_working_time WHERE seller_id=?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+
+    result.working_times = rows[0];
+
+    sendResponse(res, 1, "Done.", result);
+
+});
+
+router.post('/seller/:id', async (req, res) => {
+
+    var val = [req.params.id];
+    let rows = await dbconnection.promise().query('DELETE FROM seller_serves_to WHERE seller_id=?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    var districts = req.body.districts;
+
+    for (i = 0; i < districts.length; i++) {
+        val = [districts[i].district_id, req.params.id];
+        rows = await dbconnection.promise().query('INSERT INTO seller_serves_to  (district_id, seller_id) VALUES ( ?, ? )', val).catch((err) => {
+            console.log('Error at: ' + err);
+            sendResponse(res, 0, err.sqlMessage, null);
+        });
+    }
+
+    val = [req.params.id];
+    rows = await dbconnection.promise().query('DELETE FROM seller_working_time WHERE seller_id=?', val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    var working_times = req.body.working_times;
+
+    for (i = 0; i < working_times.length; i++) {
+        val = [working_times[i].hour, working_times[i].day, req.params.id];
+        rows = await dbconnection.promise().query('INSERT INTO seller_working_time  (hour, day, seller_id) VALUES ( ? , ? , ? )', val).catch((err) => {
+            console.log('Error at: ' + err);
+            sendResponse(res, 0, err.sqlMessage, null);
+        });
+    }
+
+    sendResponse(res, 1, "Done.", null);
+
+});
+
 module.exports = router;
