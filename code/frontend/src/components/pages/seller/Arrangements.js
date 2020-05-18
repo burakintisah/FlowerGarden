@@ -23,7 +23,8 @@ class SignUp extends Component {
                     {label: 'Flower Arrangement Name',field: 'arrangement_name'},
                     {label: 'Volume',field: 'volume'},
                     {label: 'Price',field: 'price'},
-                    {label: 'Occasions',field: 'occasion_name'}
+                    {label: 'Occasions',field: 'occasion_name'},
+                    {label: 'Count', field: 'count'}
 
                 ],
              data : []
@@ -68,11 +69,11 @@ class SignUp extends Component {
           };
         const redirectToReferrer1 = this.state.redirectToReferrerCreate;
         if (redirectToReferrer1 === true) {
-            return <Redirect to={`/createarrangements`}/>
+            return <Redirect to={`/createarrangements/accountid=` + this.state.account_id}/>
         }
         const redirectToReferrer2 = this.state.redirectToReferrerDetails;
         if (redirectToReferrer2 === true) {
-            return <Redirect to={`/arrangement-details`}/>
+            return <Redirect to={'/arrangement-details/accountid=' + this.state.account_id +'/arrangementid=' +this.state.flowerID}/>
         }
         return (
             <div>
