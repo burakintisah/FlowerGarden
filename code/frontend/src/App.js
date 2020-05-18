@@ -53,7 +53,7 @@ class App extends Component {
           <Route path="/createarrangements/accountid=:account_id" component={CreateArrangement} />
           <Route path="/arrangements/accountid=:account_id" component={Arrangements} />   
           <Route path="/arrangement-details/accountid=:account_id/arrangementid=:arrangement_id" component={ArrangementDetails} />   
-          <Route path="/sale-list" component={SaleList} />   
+          <Route path="/sale-list/seller/accountid=:account_id" component={SaleList} />   
           <Route component={NotFoundPage} />
         </Switch>
         </div>

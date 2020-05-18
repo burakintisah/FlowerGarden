@@ -28,21 +28,24 @@ class SaleList extends Component {
             ],
             data : []
         }
+
+        componentDidMount() {
+            const { match: { params } } = this.props;
+            this.setState({ account_id: params.account_id })
+            axios.get('http://localhost:5000/order/seller/'+params.account_id).then(res => {
+                if (res.data.status === 1) {
+                    this.setState({ r: res.data.data })
+                    console.log(res.data.data[0])
+                  }
+                  
+            });
+        }
+
         takeSaleID = event => { event.preventDefault(); this.setState({ saleID: event.target.value });  }
         
         seeSaleDetails = event => {
             event.preventDefault();
-            var data = { arrangement_id: this.state.saleID} // make it sale id
-            axios.post('http://localhost:5000/', data).then(res => { 
-                console.log(res);   
-                if (res.data.status === 1){
-                    this.setState({ r: res.data.data })
-                    this.setState({ redirectToReferrer: true})
-                }
-                else {
-                    console.log("There is no such sale ID")
-                }
-                });
+            this.setState({ redirectToReferrer: true})
         }
 
     render() {

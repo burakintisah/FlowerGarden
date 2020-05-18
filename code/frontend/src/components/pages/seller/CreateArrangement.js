@@ -26,7 +26,8 @@ class CreateArrangement extends Component{
             selectedFlowers:[],
             selectedOccasions: [],
             flowers: [],
-            occasions: [{'name': 'Anniversary' }, {'name' : 'Congratulations'}],
+            totalCount:0,
+            occasions: [{'name': 'Anniversary' }, {'name' : 'Congratulations'}, {'name' : 'Just Because'}],
             redirectToReferrer: false
         }
     changeName = event => { event.preventDefault(); this.setState({ name: event.target.value }); console.log(this.state.name); }
@@ -49,6 +50,7 @@ class CreateArrangement extends Component{
     changeCount5 = event => { event.preventDefault(); this.setState({ count5: event.target.value }); console.log(this.state.count5); }
     changeCount6 = event => { event.preventDefault(); this.setState({ count6: event.target.value }); console.log(this.state.count6); }
     changeCount7 = event => { event.preventDefault(); this.setState({ count7: event.target.value }); console.log(this.state.count7); }
+    changeTotal = event => { event.preventDefault(); this.setState({ totalCount: event.target.value }); console.log(this.state.totalCount); }
 
     onSelect(selectedList, selectedItem) {
         this.state.selectedOccasions.push({"occasion_name": selectedItem.name })
@@ -56,7 +58,7 @@ class CreateArrangement extends Component{
     }
 
     onRemove(selectedList, selectedItem) {
-        this.state.selectedOccasions.remove({"occasion_name": selectedItem.name })
+        //this.state.selectedOccasions.remove({"occasion_name": selectedItem.name })
         console.log(this.state.selectedOccasions);
     }
 
@@ -82,17 +84,17 @@ class CreateArrangement extends Component{
         var flowerList= [];
         if (this.state.selectedOption1 !== null && this.state.count1 !== null) flowerList.push({"flower_id": this.state.selectedOption1.value,"count": Number(this.state.count1) });
         if (this.state.selectedOption2 !== null && this.state.count2 !== null) flowerList.push({"flower_id": this.state.selectedOption2.value,"count": Number(this.state.count2) });
-        if (this.state.selectedOption3 !== null && this.state.count3 !== null) flowerList.push({"flower_id": this.state.selectedOption3.value,"count": this.state.count3 });
-        if (this.state.selectedOption4 !== null && this.state.count4 !== null) flowerList.push({"flower_id": this.state.selectedOption4.value,"count": this.state.count4 });
-        if (this.state.selectedOption5 !== null && this.state.count5 !== null) flowerList.push({"flower_id": this.state.selectedOption5.value,"count": this.state.count5 });
-        if (this.state.selectedOption6 !== null && this.state.count6 !== null) flowerList.push({"flower_id": this.state.selectedOption6.value,"count": this.state.count6 });
-        if (this.state.selectedOption7 !== null && this.state.count7 !== null) flowerList.push({"flower_id": this.state.selectedOption7.value,"count": this.state.count7 });
+        if (this.state.selectedOption3 !== null && this.state.count3 !== null) flowerList.push({"flower_id": this.state.selectedOption3.value,"count": Number(this.state.count3) });
+        if (this.state.selectedOption4 !== null && this.state.count4 !== null) flowerList.push({"flower_id": this.state.selectedOption4.value,"count": Number(this.state.count4) });
+        if (this.state.selectedOption5 !== null && this.state.count5 !== null) flowerList.push({"flower_id": this.state.selectedOption5.value,"count": Number(this.state.count5) });
+        if (this.state.selectedOption6 !== null && this.state.count6 !== null) flowerList.push({"flower_id": this.state.selectedOption6.value,"count": Number(this.state.count6) });
+        if (this.state.selectedOption7 !== null && this.state.count7 !== null) flowerList.push({"flower_id": this.state.selectedOption7.value,"count": Number(this.state.count7) });
         
         var data = {
             rating: null,
             image_path:null,
             seller_id:Number(this.state.account_id), 
-            count: 1, 
+            count: Number(this.state.totalCount), 
             arrangement_name: this.state.name, 
             price: Number(this.state.price), 
             volume: Number(this.state.volume),
@@ -130,7 +132,7 @@ class CreateArrangement extends Component{
 
         const redirectToReferrer = this.state.redirectToReferrer;
         if (redirectToReferrer === true) {
-            return <Redirect to={`/arrangements`}/>
+            return <Redirect to={`/arrangements/accountid=` + this.state.account_id}/>
         }
 
         return (
@@ -204,13 +206,17 @@ class CreateArrangement extends Component{
                                         options= {displayFlowers}
                                     /> 
                                     <br></br>
+                                    Occasions:
                                     <Multiselect 
                                         options={this.state.occasions} // Options to display in the dropdown
                                         selectedValues={this.state.selectedValue} // Preselected value to persist in dropdown
                                         onSelect={this.onSelect} // Function will trigger on select event
                                         onRemove={this.onRemove} // Function will trigger on remove event
                                         displayValue="name" // Property name to display in the dropdown options
-                                    />                                    
+                                    /> 
+                                    Total count of the arrangment:  
+                                    <div className="mt-2"><input  type="text" className="form-control" placeholder="" onChange={this.changeTotal}/></div>
+                                 
                         </div>
                         {/*Column 3 */}
                         <div className="form-group col-md-2 col-sm-8 ">

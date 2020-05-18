@@ -31,6 +31,7 @@ class ArrangementDetails extends Component {
                 descp: null,
                 ratingVal: null,
                 enabled: true,
+                count:null,
                 flowers: [],
                 commentArray: [],
                 occasions:[],
@@ -56,12 +57,29 @@ class ArrangementDetails extends Component {
                     this.setState({ flowers: res.data.data.flowers })
                     this.setState({ commentArray: res.data.data.comments })
                     this.setState({ occasions: res.data.data.occasions })
+                    this.setState({ count: res.data.data.count })
                     console.log(res.data)
                     console.log(res.data.data.flowers)
                     console.log(res.data.data.occasions )
                 }
                   
             });
+        }
+
+        
+
+        deleteArrangement = event => {
+            event.preventDefault();
+            var data = { arrangement_id: this.state.arrangement_id}
+            axios.get('http://localhost:5000/arrangement/'+  this.state.arrangement_id +'/delete', data).then(res => { 
+                console.log(res);   
+                if (res.data.status === 1){
+                    this.setState({ redirectToReferrer: true})
+                }
+                else {
+                    alert(console.log("The deletion is unsuccesfull"));
+                }
+                });
         }
  
 
@@ -101,6 +119,12 @@ class ArrangementDetails extends Component {
 
 
     render() {
+
+        const redirectToReferrer = this.state.redirectToReferrer;
+        if (redirectToReferrer === true) {
+            return <Redirect to={'/arrangements/accountid=' + this.state.account_id}/>
+        }
+
         var tags = this.intersperseOccasions(this.state.occasions);
         var flowerNames = this.intersperseFlowers(this.state.flowers);
         let comments = this.state.commentArray.map(comment => {
@@ -163,6 +187,9 @@ class ArrangementDetails extends Component {
                         <br />
                         <div>Contained Flowers:  </div>
                         <div> {flowerNames} </div>
+                        <br />
+                        Stock:
+                        <div> {this.state.count} </div>
                     </div>
                 </div>
                 
@@ -178,9 +205,3 @@ class ArrangementDetails extends Component {
 
 export default ArrangementDetails;
 
-/*
-   <CommentComponent userName="esra" description="Very beautiful arrangement!" rating="4.5"/>
-                    <CommentComponent userName="nur" description="Love it <3 <3 !" rating="5"/>
-                    <CommentComponent userName="deniz" description="It is not that beautiful :(!" rating="2.5"/>*/
-
-                    //{flowerNames}*/
