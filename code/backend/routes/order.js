@@ -125,7 +125,7 @@ router.get('/seller/:id', async (req, res) => {
         sendResponse(res, 0, "No sales with the given seller_id " + req.params.id, null);
         return;
     }
-    
+
     for (i = 0; i < sales.length; ++i) {
         if (!sales[i].courier_id)
             continue;
@@ -135,11 +135,44 @@ router.get('/seller/:id', async (req, res) => {
             sendResponse(res, 0, err.sqlMessage, null);
         });
         var courier_info = rows[0][0];
-        console.log(sales[i].courier_id);
-
         sales[i].courier = { first_name: courier_info.first_name, middle_name: courier_info.middle_name, last_name: courier_info.last_name }
     }
     sendResponse(res, 1, "Done.", sales);
+});
+
+
+router.get('/courier/:id', async (req, res) => {
+    var query = 'SELECT order_id, desired_delivery_date, desired_delivery_time, volume, A2.first_name, A2.middle_name, A2.last_name, A2.account_id, '
+        + ' O.address_text, courier_status, delivery_status FROM flowergarden.order AS O, account AS A, '
+        + ' flower_arrangement AS F, seller AS S, account as A2 WHERE courier_id = ? AND O.courier_id = A.account_id '
+        + ' AND F.arrangement_id = O.arrangement_id AND S.account_id = F.seller_id AND A2.account_id = S.account_id';
+
+    var val = [req.params.id];
+
+    let rows = await dbconnection.promise().query(query, val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    var deliveries = rows[0];
+    if (!deliveries || deliveries.length == 0) {
+        sendResponse(res, 0, "No deliveries with the given courier_id " + req.params.id, null);
+        return;
+    }
+
+    for (i = 0; i < deliveries.length; ++i) {
+        if (!deliveries[i].account_id)
+            continue;
+        deliveries[i].seller = { first_name: deliveries[i].first_name, middle_name: deliveries[i].middle_name, last_name: deliveries[i].last_name }
+        deliveries[i].first_name = undefined;
+        deliveries[i].last_name = undefined;
+        deliveries[i].middle_name = undefined;
+        deliveries[i].seller_id = deliveries[i].account_id;
+        deliveries[i].account_id = undefined;
+
+    }
+
+    sendResponse(res, 1, "Done.", deliveries);
 });
 
 

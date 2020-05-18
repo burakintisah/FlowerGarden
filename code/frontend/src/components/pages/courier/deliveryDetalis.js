@@ -14,31 +14,43 @@ const ColoredLine = ({ color }) => (
         }}
     />
 );
-
 class DeliveryDetails extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            account_id:null,
-            delivery_id:null,
+            account_id: null,
+            delivery_id: null,
             enableDelivered: false,
             canceled: false,
             deliveredReceiver: false,
 
-            delInfo: []
+            delInfo: [],
+
+
+            selPhone: "",
+            selAdress: "",
+            selName: ""
         }
     }
 
     componentDidMount() {
         const { match: { params } } = this.props;
-        this.setState({ account_id: params.account_id })
+        this.setState({
+            account_id: params.account_id,
+            delivery_id: params.delivery_id
+        })
 
-        axios.get('' + params.account_id).then(res => {
+        axios.get('http://localhost:5000/order/' + params.delivery_id).then(res => {
             console.log(res)
             if (res.data.status === 1) {
-                this.setState({ delInfo: res.data.data })
+                this.setState({
+                    delInfo: res.data.data,
+                    selName: res.data.data.seller.first_name + " " +  res.data.data.seller.middle_name  +  " "  +  res.data.data.seller.last_name
+                })
                 console.log(res.data.message)
+                
+
             }
             else {
                 console.log(res.data.message)
@@ -59,7 +71,11 @@ class DeliveryDetails extends Component {
     }
 
 
+
     render() {
+
+        if (this.state.delInfo != null) {
+        }
         return (
             <DeliveryContainer>
                 <Navbar />
@@ -71,35 +87,26 @@ class DeliveryDetails extends Component {
                             <ColoredLine color="black" />
                             <Row>
                                 <Col className="fon">Delivery ID:</Col>
-                                <Col></Col>
+                                <Col className="fon">{this.state.delInfo.order_id}</Col>
                             </Row>
                             <Row>
                                 <Col className="fon">Delivery Date:</Col>
-                                <Col></Col>
+                                <Col className="fon">{this.state.delInfo.desired_delivery_date}</Col>
                             </Row>
                             <Row>
                                 <Col className="fon">Timeslot:</Col>
-                                <Col></Col>
+                                <Col className="fon">{this.state.delInfo.desired_delivery_time}</Col>
                             </Row>
                             <Row>
                                 <Col className="fon">Volume:</Col>
-                                <Col></Col>
+                                <Col className="fon">{this.state.delInfo.volume}</Col>
                             </Row>
                             <Row>
                                 <Col className="fon">Delivery Type:</Col>
-                                <Col></Col>
+                                <Col className="fon">{this.state.delInfo.delivery_type}</Col>
                             </Row>
-                            <h1 className="info-margin">Customer Information</h1>
-                            <ColoredLine color="black" />
-                            <Row>
-                                <Col className="fon">Customer Name:</Col>
-                                <Col></Col>
-                            </Row>
-                            <Row>
-                                <Col className="fon">Customer Phone:</Col>
-                                <Col></Col>
-                            </Row>
-                            <Row>
+                            
+                            <Row className="btn-mrg ">
                                 <Col sm="4">
                                     <Button className="mt-4 btn-lg btn-dark mr-5 ml-25 btn-block" onClick={this.cancelDel} disabled={this.state.enableDelivered}>Cancel Delivery</Button>
                                 </Col>
@@ -126,29 +133,29 @@ class DeliveryDetails extends Component {
                             <ColoredLine color="black" />
                             <Row>
                                 <Col className="fon">Seller Name:</Col>
-                                <Col></Col>
+                                <Col className="fon">{this.state.selName}</Col>
                             </Row>
                             <Row>
                                 <Col className="fon">Seller Phone:</Col>
-                                <Col></Col>
+                                <Col className="fon">{this.state.selPhone}</Col>
                             </Row>
                             <Row>
                                 <Col className="fon">Seller Address:</Col>
-                                <Col></Col>
+                                <Col className="fon">{this.state.selAdress}</Col>
                             </Row>
                             <h1 className="info-margin">Receiver Information</h1>
                             <ColoredLine color="black" />
                             <Row>
                                 <Col className="fon">Receiver Name:</Col>
-                                <Col></Col>
+                                <Col className="fon">{this.state.delInfo.receiver_name}</Col>
                             </Row>
                             <Row>
                                 <Col className="fon">Receiver Phone:</Col>
-                                <Col></Col>
+                                <Col className="fon">{this.state.delInfo.receiver_phone}</Col>
                             </Row>
                             <Row>
                                 <Col className="fon">Receiver Address:</Col>
-                                <Col></Col>
+                                <Col className="fon">{this.state.delInfo.address_text}</Col>
                             </Row>
 
                         </Container>
@@ -177,6 +184,9 @@ const DeliveryContainer = styled.div`
 .fon {
     margin-top: 5px;
     font-size: 30px;
+}
+.btn-mrg {
+    margin-top: 25%
 }
 
 
