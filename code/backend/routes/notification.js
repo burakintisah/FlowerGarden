@@ -12,7 +12,7 @@ router.get('/account/:id', (req, res) => {
             console.log('Error at: ' + err.sql);
             return;
         }
-        sendResponse(res, 1, 'Done.', result[0]);
+        sendResponse(res, 1, 'Done.', result);
     });
 });
 
