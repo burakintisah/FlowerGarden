@@ -27,6 +27,7 @@ class Complaint extends Component {
             complaint_status:null,
 
             //order
+            order_id:null,
             order_date:null,
             expected_delivery_date:null,
             expected_delivery_timeslot:null,
@@ -46,10 +47,10 @@ class Complaint extends Component {
             seller_address:null,
 
             //courier
-            courier_acceptance_status:null,
-            courier_name:null,
-            courier_phone:null,
-            courier_email:null,
+            courier_acceptance_status:"",
+            courier_name:"",
+            courier_phone:"",
+            courier_email:"",
 
             //customer
             customer_name:null,
@@ -68,49 +69,48 @@ class Complaint extends Component {
             const { match: { params } } = this.props;
             this.setState({ account_id: params.account_id })
             this.setState({ complaint_id: params.complaint_id })
-            
-            axios.get('http://localhost:5000/order/' +params.order_id).then(res => {
+            this.setState({ order_id: params.order_id })
+
+            axios.get('http://localhost:5000/complaint/?complaint_id=' +params.complaint_id + '&order_id=' + params.order_id).then(res => {
                 if (res.data.status === 1) {
-                    console.log("The data:", res.data.data)
+                    console.log("The data esra:", res.data.data.order)
                     
                     //complaint
-                    this.setState({  complaint_date : res.data.data})
-                    this.setState({  complaint_status : res.data.data})
+                    this.setState({  complaint_date : res.data.data.complaint_date})
+                    this.setState({  complaint_status : res.data.data.complaint_status})
                     //order
-                    this.setState({  order_date: res.data.data})
-                    this.setState({  expected_delivery_date: res.data.data})
-                    this.setState({  expected_delivery_timeslot: res.data.data})
-                    this.setState({  delivery_date: res.data.data})
-                    this.setState({  arrangement_name: res.data.data})
-                    this.setState({  price: res.data.data})
-                    this.setState({  payment_method : res.data.data})
-                    this.setState({  volume: res.data.data})
-                    this.setState({  delivery_type : res.data.data})
-                    this.setState({  arrangement_message: res.data.data})
+                    this.setState({  order_date: res.data.data.order.order_date})
+                    this.setState({  expected_delivery_date: res.data.data.order.desired_delivery_date})
+                    this.setState({  expected_delivery_timeslot: res.data.data.order.desired_delivery_time})
+                    this.setState({  delivery_date: res.data.data.order.delivery_date})
+                    this.setState({  arrangement_name: res.data.data.order.arrangement_name})
+                    this.setState({  price: res.data.data.order.price})
+                    this.setState({  payment_method : res.data.data.order.payment})
+                    this.setState({  volume: res.data.data.order.volume})
+                    this.setState({  delivery_type : res.data.data.order.delivery_type})
+                    this.setState({  arrangement_message: res.data.data.order.message})
 
                     //seller
-                    this.setState({  seller_acceptance_status: res.data.data})
-                    this.setState({  seller_name: res.data.data})
-                    this.setState({  seller_phone: res.data.data})
-                    this.setState({  seller_email: res.data.data})
-                    this.setState({  seller_address: res.data.data})
+                    this.setState({  seller_acceptance_status: res.data.data.order.seller.seller_status})
+                    this.setState({  seller_name: res.data.data.order.seller.first_name + " " + res.data.data.order.seller.middle_name + " " + res.data.data.order.seller.last_name})
+                    this.setState({  seller_phone: res.data.data.order.seller.phone})
+                    this.setState({  seller_email: res.data.data.order.seller.email})
+                    this.setState({  seller_address: res.data.data.order.seller.address_text})
 
                     //courier
-                    this.setState({  courier_acceptance_status : res.data.data})
-                    this.setState({  courier_name : res.data.data})
-                    this.setState({  courier_phone : res.data.data})
-                    this.setState({  courier_email : res.data.data})
+                    //this.setState({  courier_acceptance_status : res.data.data})
+                   // this.setState({  courier_name : res.data.data})
+                    //this.setState({  courier_phone : res.data.data})
+                   // this.setState({  courier_email : res.data.data})
 
                     //customer
-                    this.setState({  customer_name : res.data.data})
-                    this.setState({  customer_phone : res.data.data})
-                    this.setState({  customer_email : res.data.data})
+                    this.setState({  customer_name : res.data.data.order.customer.first_name + " " + res.data.data.order.customer.middle_name + " " + res.data.data.order.customer.last_name})
+                    this.setState({  customer_phone : res.data.data.order.customer.phone})
+                    this.setState({  customer_email : res.data.data.order.customer.email})
 
                     //receiver
-                    this.setState({  receiver_name : res.data.data})
-                    this.setState({  receiver_phone : res.data.data})
-                    this.setState({  receiver_email : res.data.data})
-
+                    this.setState({  receiver_name : res.data.data.order.receiver_name})
+                    this.setState({  receiver_phone : res.data.data.order.receiver_phone})
                     
               
                   }
@@ -274,11 +274,9 @@ class Complaint extends Component {
                 <div class="input-group-prepend">
                     <h5>Receiver Phone: </h5> <div> {this.state.receiver_phone} </div>
                 </div>
-                <div class="input-group-prepend">
-                    <h5>Receiver Email: </h5> <div> {this.state.receiver_email} </div>
-                </div>
+
             </Col>
-            </Row> this.state.
+            </Row> 
          
             <div class="input-group mb-3" className="serviceComplaintButtons" >
                 <div class="input-group-prepend">

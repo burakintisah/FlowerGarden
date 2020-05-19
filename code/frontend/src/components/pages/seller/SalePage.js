@@ -49,8 +49,8 @@ class SaleList extends Component {
                     this.setState({ timeslot: res.data.data.desired_delivery_time})
                     this.setState({ message: res.data.data.message })
                     this.setState({ orderStatus: res.data.data.delivery_status })
-                    this.setState({ courierName: res.data.data.courier.first_name + " " +res.data.data.courier.last_name })
-                    this.setState({ courierPhone: res.data.data.courier.phone })
+                    //this.setState({ courierName: res.data.data.courier.first_name + " " +res.data.data.courier.last_name })
+                    //this.setState({ courierPhone: res.data.data.courier.phone })
                     this.setState({ seller_status: res.data.data.seller_status })
               
                   }

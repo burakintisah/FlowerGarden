@@ -1,92 +1,121 @@
+import { MDBCard, MDBCardHeader, MDBCardBody, MDBTableEditable } from "mdbreact";
 import React, { Component } from 'react'
-import {  Container } from 'reactstrap';
-import { Button,  Input } from 'reactstrap';
-import Navbar from '../../layouts/NavbarSeller'
-import { MDBDataTable  } from 'mdbreact';
-import { Redirect} from 'react-router-dom';
+import { Container } from 'reactstrap';
+import { Button, Input } from 'reactstrap';
+import { MDBDataTable } from 'mdbreact';
+import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import Image from 'react-bootstrap/Image'
+import DataTable from 'react-data-table-component';
 
 
-//data yı düzenle
 
-class SaleList extends Component {
-  
-        state = {
-            saleID: null,
-            redirectToReferrer: false,
-            account_id:null,
-            r: [],
-            headings:  [
-                {label: 'ID',field: 'arrangement_id'},
-                {label: 'Flower Arrangement Name',field: 'arrangement_name'},
-                {label: 'Sale Date',field: ''},
-                {label: 'Deliery Date',field: ''},
-                {label: 'Delivery Time',field: ''},
-                {label: 'Courier Name',field: ''},
-                {label: 'Acceptance Status',field: ''},
-                {label: 'Message',field: ''}
+class SaleList  extends Component {
 
-            ],
-            data : []
-        }
+    state = {
+        redirectToReferrer:false,
+        account_id: null,
+        selectedCount: 0,
+        data : [ ],
+        columns: [  {
+          name: 'Arrangement Name',
+          selector: 'arrangement_name',
+        },
+        {
+          name: 'Sale Date',
+          selector: 'order_date',
+          sortable: true,
+        },
+        {
+            name: 'Delivery Status',
+            selector: 'delivery_status',
+            sortable: true,
+          },
+          {
+            name: 'Desired Delivery Date',
+            selector: 'desired_delivery_date',
+            sortable: true,
+          },
+          {
+            name: 'Desired Delivery Time',
+            selector: 'desired_delivery_time',
+            sortable: true,
+          },
+          {
+            name: 'Message',
+            selector: 'message',
+            sortable: true,
+          },          
+        ]
+    }
 
-        componentDidMount() {
-            const { match: { params } } = this.props;
-            this.setState({ account_id: params.account_id })
-            axios.get('http://localhost:5000/order/seller/'+params.account_id).then(res => {
-                if (res.data.status === 1) {
-                    this.setState({ r: res.data.data })
-                    console.log(res.data.data[0])
-                  }
-                  
-            });
-        }
+    componentDidMount() {
+      const { match: { params } } = this.props;
+      this.setState({ account_id: params.account_id })
+      axios.get('http://localhost:5000/order/seller/'+params.account_id).then(res => {
+          if (res.data.status === 1) {
+              this.setState({ data: res.data.data })
+              console.log(res.data)
+            }
+            
+      });
+  }
 
-        takeSaleID = event => { event.preventDefault(); this.setState({ saleID: event.target.value });  }
-        
-        seeSaleDetails = event => {
-            event.preventDefault();
-            this.setState({ redirectToReferrer: true})
-        }
+  seeSaleDetails   = event => {
+    event.preventDefault();
+    if(this.state.selectedCount != 1)
+    {
+        alert("Please select only one sale!")
+    }
+    else{
+        this.setState({redirectToReferrer : true})
+    } 
+
+};
+
+    handleChange = (state) => {
+      // You can use setState or dispatch with something like Redux so we can use the retrieved data
+      console.log('Selected Rows: ', state.selectedRows);
+      if(state.selectedRows.length > 0)
+      {
+        this.setState({ saleID: state.selectedRows[0].order_id })
+        this.setState({ selectedCount: state.selectedRows.length })
+        console.log("sale ID:", state.selectedRows[0].order_id )
+      }
+
+    };
 
     render() {
-
         const redirectToReferrer = this.state.redirectToReferrer;
         if (redirectToReferrer === true) {
-            //return <Redirect push to={'/sale-details/accountid=' + this.state.account_id + 'saleid=' + this.state.saleID}/>  buraya baaaaaaaaaaaaaak
+            return <Redirect push to={'/sale-page/accountid=' + this.state.account_id + '/orderid=' + this.state.saleID}/> 
         }
-       
-       this.state.data = {
-        columns: this.state.headings,
-        rows: this.state.r
-      };
-
+        
         return (
             <div>
-            <Navbar />
-            <h1 className='ml-3 mt-3'>FlowerGarden</h1>
-            <br/>
-            <br/>
-            <Container>
-            <h2>Sale Details</h2>
-            <MDBDataTable
-                striped
-                bordered
-                small
-                data={this.state.data}
-            />
-            <br /> <br />
-            <div class="input-group mb-3" className="mt-4" style={{float: 'right'}}>
-                <div class="input-group-prepend">
-                    <Input className="mr-5" style={{width: '350px'}} type="text" placeholder="Enter the ID of the sale..." onChange={this.changeID} onChange={this.takeFlowerName}/>
-                    <Button className="btn-lg btn-dark mr-5 ml-10"  onClick={this.seeSaleDetails}>Sale Details</Button>
-                </div>
-            </div>
-            </Container>
+               
+                <h1 className='ml-3 mt-3'>FlowerGarden</h1>
+                <br />
+                <br />
+                
+
+                <Container>
+                <DataTable
+                    title="SALES"
+                    columns={this.state.columns}
+                    data={this.state.data}
+                    selectableRows // add for checkbox selection
+                    Clicked
+                    onSelectedRowsChange={this.handleChange}
+                  />
+                    <Button className=" serviceComplaintButtons btn-lg btn-dark mr-5 ml-10"  onClick={this.seeSaleDetails}>Sale Detail</Button>
+
+                </Container>
+
             </div>
         )
     }
 }
 
 
-export default SaleList;
+export default SaleList ;

@@ -178,7 +178,7 @@ router.get('/courier/:id', async (req, res) => {
 
 router.get('/:id', async (req, res) => {
     var query = 'SELECT *'
-        + 'FROM flowergarden.order NATURAL JOIN flower_arrangement WHERE order_id = ?';
+        + 'FROM flowergarden.order NATURAL JOIN flower_arrangement NATURAL JOIN district NATURAL JOIN province WHERE order_id = ?';
 
     var val = [req.params.id];
 
