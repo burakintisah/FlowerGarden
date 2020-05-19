@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mysql = require('mysql2');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
@@ -21,6 +22,7 @@ var complaintRouter = require('./routes/complaint');
 var notificationRouter = require('./routes/notification');
 
 var app = express();
+app.use(cors({ origin: '*' , credentials :  true}));
 
 global.dbconnection = mysql.createConnection({
   host      : "127.0.0.1",
