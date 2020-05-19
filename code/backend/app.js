@@ -26,7 +26,8 @@ global.dbconnection = mysql.createConnection({
   host      : "127.0.0.1",
   user      : "root",
   password  : "password",
-  database  : "flowergarden"
+  database  : "flowergarden",
+  dateStrings: true
 });
 
 dbconnection.connect(function(err){

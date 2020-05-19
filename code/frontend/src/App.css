@@ -71,6 +71,9 @@
   .selecter {
     max-width:  160px;
 }
+.selecterStock {
+  max-width:  455x;
+}
 
 .days
 {
@@ -98,3 +101,22 @@
   margin-left: 40%;
   margin-top: 100%;
 }
+
+.salePageButtons
+{
+  margin-left: 30%;
+  margin-top: 40px;
+}
+
+.assignPageButtons
+{
+  margin-left: 950px;
+  margin-top: 40px;
+}
+
+.stockContainer
+{
+  max-width: 150px;
+  
+}
+

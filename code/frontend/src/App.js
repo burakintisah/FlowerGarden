@@ -28,12 +28,16 @@ import Arrangements from './components/pages/seller/Arrangements'
 import ArrangementDetails from './components/pages/seller/ArrangementDetails.js'
 import SaleList from './components/pages/seller/SaleList'
 import SelectDistrictWorkingHours from './components/pages/seller/SelectDistrictWorkingHours'
+import SalePage from './components/pages/seller/SalePage'
+import AssignCourier from './components/pages/seller/AssignCourier'
+import FlowerStockUpdate from './components/pages/seller/FlowerStockUpdate'
 
 // Importing Courier Pages
 import selectDistrictCourier from './components/pages/courier/selectDistrictCourier';
 import courierDeliveryList from './components/pages/courier/courierDeliveryList';
 import deliveryDetails from './components/pages/courier/deliveryDetalis';
 import WorkingHoursCourier from './components/pages/courier/WorkingHoursCourier';
+
 
 
 
@@ -58,12 +62,15 @@ class App extends Component {
           <Route path="/createarrangements/accountid=:account_id" component={CreateArrangement} />
           <Route path="/arrangements/accountid=:account_id" component={Arrangements} />   
           <Route path="/arrangement-details/accountid=:account_id/arrangementid=:arrangement_id" component={ArrangementDetails} />   
-          <Route path="/sale-list/seller/accountid=:account_id" component={SaleList} />   
+          <Route path="/stock-update/seller/accountid=:account_id" component={FlowerStockUpdate} /> 
+          <Route path="/sale-list/seller/accountid=:account_id" component={SaleList} /> 
+          <Route path="/sale-page/accountid=:account_id/orderid=:order_id" component={SalePage} /> 
+          <Route path="/assign-courier/accountid=:account_id/orderid=:order_id" component={AssignCourier} />    
           <Route path="/selectDistrict/courier/accountid=:account_id" component={selectDistrictCourier} />   
           <Route path="/deliverytracking/accountid=:account_id" component={courierDeliveryList} />   
           <Route path="/deliverydetails/accountid=:account_id/deliveryid=:delivery_id" component={deliveryDetails} />   
           <Route path="/select-district-working-hours/seller/accountid=:account_id" component={SelectDistrictWorkingHours} />   
-          <Route path="/select-district-and-working-hours/courier/accountid=:account_id" component={WorkingHoursCourier} />   
+          <Route path="/select-district-and-working-hours/courier/accountid=:account_id" component={WorkingHoursCourier} />    
           <Route component={NotFoundPage} />
         </Switch>
         </div>
