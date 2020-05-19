@@ -17,7 +17,6 @@ router.post('/create', (req, res) => {
     });
 });
 
-
 router.get('/', async (req, res) => {
     var val = [req.query.complaint_id, req.query.order_id];
     var query = 'SELECT complaint_date, complaint_status, customer_service_id, response_date FROM complaint WHERE complaint_id= ? AND order_id= ?';
