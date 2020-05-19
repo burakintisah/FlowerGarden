@@ -11,7 +11,6 @@ import ForgotPassword from './components/pages/ForgotPassword'
 
 // Importing Customer Pages
 import Home from './components/pages/customer/Home';
-import Notifications from './components/pages/customer/Notifications';
 import Profile from './components/pages/customer/Profile';
 import OrderTracking from './components/pages/customer/OrderTracking'
 import ChangeDestination from './components/pages/customer/ChangeDestination'
@@ -59,7 +58,6 @@ class App extends Component {
           <Route path="/ordertracking/accountid=:account_id" component={OrderTracking} />
           <Route path="/orderdetails/accountid=:account_id/orderid=:order_id" component={OrderDetails} />
           <Route path="/sign-up" component={SignUp} />
-          <Route path="/notifications" component={Notifications} />
           <Route path="/profile/:id" component={Profile} />
           <Route path="/change-destination" component={ChangeDestination}/>
           <Route path="/forgot-password" component={ForgotPassword} />
