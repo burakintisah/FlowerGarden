@@ -3,9 +3,9 @@ var express = require('express');
 var router = express.Router();
 
 router.post('/create', (req, res) => {
-    var val = [req.body.order_id, req.body.complaint_date, 4, null, "Waiting"];
-    var query = 'INSERT INTO complaint (order_id, complaint_date, customer_service_id, response_date, complaint_status) '
-        + ' VALUES ( ?, ?, ?, ?, ?)';
+    var val = [req.body.order_id, req.body.complaint_date, 28, null, "Waiting", req.body.complaint_text];
+    var query = 'INSERT INTO complaint (order_id, complaint_date, customer_service_id, response_date, complaint_status, complaint_text) '
+        + ' VALUES ( ?, ?, ?, ?, ?, ?)';
 
     dbconnection.query(query, val, function (err, result, fields) {
         if (err) {
