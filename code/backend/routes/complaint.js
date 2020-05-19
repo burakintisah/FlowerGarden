@@ -3,7 +3,7 @@ var express = require('express');
 var router = express.Router();
 
 router.post('/create', (req, res) => {
-    var val = [req.body.order_id, req.body.complaint_date, req.body.customer_service_id, req.body.response_date, req.body.complaint_status];
+    var val = [req.body.order_id, req.body.complaint_date, 4, null, "Waiting"];
     var query = 'INSERT INTO complaint (order_id, complaint_date, customer_service_id, response_date, complaint_status) '
         + ' VALUES ( ?, ?, ?, ?, ?)';
 
@@ -70,8 +70,55 @@ router.get('/', async (req, res) => {
     });
     order.customer = rows[0][0];
 
-    result.order=order;
+    result.order = order;
     sendResponse(res, 1, "Done.", result);
 
 });
+
+router.get('/account/:id', async (req, res) => {
+    var val = [req.params.id];
+    var query = 'SELECT C.complaint_id, C.complaint_date, C.complaint_status, O.order_id, A1.email as customer_email, '
+        + ' A2.email as seller_email FROM complaint as C NATURAL JOIN flowergarden.order as O, '
+        + ' account as A1, account as A2 WHERE O.customer_id = A1.account_id AND '
+        + ' O.seller_id = A2.account_id AND customer_service_id = 4';
+
+    let rows = await dbconnection.promise().query(query, val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    var result = rows[0];
+    sendResponse(res, 1, "Done.", result);
+});
+
+router.get('/replied', async (req, res) => {
+    var val = [req.query.complaint_id, req.query.order_id];;
+    var query = 'UPDATE complaint SET complaint_status = "Replied" WHERE complaint_id = ? AND order_id = ?'
+
+    let rows = await dbconnection.promise().query(query, val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    sendResponse(res, 1, "Done.", null);
+
+});
+
+router.get('/solved', async (req, res) => {
+    var val = [req.query.complaint_id, req.query.order_id];;
+    var query = 'UPDATE complaint SET complaint_status = "Solved" WHERE complaint_id = ? AND order_id = ?'
+
+    let rows = await dbconnection.promise().query(query, val).catch((err) => {
+        console.log('Error at: ' + err);
+        sendResponse(res, 0, err.sqlMessage, null);
+    });
+
+    sendResponse(res, 1, "Done.", null);
+
+});
+
+
+
+
+
 module.exports = router;
