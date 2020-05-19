@@ -38,6 +38,11 @@ import courierDeliveryList from './components/pages/courier/courierDeliveryList'
 import deliveryDetails from './components/pages/courier/deliveryDetalis';
 import WorkingHoursCourier from './components/pages/courier/WorkingHoursCourier';
 
+// Importing Customer Service Pages
+import Complaint from './components/pages/service/Complaint';
+
+//Import common pages
+import NotificationList from './components/pages/NotificationList';
 
 
 
@@ -70,7 +75,9 @@ class App extends Component {
           <Route path="/deliverytracking/accountid=:account_id" component={courierDeliveryList} />   
           <Route path="/deliverydetails/accountid=:account_id/deliveryid=:delivery_id" component={deliveryDetails} />   
           <Route path="/select-district-working-hours/seller/accountid=:account_id" component={SelectDistrictWorkingHours} />   
-          <Route path="/select-district-and-working-hours/courier/accountid=:account_id" component={WorkingHoursCourier} />    
+          <Route path="/select-district-and-working-hours/courier/accountid=:account_id" component={WorkingHoursCourier} />  
+          <Route path="/complaint/service" component={Complaint} />  
+          <Route path="/notification-list/accountid=:account_id" component={NotificationList} />    
           <Route component={NotFoundPage} />
         </Switch>
         </div>
@@ -78,3 +85,5 @@ class App extends Component {
   }
 }
 export default App;
+
+// <Route path="/complaint/service/accountid=:account_id/complainy_id=:complaint_id" component={Complaint} />  
