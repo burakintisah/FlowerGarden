@@ -20,6 +20,7 @@ var orderRouter = require('./routes/order');
 var flowerRouter = require('./routes/flower');
 var complaintRouter = require('./routes/complaint');
 var notificationRouter = require('./routes/notification');
+var reportRouter = require('./routes/report');
 
 var app = express();
 app.use(cors({ origin: '*' , credentials :  true}));
@@ -76,6 +77,7 @@ app.use('/order', orderRouter);
 app.use('/flower', flowerRouter);
 app.use('/complaint', complaintRouter);
 app.use('/notification', notificationRouter);
+app.use('/report', reportRouter);
 
 
 // catch 404 and forward to error handler

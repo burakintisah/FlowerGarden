@@ -6,7 +6,7 @@ router.post('/customer/', (req, res) => {
   if (req.body.search_text) {
     var query = 'WITH to_display AS ('
       + 'SELECT arrangement_id, image_path, arrangement_name, volume, price, seller_id, details, rate, count '
-      + 'FROM flower_arrangement '
+      + 'FROM enabled_arrangements '
       + 'WHERE seller_id IN ( SELECT seller_id FROM seller_serves_to WHERE district_id = ?)) '
       + 'SELECT DISTINCT TD.arrangement_id, TD.image_path, TD.arrangement_name, TD.price, A.first_name, A.middle_name, A.last_name, TD.details, TD.rate, TD.count '
       + 'FROM to_display as TD, account as A '
@@ -17,7 +17,7 @@ router.post('/customer/', (req, res) => {
   else {
     var query = 'WITH to_display AS ('
       + 'SELECT arrangement_id, image_path, arrangement_name, volume, price, seller_id, details, rate, count '
-      + 'FROM flower_arrangement '
+      + 'FROM enabled_arrangements '
       + 'WHERE seller_id IN ( SELECT seller_id FROM seller_serves_to WHERE district_id = ?)) '
       + 'SELECT DISTINCT TD.arrangement_id, TD.image_path, TD.arrangement_name, TD.price, A.first_name, A.middle_name, A.last_name, TD.details, TD.rate, TD.count '
       + 'FROM to_display as TD, occasion as O, seller_working_time as SWT, composed_of C, account as A '
