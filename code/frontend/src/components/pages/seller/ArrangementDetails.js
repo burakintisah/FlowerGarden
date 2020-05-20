@@ -46,7 +46,7 @@ class ArrangementDetails extends Component {
             this.setState({ arrangement_id: params.arrangement_id })
             console.log(params.account_id )
             console.log(params.arrangement_id)
-            axios.get('http://localhost:5000/arrangement/'+params.arrangement_id).then(res => {
+            axios.get(window.$globalAddress + '/arrangement/'+params.arrangement_id).then(res => {
                 if (res.data.status === 1) {
                     this.setState({ arrangementName: res.data.data.arrangement_name })
                     this.setState({ descp: res.data.data.details })
@@ -71,7 +71,7 @@ class ArrangementDetails extends Component {
         deleteArrangement = event => {
             event.preventDefault();
             var data = { arrangement_id: this.state.arrangement_id}
-            axios.get('http://localhost:5000/arrangement/'+  this.state.arrangement_id +'/delete', data).then(res => { 
+            axios.get(window.$globalAddress + '/arrangement/'+  this.state.arrangement_id +'/delete', data).then(res => { 
                 console.log(res);   
                 if (res.data.status === 1){
                     this.setState({ redirectToReferrer: true})

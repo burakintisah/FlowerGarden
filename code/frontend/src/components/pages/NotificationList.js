@@ -33,7 +33,7 @@ class NotificationList extends Component {
     componentDidMount() {
       const { match: { params } } = this.props;
       this.setState({ account_id: params.account_id })
-      axios.get('http://localhost:5000/notification/account/'+params.account_id).then(res => {
+      axios.get(window.$globalAddress + '/notification/account/'+params.account_id).then(res => {
           if (res.data.status === 1) {
               this.setState({ data: res.data.data })
               console.log(res.data)
@@ -51,14 +51,14 @@ class NotificationList extends Component {
     }
     var data = {notifications: nList };
     console.log("Sent data:", data)
-    axios.post('http://localhost:5000/notification/delete', data).then(res => {
+    axios.post(window.$globalAddress + '/notification/delete', data).then(res => {
       console.log("esraa")
         console.log("RES data:",res)    
         if (res.data.status === 1) {
             this.setState({ redirectToReferrer: true })
             alert("Notifications are deleted.")
 
-            axios.get('http://localhost:5000/notification/account/'+this.state.account_id).then(res => {
+            axios.get(window.$globalAddress + '/notification/account/'+this.state.account_id).then(res => {
               if (res.data.status === 1) {
                   this.setState({ data: res.data.data })
                   console.log(res.data)

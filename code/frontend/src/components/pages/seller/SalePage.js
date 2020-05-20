@@ -36,7 +36,7 @@ class SaleList extends Component {
             this.setState({ account_id: params.account_id })
             this.setState({ order_id: params.order_id })
             
-            axios.get('http://localhost:5000/order/' +params.order_id).then(res => {
+            axios.get(window.$globalAddress + '/order/' +params.order_id).then(res => {
                 if (res.data.status === 1) {
                     console.log("The data:", res.data.data)
                     this.setState({ saleID : res.data.data.order_id })
@@ -60,7 +60,7 @@ class SaleList extends Component {
 
         onDeliveredTo = event => {
             event.preventDefault();
-            axios.get('http://localhost:5000/order/' +this.state.order_id+ '/seller/on_delivery').then(res => {
+            axios.get(window.$globalAddress + '/order/' +this.state.order_id+ '/seller/on_delivery').then(res => {
                 if (res.data.status === 1) {
                     console.log("The data:", res.data.data);
                     //alert("");
@@ -76,7 +76,7 @@ class SaleList extends Component {
 
         onReject = event => {
             event.preventDefault();
-            axios.get('http://localhost:5000/order/' +this.state.order_id+ '/seller/reject').then(res => {
+            axios.get(window.$globalAddress + '/order/' +this.state.order_id+ '/seller/reject').then(res => {
                 if (res.data.status === 1) {
                     console.log("The data:", res.data.data)
                     alert("The order is succesfully rejected.");
@@ -92,7 +92,7 @@ class SaleList extends Component {
         onAccept = event => {
             event.preventDefault();
 
-            axios.get('http://localhost:5000/order/' +this.state.order_id+ '/seller/accept').then(res => {
+            axios.get(window.$globalAddress + '/order/' +this.state.order_id+ '/seller/accept').then(res => {
                 if (res.data.status === 1) {
                     console.log("The data:", res.data.data);
                     alert("The order is succesfully accepted. Assign to the courier");

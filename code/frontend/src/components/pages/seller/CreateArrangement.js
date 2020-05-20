@@ -68,7 +68,7 @@ class CreateArrangement extends Component{
         const { match: { params } } = this.props;
         this.setState({ account_id: params.account_id })
         
-        axios.get("http://localhost:5000/flower").then(res => {
+        axios.get(window.$globalAddress + "/flower").then(res => {
             console.log(res.data.data)
             if (res.data.status === 1) {
                 this.setState({ flowers: res.data.data })
@@ -104,7 +104,7 @@ class CreateArrangement extends Component{
              occasions: this.state.selectedOccasions,
              flowers: flowerList}
              console.log(data);
-        axios.post('http://localhost:5000/arrangement/create', data).then(res => { 
+        axios.post(window.$globalAddress + '/arrangement/create', data).then(res => { 
             console.log(res); 
             if (res.data.status === 1){
                 this.setState({ redirectToReferrer: true})

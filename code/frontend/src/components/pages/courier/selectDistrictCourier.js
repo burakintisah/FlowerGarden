@@ -79,18 +79,6 @@ class selectDistrictCourier extends Component {
 
             console.log(data)
 
-            /*
-            Axios.get(`http://localhost:5000/courier/`,data).then(res => {
-                console.log(res)
-                if (res.data.status === 1) {
-                    this.setState({ sellerInfo: res.data.data })
-                }
-                else {
-                    console.log("No Arrangement Found")
-                }
-
-            });
-            */
         }
 
     }

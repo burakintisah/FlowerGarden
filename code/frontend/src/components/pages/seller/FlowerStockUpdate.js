@@ -25,7 +25,7 @@ class FlowerStockUpdate extends Component {
             const { match: { params } } = this.props;
             this.setState({ account_id: params.account_id })
 
-            axios.get('http://localhost:5000/flower').then(res => {
+            axios.get(window.$globalAddress + '/flower').then(res => {
                 if (res.data.status === 1) {
                     console.log("The data:", res.data.data)
                     this.setState({ flowers: res.data.data })
@@ -43,7 +43,7 @@ class FlowerStockUpdate extends Component {
             event.preventDefault();
             var data = [{ "flower_id": this.state.flower_id,"stock": this.state.stock  }]
             console.log("Sent data:", data)
-            axios.post('http://localhost:5000/flower/stock/' + this.state.account_id, data).then(res => {
+            axios.post(window.$globalAddress + '/flower/stock/' + this.state.account_id, data).then(res => {
                 console.log("RES data:",res)    
                 if (res.data.status === 1) {
                     this.setState({ redirectToReferrerSales: true })
