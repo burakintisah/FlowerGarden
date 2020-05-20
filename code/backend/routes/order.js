@@ -478,7 +478,7 @@ router.get('/:id/courier/delivered', async (req, res) => {
 });
 
 router.get('/:id/courier/reject', async (req, res) => {
-    var query = 'UPDATE flowergarden.order SET courier_id = NULL, courier_status = "Rejected" WHERE order_id = ?';
+    var query = 'UPDATE flowergarden.order SET courier_status = "Rejected" WHERE order_id = ?';
 
     var val = [req.params.id];
 
