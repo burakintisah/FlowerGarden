@@ -153,7 +153,7 @@ class FlowerDetails extends Component {
 
         return (
             <div>
-                <Navbar></Navbar>
+                <Navbar account_id={this.state.account_id}></Navbar>
                 <h1 className='ml-5 mt-3'>FlowerGarden</h1>
 
                 <div className="form-row">

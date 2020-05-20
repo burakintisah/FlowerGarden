@@ -260,7 +260,7 @@ class Checkout extends Component {
         return (
 
             <CheckoutContainer>
-                <Navbar />
+                <Navbar account_id={this.state.account_id}/>
                 <Row>
                     <Col>
                         <Container className="showOrder" hidden={this.state.showPayment} disabled={this.state.showPayment}>

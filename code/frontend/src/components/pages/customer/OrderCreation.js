@@ -92,7 +92,7 @@ class OrderCreation extends Component {
         return (
             <OrderContainer>
 
-                <Navbar />
+                <Navbar account_id={this.state.account_id}/>
                 <Row>
                     <Col>
                         <Container className="showOrder">

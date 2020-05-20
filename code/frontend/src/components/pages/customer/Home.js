@@ -158,7 +158,7 @@ class Home extends Component {
 
             <HomeContainer>
 
-                <Navbar />
+                <Navbar account_id={this.state.account_id}/>
                 <div>
 
                     <Row>

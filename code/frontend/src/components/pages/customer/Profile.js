@@ -27,7 +27,7 @@ class Profile extends Component {
         console.log(this.state.password)
         return (
             <div>
-                <Navbar />
+                <Navbar account_id={this.state.account_id}/>
                 <h2> Profile page...</h2>
 
                 <Footer />

@@ -138,7 +138,7 @@ class OrderDetails extends Component {
             return (
                 <CheckoutContainer>
 
-                    <Navbar />
+                    <Navbar account_id={this.state.account_id}/>
                     <div>
 
                         <Row>
