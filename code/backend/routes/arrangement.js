@@ -122,7 +122,7 @@ router.get('/:id', async (req, res) => {
 });
 
 router.get('/seller/:id', (req, res) => {
-  var query = 'SELECT * FROM flower_arrangement natural join occasion WHERE seller_id = ?';
+  var query = 'SELECT * FROM enabled_arrangements NATURAL JOIN occasion WHERE seller_id = ?';
   var val = [req.params.id];
 
   dbconnection.query(query, val, function (err, result, fields) {
