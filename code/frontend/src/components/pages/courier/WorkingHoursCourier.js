@@ -5,7 +5,7 @@ import axios from 'axios'
 import { Redirect } from 'react-router-dom';
 //import ReactMultiSelectCheckboxes from 'react-multiselect-checkboxes';
 import { Multiselect } from 'multiselect-react-dropdown';
-import Navbar from '../../layouts/NavbarSeller'
+import Navbar from '../../layouts/NavbarCourier'
 
 var working_hours_mon = [];
 var working_hours_tue = [];
@@ -42,7 +42,7 @@ class SelectDistrictWorkingHours extends Component {
         districts: null,
         hourTxt:"",
         text:"",
-        redirectToArrangements: false,
+        redirectToReferrer: false,
         hours : [
             { 'name' : '7:00-8:00', 'value': 7},
             { 'name': '8:00-9:00', 'value': 8},
@@ -161,6 +161,7 @@ class SelectDistrictWorkingHours extends Component {
     componentDidMount() {
         const { match: { params } } = this.props;
         this.setState({ account_id: params.account_id })
+        console.log("accccccccount:",params.account_id)
         axios.get('http://localhost:5000/province').then(res => {
             //console.log(res.data.data)
             if (res.data.status === 1) {
@@ -168,12 +169,11 @@ class SelectDistrictWorkingHours extends Component {
             }
         });
 
-        axios.get('http://localhost:5000/account/seller/' +params.account_id ).then(res => {
-            //console.log(res.data.data)
+        axios.get('http://localhost:5000/account/courier/' + params.account_id + '/district_hour').then(res => {
             if (res.data.status === 1) {
                 this.setState({ getDistrictData: res.data.data.districts });
                 this.setState({ getHoursData: res.data.data.working_times });
-                console.log("DistrictData", res.data.data.working_times);
+                console.log("working hours", res.data.data.working_times);
                 
 
                 var str ="Current selected districts:";
@@ -188,7 +188,7 @@ class SelectDistrictWorkingHours extends Component {
 
 
                 str ="Current selected hours:";
-                if(res.data.data.working_times !== null )
+               /* if(res.data.data.working_times !== null )
                 {
                     for(var i = 0; i < res.data.data.working_times.length; i++)
                     { 
@@ -197,7 +197,7 @@ class SelectDistrictWorkingHours extends Component {
                     str = str + " "
                     this.setState({hourTxt : str})
                 }
-
+*/
 
             }
         });
@@ -256,9 +256,9 @@ class SelectDistrictWorkingHours extends Component {
     
     render() {
 
-        const redirectToReferrer = this.state.redirectToArrangements;
+        const redirectToReferrer = this.state.redirectToReferrer;
         if (redirectToReferrer === true ) {
-            return <Redirect push to={'/arrangements/accountid=' +this.state.account_id} />
+            return <Redirect to={'/deliverytracking/accountid=' +this.state.account_id} />
         }
 
         var display_provinces = []
@@ -289,7 +289,7 @@ class SelectDistrictWorkingHours extends Component {
         return (
             
             <div>
-                <Navbar />
+                <Navbar/>
                 <h1>FlowerGarden</h1>
                 
                 

@@ -61,6 +61,7 @@ class CreateArrangement extends Component{
         //this.state.selectedOccasions.remove({"occasion_name": selectedItem.name })
         console.log(this.state.selectedOccasions);
     }
+    
 
 
     componentDidMount() {
@@ -132,7 +133,7 @@ class CreateArrangement extends Component{
 
         const redirectToReferrer = this.state.redirectToReferrer;
         if (redirectToReferrer === true) {
-            return <Redirect to={`/arrangements/accountid=` + this.state.account_id}/>
+            return <Redirect push to={`/arrangements/accountid=` + this.state.account_id}/>
         }
 
         return (

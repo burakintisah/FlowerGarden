@@ -71,8 +71,64 @@
   .selecter {
     max-width:  160px;
 }
+.selecterStock {
+  max-width:  455x;
+}
+
+.days
+{
+  min-width:300px;
+}
 .stars {
   margin-right:  0px;
   padding-right: 0px;
   margin-left:10px;
 }
+
+
+.workingHoursHeader
+{
+  margin-left: 5%;
+  margin-bottom: 2%;
+  font-size: 20px;
+  background-blend-mode: luminosity ;
+  padding: 0px;
+  text-align: left;
+}
+
+.saveButton
+{
+  margin-left: 40%;
+  margin-top: 100%;
+}
+
+.salePageButtons
+{
+  margin-left: 30%;
+  margin-top: 40px;
+}
+
+.assignPageButtons
+{
+  margin-left: 950px;
+  margin-top: 40px;
+}
+
+.stockContainer
+{
+  max-width: 150px;
+  
+}
+
+.notificationIcon
+{
+  margin-left: 90%;
+  margin-top: 0%;
+}
+
+.serviceComplaintButtons
+{
+  margin-top: 7%;
+  margin-left: 80%;
+}
+

@@ -18,7 +18,7 @@ var ratingRouter = require('./routes/rating');
 var orderRouter = require('./routes/order');
 var flowerRouter = require('./routes/flower');
 var complaintRouter = require('./routes/complaint');
-
+var notificationRouter = require('./routes/notification');
 
 var app = express();
 
@@ -26,7 +26,8 @@ global.dbconnection = mysql.createConnection({
   host      : "127.0.0.1",
   user      : "root",
   password  : "password",
-  database  : "flowergarden"
+  database  : "flowergarden",
+  dateStrings: true
 });
 
 dbconnection.connect(function(err){
@@ -72,6 +73,7 @@ app.use('/rating', ratingRouter);
 app.use('/order', orderRouter);
 app.use('/flower', flowerRouter);
 app.use('/complaint', complaintRouter);
+app.use('/notification', notificationRouter);
 
 
 // catch 404 and forward to error handler

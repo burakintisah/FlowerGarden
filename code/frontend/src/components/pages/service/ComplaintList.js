@@ -5,54 +5,57 @@ import { Button, Input } from 'reactstrap';
 import { MDBDataTable } from 'mdbreact';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import Image from 'react-bootstrap/Image'
 import DataTable from 'react-data-table-component';
 
 
 
-class SaleList  extends Component {
+class ComplaintList  extends Component {
 
     state = {
         redirectToReferrer:false,
         account_id: null,
+        complaint_id: null,
+        order_id:null,
         selectedCount: 0,
         data : [ ],
-        columns: [  {
-          name: 'Arrangement Name',
-          selector: 'arrangement_name',
+        columns: [  
+        {
+            name: 'Complaint ID',
+            selector: 'complaint_id',
+            sortable: true,
+        }, 
+        {
+          name: 'Status',
+          selector: 'complaint_status',
         },
         {
-          name: 'Sale Date',
-          selector: 'order_date',
+          name: 'Order ID',
+          selector: 'order_id',
           sortable: true,
         },
         {
-            name: 'Delivery Status',
-            selector: 'delivery_status',
+            name: 'Customer Email',
+            selector: 'customer_email',
             sortable: true,
           },
           {
-            name: 'Desired Delivery Date',
-            selector: 'desired_delivery_date',
+            name: 'Seller Email',
+            selector: 'seller_email',
             sortable: true,
           },
           {
-            name: 'Desired Delivery Time',
-            selector: 'desired_delivery_time',
+            name: 'Complaint Date',
+            selector: 'complaint_date',
             sortable: true,
           },
-          {
-            name: 'Message',
-            selector: 'message',
-            sortable: true,
-          },          
+         
         ]
     }
 
     componentDidMount() {
       const { match: { params } } = this.props;
       this.setState({ account_id: params.account_id })
-      axios.get('http://localhost:5000/order/seller/'+params.account_id).then(res => {
+      axios.get('http://localhost:5000/complaint/account/'+params.account_id).then(res => {
           if (res.data.status === 1) {
               this.setState({ data: res.data.data })
               console.log(res.data)
@@ -61,11 +64,11 @@ class SaleList  extends Component {
       });
   }
 
-  seeSaleDetails   = event => {
+  seeComplaintDetails   = event => {
     event.preventDefault();
     if(this.state.selectedCount != 1)
     {
-        alert("Please select only one sale!")
+        alert("Please select only one complaint!")
     }
     else{
         this.setState({redirectToReferrer : true})
@@ -74,13 +77,13 @@ class SaleList  extends Component {
 };
 
     handleChange = (state) => {
-      // You can use setState or dispatch with something like Redux so we can use the retrieved data
       console.log('Selected Rows: ', state.selectedRows);
       if(state.selectedRows.length > 0)
       {
-        this.setState({ saleID: state.selectedRows[0].order_id })
+        this.setState({ order_id: state.selectedRows[0].order_id })
+        this.setState({ complaint_id: state.selectedRows[0].order_id })
         this.setState({ selectedCount: state.selectedRows.length })
-        console.log("sale ID:", state.selectedRows[0].order_id )
+        console.log("complaint id: :", state.selectedRows[0].complaint_id )
       }
 
     };
@@ -88,9 +91,9 @@ class SaleList  extends Component {
     render() {
         const redirectToReferrer = this.state.redirectToReferrer;
         if (redirectToReferrer === true) {
-            return <Redirect push to={'/sale-page/accountid=' + this.state.account_id + '/orderid=' + this.state.saleID}/> 
+            return <Redirect push to={'/complaint/service/accountid=' + this.state.account_id + '/complaintid=' + this.state.complaint_id + '/orderid=' + this.state.saleID}/> 
         }
-        
+
         return (
             <div>
                
@@ -101,14 +104,14 @@ class SaleList  extends Component {
 
                 <Container>
                 <DataTable
-                    title="SALES"
+                    title="COMPLAINTS"
                     columns={this.state.columns}
                     data={this.state.data}
                     selectableRows // add for checkbox selection
                     Clicked
                     onSelectedRowsChange={this.handleChange}
                   />
-                    <Button className=" serviceComplaintButtons btn-lg btn-dark mr-5 ml-10"  onClick={this.seeSaleDetails}>Sale Detail</Button>
+                    <Button className=" serviceComplaintButtons btn-lg btn-dark mr-5 ml-10"  onClick={this.seeComplaintDetails}> See Complaint Detail</Button>
 
                 </Container>
 
@@ -118,4 +121,4 @@ class SaleList  extends Component {
 }
 
 
-export default SaleList ;
+export default ComplaintList ;

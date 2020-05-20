@@ -1,105 +1,130 @@
 import React, { Component } from 'react'
 import { Container } from 'reactstrap';
 import { Button, Input } from 'reactstrap';
-import Navbar from '../../layouts/NavbarSeller'
-import { MDBDataTable } from 'mdbreact';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
+import DataTable from 'react-data-table-component';
 
 
-//data yı düzenle
 
-class SignUp extends Component {
+class Arrangements  extends Component {
 
     state = {
-        rows: null,
+        redirectToReferrerDetails:false,
+        redirectToReferrerCreate:false,
+        arrangement_id:null,
         account_id: null,
-        flowerID: null,
-        redirectToReferrerDetails: false,
-        redirectToReferrerCreate: false,
-        r: [],
-        c: [
-            { label: 'ID', field: 'arrangement_id' },
-            { label: 'Flower Arrangement Name', field: 'arrangement_name' },
-            { label: 'Volume', field: 'volume' },
-            { label: 'Price', field: 'price' },
-            { label: 'Occasions', field: 'occasion_name' }
-        ],
-        data: []
+        selectedCount: 0,
+        data : [ ],
+        columns: [  {
+          name: 'ID',
+          selector: 'arrangement_id' ,
+        },
+        {
+          name: 'Flower Arrangement Name',
+          selector: 'arrangement_name',
+          sortable: true,
+        },
+        {
+            name: 'Volume',
+            selector: 'volume',
+            sortable: true,
+          },
+          {
+            name: 'Price',
+            selector: 'price',
+            sortable: true,
+          },
+         /* {
+            name: 'Occasions',
+            selector: 'occasion_name',
+            sortable: true,
+          },*/
+        
+        ]
     }
+
     componentDidMount() {
-        const { match: { params } } = this.props;
-        this.setState({ account_id: params.account_id })
-        axios.get('http://localhost:5000/arrangement/seller/' + params.account_id).then(res => {
+      const { match: { params } } = this.props;
+      this.setState({ account_id: params.account_id })
+      axios.get('http://localhost:5000/arrangement/seller/' + params.account_id).then(res => {
             if (res.data.status === 1) {
-                this.setState({ r: res.data.data })
-                console.log(res.data.data)
+              this.setState({ data: res.data.data })
+              console.log(res.data)
             }
+            
+      });
+  }
 
-        });
+  seeArrangementDetails   = event => {
+    event.preventDefault();
+    if(this.state.selectedCount != 1)
+    {
+        alert("Please select only one sale!")
     }
+    else{
+        this.setState({redirectToReferrerDetails : true})
+    } 
 
-    takeFlowerID = event => { event.preventDefault(); this.setState({ flowerID: event.target.value }); console.log(this.state.flowerID); }
-
-    seeFlowerDetails = event => {
-        event.preventDefault();
-        var data = { arrangement_name: this.state.flowerName }
-        axios.post('http://localhost:5000/arrangement/{flowerName}', data).then(res => {
-            console.log(res);
-            if (res.data.status === 1) {
-                this.setState({ redirectToReferrerDetails: true })
-            }
-            else {
-                console.log("There is no such flower arrangement")
-            }
-        });
-    }
+};
 
     createArrangement = event => {
         event.preventDefault();
         this.setState({ redirectToReferrerCreate: true })
     }
 
+    handleChange = (state) => {
+      // You can use setState or dispatch with something like Redux so we can use the retrieved data
+      console.log('Selected Rows: ', state.selectedRows);
+      if(state.selectedRows.length > 0)
+      {
+        this.setState({ arrangement_id : state.selectedRows[0].arrangement_id })
+        this.setState({ selectedCount: state.selectedRows.length })
+        console.log("arrangement_id :", state.selectedRows[0].arrangement_id )
+      }
+
+    };
+
     render() {
-        this.state.data = {
-            columns: this.state.c,
-            rows: this.state.r
-        };
-        const redirectToReferrer1 = this.state.redirectToReferrerCreate;
-        if (redirectToReferrer1 === true) {
-            return <Redirect to={`/createarrangements/accountid=` + this.state.account_id}/>
+        var redirectToReferrer = this.state.redirectToReferrerDetails;
+        if (redirectToReferrer === true) {
+            return <Redirect push to={'/arrangement-details/accountid=' + this.state.account_id + '/arrangementid=' + this.state.arrangement_id}/> 
         }
-        const redirectToReferrer2 = this.state.redirectToReferrerDetails;
-        if (redirectToReferrer2 === true) {
-            return <Redirect to={'/arrangement-details/accountid=' + this.state.account_id +'/arrangementid=' +this.state.flowerID}/>
+        redirectToReferrer = this.state.redirectToReferrerCreate;
+        if (redirectToReferrer === true) {
+            return <Redirect push to={'/createarrangements/accountid=' + this.state.account_id}/> 
         }
+    
+        
         return (
             <div>
-                <Navbar />
+               
                 <h1 className='ml-3 mt-3'>FlowerGarden</h1>
                 <br />
                 <br />
+                
+
                 <Container>
-                    <h2>Arrangement Details</h2>
-                    <MDBDataTable
-                        striped
-                        bordered
-                        small
-                        data={this.state.data}
-                    />
-                    <br /> <br />
+                <DataTable
+                    title="ARRANEGEMENTS"
+                    columns={this.state.columns}
+                    data={this.state.data}
+                    selectableRows // add for checkbox selection
+                    Clicked
+                    onSelectedRowsChange={this.handleChange}
+                  />
                     <div class="input-group mb-3" className="mt-4" style={{ float: 'right' }}>
                         <div class="input-group-prepend">
-                            <Input className="mr-5" style={{ width: '350px' }} type="text" placeholder="Enter the ID of the arrangement..." onChange={this.takeFlowerID} />
-                            <Button className="btn-lg btn-dark mr-5 ml-25" onClick={this.seeFlowerDetails}>Arrangement Details</Button>
+                            <Button className="btn-lg btn-dark mr-5 ml-25" onClick={this.seeArrangementDetails}>Arrangement Details</Button>
                             <Button className="btn-lg btn-dark mr-5 ml-10" onClick={this.createArrangement}>Create Arrangement</Button>
                         </div>
                     </div>
                 </Container>
+
             </div>
         )
     }
 }
 
 
-export default SignUp;
+export default Arrangements ;

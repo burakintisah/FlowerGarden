@@ -32,7 +32,7 @@ function Navbar () {
                 
                 <ul className="navbar-nav ml-auto">
                     <li className="nav-item">
-                        <Link className="nav-link text-white text-uppercase ml-5" to="/notifications">Notifications&nbsp;<i class="fas fa-bell"></i></Link>
+                        <Link className="nav-link text-white text-uppercase ml-5" to="/notification-list/accountid=4">Notifications&nbsp;<i class="fas fa-bell"></i></Link>
                     </li>
                     <li className="nav-item active">
                         <Link className="nav-link text-white text-uppercase ml-5" to="/change-destination">Change Service District&nbsp; <i class="fas fa-home"></i></Link>

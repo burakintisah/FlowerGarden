@@ -11,7 +11,6 @@ import ForgotPassword from './components/pages/ForgotPassword'
 
 // Importing Customer Pages
 import Home from './components/pages/customer/Home';
-import Notifications from './components/pages/customer/Notifications';
 import Profile from './components/pages/customer/Profile';
 import OrderTracking from './components/pages/customer/OrderTracking'
 import ChangeDestination from './components/pages/customer/ChangeDestination'
@@ -23,19 +22,27 @@ import OrderDetails from './components/pages/customer/OrderDetails'
 
 
 // Importing Seller Pages
-import SelectTimePlace from './components/pages/seller/selectTimePlace'
-import SellerHome from './components/pages/seller/sellerHome'
 import CreateArrangement from './components/pages/seller/CreateArrangement'
 import Arrangements from './components/pages/seller/Arrangements'
 import ArrangementDetails from './components/pages/seller/ArrangementDetails.js'
 import SaleList from './components/pages/seller/SaleList'
 import SelectDistrictWorkingHours from './components/pages/seller/SelectDistrictWorkingHours'
+import SalePage from './components/pages/seller/SalePage'
+import AssignCourier from './components/pages/seller/AssignCourier'
+import FlowerStockUpdate from './components/pages/seller/FlowerStockUpdate'
 
 // Importing Courier Pages
 import selectDistrictCourier from './components/pages/courier/selectDistrictCourier';
 import courierDeliveryList from './components/pages/courier/courierDeliveryList';
 import deliveryDetails from './components/pages/courier/deliveryDetalis';
+import WorkingHoursCourier from './components/pages/courier/WorkingHoursCourier';
 
+// Importing Customer Service Pages
+import Complaint from './components/pages/service/Complaint';
+import ComplaintList from './components/pages/service/ComplaintList';
+
+//Import common pages
+import NotificationList from './components/pages/NotificationList';
 
 class App extends Component {
   render() {
@@ -51,23 +58,24 @@ class App extends Component {
           <Route path="/ordertracking/accountid=:account_id" component={OrderTracking} />
           <Route path="/orderdetails/accountid=:account_id/orderid=:order_id" component={OrderDetails} />
           <Route path="/sign-up" component={SignUp} />
-          <Route path="/notifications" component={Notifications} />
           <Route path="/profile/:id" component={Profile} />
           <Route path="/change-destination" component={ChangeDestination}/>
           <Route path="/forgot-password" component={ForgotPassword} />
-          <Route path="/selectTimePlace" component={SelectTimePlace} />
-          <Route path="/seller/:account_id" component={SellerHome} />
           <Route path="/createarrangements/accountid=:account_id" component={CreateArrangement} />
           <Route path="/arrangements/accountid=:account_id" component={Arrangements} />   
           <Route path="/arrangement-details/accountid=:account_id/arrangementid=:arrangement_id" component={ArrangementDetails} />   
-          <Route path="/sale-list/seller/accountid=:account_id" component={SaleList} />   
+          <Route path="/stock-update/seller/accountid=:account_id" component={FlowerStockUpdate} /> 
+          <Route path="/sale-list/seller/accountid=:account_id" component={SaleList} /> 
+          <Route path="/sale-page/accountid=:account_id/orderid=:order_id" component={SalePage} /> 
+          <Route path="/assign-courier/accountid=:account_id/orderid=:order_id" component={AssignCourier} />    
           <Route path="/selectDistrict/courier/accountid=:account_id" component={selectDistrictCourier} />   
           <Route path="/deliverytracking/accountid=:account_id" component={courierDeliveryList} />   
           <Route path="/deliverydetails/accountid=:account_id/deliveryid=:delivery_id" component={deliveryDetails} />   
-
-
-
           <Route path="/select-district-working-hours/seller/accountid=:account_id" component={SelectDistrictWorkingHours} />   
+          <Route path="/select-district-and-working-hours/courier/accountid=:account_id" component={WorkingHoursCourier} />  
+          <Route path="/complaint/service/accountid=:account_id/complaintid=:complaint_id/orderid=:order_id" component={Complaint} />
+          <Route path="/complaint-list/service/accountid=:account_id" component={ComplaintList} />    
+          <Route path="/notification-list/accountid=:account_id" component={NotificationList} />    
           <Route component={NotFoundPage} />
         </Switch>
         </div>
@@ -75,3 +83,4 @@ class App extends Component {
   }
 }
 export default App;
+
