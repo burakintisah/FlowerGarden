@@ -3,14 +3,16 @@ import { Button, Form, FormGroup, Label, Input, Jumbotron } from 'reactstrap';
 import styled from 'styled-components'
 import Footer from '../layouts/Footer';
 import axios from 'axios'
+import App from '../../App'
 import { Redirect } from 'react-router-dom';
 
-class Login extends Component {
 
+class Login extends Component {
+    
 
     state = {
-        email: "banu@gmail.com",
-        password: "23456",
+        email: "sel1@gmail.com",
+        password: "sel1",
         account_id: null,
         account_type: 0,
         redirectToReferrer: false
@@ -20,7 +22,7 @@ class Login extends Component {
         event.preventDefault();
         var data = { email: this.state.email, password: this.state.password }
         console.log(data)
-        axios.post('http://localhost:5000/login', data).then(res => {
+        axios.post( window.$globalAddress, data).then(res => {
             console.log(res);
             // console.log(res.data.data.account_id)
             // Here we are checking whether we were able to log in or not ! 
@@ -71,11 +73,11 @@ class Login extends Component {
                         <Form className="login-form bk" onSubmit={this.handleSubmit}>
                             <FormGroup>
                                 <Label> Email</Label>
-                                <Input type="email" placeholder="Email" value="banu@gmail.com" onChange={this.changeEmail} />
+                                <Input type="email" placeholder="Email" value="sel1@gmail.com" onChange={this.changeEmail} />
                             </FormGroup>
                             <FormGroup>
                                 <Label> Password</Label>
-                                <Input type="password" placeholder="Password" value="23456" onChange={this.changePassword} />
+                                <Input type="password" placeholder="Password" value="sel1" onChange={this.changePassword} />
                             </FormGroup>
                             <Button className="btn-lg btn-dark btn-block">Log in</Button>
                             <div className='text-center mt-3 mb-3'>

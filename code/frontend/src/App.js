@@ -37,7 +37,6 @@ import courierDeliveryList from './components/pages/courier/courierDeliveryList'
 import deliveryDetails from './components/pages/courier/deliveryDetalis';
 
 
-
 class App extends Component {
   render() {
     return (
