@@ -121,18 +121,29 @@ router.get('/:id', async (req, res) => {
 
 });
 
-router.get('/seller/:id', (req, res) => {
-  var query = 'SELECT * FROM enabled_arrangements NATURAL JOIN occasion WHERE seller_id = ?';
+router.get('/seller/:id', async (req, res) => {
+  var query = 'SELECT * FROM enabled_arrangements WHERE seller_id = ?';
   var val = [req.params.id];
 
-  dbconnection.query(query, val, function (err, result, fields) {
-    if (err) {
-      sendResponse(res, 0, 'MySQL Error: ' + err.sqlMessage, null);
-      console.log('Error at: ' + err.sql);
-      return;
-    }
-    sendResponse(res, 1, 'Done.', result);
+  let rows = await dbconnection.promise().query(query, val).catch((err) => {
+    console.log('Error at: ' + err);
+    sendResponse(res, 0, err.sqlMessage, null);
   });
+  var arrangements = rows[0];
+  query = 'SELECT occasion_name FROM occasion WHERE arrangement_id = ?';
+
+  for (i = 0; i < arrangements.length; i++) {
+    val = [arrangements[i].arrangement_id]
+    let rows = await dbconnection.promise().query(query, val).catch((err) => {
+      console.log('Error at: ' + err);
+      sendResponse(res, 0, err.sqlMessage, null);
+    });
+    arrangements[i].occasions = rows[0];
+  }
+
+  sendResponse(res, 1, "Done.", arrangements);
+
+
 });
 
 router.post('/create', async (req, res) => {
