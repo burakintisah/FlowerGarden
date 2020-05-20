@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import Navbar from '../../layouts/NavbarCustomer'
 import Footer from '../../layouts/Footer'
 import { Redirect } from 'react-router-dom';
-import {Button, Row} from 'reactstrap';
+import { Button, Row } from 'reactstrap';
 import axios from 'axios';
-import {Image, Col} from 'react-bootstrap'
+import { Image, Col } from 'react-bootstrap'
 import Rating from 'react-rating'
 import CommentCard from '../seller/CommentCard';
 import DatePicker from 'react-date-picker';
@@ -27,116 +27,119 @@ const options = [
     { value: '14', label: '14:00' },
     { value: '15', label: '15:00' },
     { value: '16', label: '16:00' },
-  ];
+];
 
 class FlowerDetails extends Component {
-            state = {
-                arrangement_id: null,
-                account_id:null,
-                district_id: null,
-                arrangementName: null,
-                volume: null,
-                price: null,
-                occasions: [],
-                flowers: null,
-                descp: null,
-                arrangementRate: null,
-                sellerRate: null,
-                sellerFirstName:null,
-                sellerMiddleName:null,
-                sellerLastName:null,
-                //enabled: true,
-                count:null,
-                flowers: [],
-                commentArray: [],
-                occasions:[],
-                redirectToOrderPage: false,
-                date: new Date(),
-                time: null
+    state = {
+        arrangement_id: null,
+        account_id: null,
+        district_id: null,
+        arrangementName: null,
+        volume: null,
+        price: null,
+        occasions: [],
+        flowers: null,
+        descp: null,
+        arrangementRate: null,
+        sellerRate: null,
+        sellerFirstName: null,
+        sellerMiddleName: null,
+        sellerLastName: null,
+        //enabled: true,
+        count: null,
+        flowers: [],
+        commentArray: [],
+        occasions: [],
+        redirectToOrderPage: false,
+        date: new Date(),
+        time: null
+    }
+    componentDidMount() {
+        const { match: { params } } = this.props;
+        this.setState({ account_id: params.account_id })
+        this.setState({ arrangement_id: params.arrangement_id })
+        this.setState({ district_id: params.district_id })
+        console.log(params.account_id)
+        console.log(params.arrangement_id)
+
+        axios.get(window.$globalAddress + '/arrangement/' + params.arrangement_id).then(res => {
+            if (res.data.status === 1) {
+                this.setState({ arrangementName: res.data.data.arrangement_name })
+                this.setState({ descp: res.data.data.details })
+                //this.setState({ enabled: res.data.data.enabled })
+                this.setState({ price: res.data.data.price })
+                this.setState({ arrangementRate: res.data.data.rate })
+                //this.setState({ sellerRate: res.data.data. })
+                this.setState({ sellerFirstName: res.data.data.seller.first_name })
+                this.setState({ sellerMiddleName: res.data.data.seller.middle_name })
+                this.setState({ sellerLastName: res.data.data.seller.last_name })
+                this.setState({ sellerRate: res.data.data.seller.rating })
+                this.setState({ volume: res.data.data.volume })
+                this.setState({ flowers: res.data.data.flowers })
+                this.setState({ commentArray: res.data.data.comments })
+                this.setState({ occasions: res.data.data.occasions })
+                this.setState({ count: res.data.data.count })
+                console.log(res.data)
+                console.log(res.data.data.flowers)
+                console.log(res.data.data.occasions)
             }
-        componentDidMount() {
-            const { match: { params } } = this.props;
-            this.setState({ account_id: params.account_id })
-            this.setState({ arrangement_id: params.arrangement_id })
-            this.setState({ district_id: params.district_id })
-            console.log(params.account_id )
-            console.log(params.arrangement_id)
 
-            axios.get('http://localhost:5000/arrangement/'+params.arrangement_id).then(res => {
-                if (res.data.status === 1) {
-                    this.setState({ arrangementName: res.data.data.arrangement_name })
-                    this.setState({ descp: res.data.data.details })
-                    //this.setState({ enabled: res.data.data.enabled })
-                    this.setState({ price: res.data.data.price })
-                    this.setState({ arrangementRate: res.data.data.rate })
-                    //this.setState({ sellerRate: res.data.data. })
-                    this.setState({ sellerFirstName: res.data.data.seller.first_name })
-                    this.setState({ sellerMiddleName: res.data.data.seller.middle_name })
-                    this.setState({ sellerLastName: res.data.data.seller.last_name })
-                    this.setState({ sellerRate: res.data.data.seller.rating})
-                    this.setState({ volume: res.data.data.volume })
-                    this.setState({ flowers: res.data.data.flowers })
-                    this.setState({ commentArray: res.data.data.comments })
-                    this.setState({ occasions: res.data.data.occasions })
-                    this.setState({ count: res.data.data.count })
-                    console.log(res.data)
-                    console.log(res.data.data.flowers)
-                    console.log(res.data.data.occasions )
-                }
-                  
-            });
-        }
+        });
+    }
 
-        orderArrangement = event => {
-            event.preventDefault();
-            this.setState({ redirectToReferrer: true})
-        }
-        
+    orderArrangement = event => {
+        event.preventDefault();
+        this.setState({ redirectToReferrer: true })
+    }
 
 
 
-    onDateChange = date =>  { this.setState({ date }); console.log(this.state.date); }
-    onTimeChange = time =>  {this.setState({ time }); console.log(time); }
+
+    onDateChange = date => { this.setState({ date }); console.log(this.state.date); }
+    onTimeChange = time => { this.setState({ time }); console.log(time); }
 
 
     intersperseOccasions(arr) {
-            if (arr.length === 0 ) {
-                return [];
-            }
-            let occasions = "";
-            for(var i = 0; i < arr.length; i++)
-            {
-                if(i === arr.length -1 ) { occasions = occasions +  arr[i].occasion_name}
-                else{ occasions = occasions +  arr[i].occasion_name + ','; }
-            }
-            //console.log(occasions);
-            return occasions;
+        if (arr.length === 0) {
+            return [];
+        }
+        let occasions = "";
+        for (var i = 0; i < arr.length; i++) {
+            if (i === arr.length - 1) { occasions = occasions + arr[i].occasion_name }
+            else { occasions = occasions + arr[i].occasion_name + ','; }
+        }
+        //console.log(occasions);
+        return occasions;
     }
     intersperseFlowers(arr) {
-        if (arr.length === 0 ) {
+        if (arr.length === 0) {
             return [];
         }
         let flowers = "";
-        for(var i = 0; i < arr.length; i++)
-        {
-            if(i === arr.length -1 )
-            {
-                flowers = flowers +  arr[i].count + " " + arr[i].flower_name
+        for (var i = 0; i < arr.length; i++) {
+            if (i === arr.length - 1) {
+                flowers = flowers + arr[i].count + " " + arr[i].flower_name
             }
-            else
-            {
-                flowers = flowers +  arr[i].count + " " + arr[i].flower_name+ ',';
+            else {
+                flowers = flowers + arr[i].count + " " + arr[i].flower_name + ',';
             }
         }
         //console.log(flowers);
         return flowers;
-}
+    }
     render() {
 
         const { selectedOption } = this.state;
         const redirectToOrderPage = this.state.redirectToReferrer;
         if (redirectToOrderPage === true) {
-            return <Redirect to={'/ordercreation/accountid=' + this.state.account_id + '/districtid=' + this.state.district_id + '/arrangementid=' + this .state.account_id}/>
+            return <Redirect to={{
+                pathname: '/ordercreation/accountid=' + this.state.account_id + '/districtid=' + this.state.district_id + '/arrangementid=' + this.state.account_id,
+                state: {
+                    desired_date: this.state.date,
+                    desired_time: this.state.time
+                }}
+
+            } />
         }
         var sellerName = this.state.sellerFirstName + " " + this.state.sellerMiddleName + " " + this.state.sellerLastName;
 
@@ -148,30 +151,30 @@ class FlowerDetails extends Component {
             )
         });
 
-        return(
+        return (
             <div>
                 <Navbar></Navbar>
                 <h1 className='ml-5 mt-3'>FlowerGarden</h1>
-                
+
                 <div className="form-row">
-                        {/*Column 1 */}
-                        <div className="form-group col-md-2 col-sm-2 ml-3" ></div>
+                    {/*Column 1 */}
+                    <div className="form-group col-md-2 col-sm-2 ml-3" ></div>
                     <div className="form-group col-md-2 col-sm-2 ml-3" >
                         <br /><br />
                         <Col xs={3} md={2}>
                             <Image src={require('../seller/arangement_details.jpg')} rounded="true" />
                         </Col>
-                        
+
                     </div>
                     {/*Column 2 */}
                     <div className="form-group col-md-3 col-sm-3 ml-5">
-                        <h1 className=" mt-3" >{this.state.arrangementName}</h1>                    
+                        <h1 className=" mt-3" >{this.state.arrangementName}</h1>
                         <Row>
                             <Col>
-                            <h2 className="mr-0">${this.state.price}</h2>
+                                <h2 className="mr-0">${this.state.price}</h2>
                             </Col>
                             <Col>
-                            <Rating
+                                <Rating
                                     readonly="true"
                                     initialRating={this.state.ratingVal}
                                     emptySymbol="fa fa-star-o fa-2x"
@@ -180,36 +183,36 @@ class FlowerDetails extends Component {
                                 />
                             </Col>
                         </Row>
-                        
+
 
                         <ColoredLine color="black" />
                         <div className=" mt-3" mt-3>Occasions: {tags}</div>
                         <br /> <h3>Time:</h3>
 
-                        
-                               <div className="mr-5">Date: </div>
-                               <div>
-                                    <DatePicker
-                                    onChange={this.onDateChange}
-                                    value={this.state.date}
-                                    />
-                                </div>
-                            
-                        
 
-                        <div className="mr-5">Timeslot: </div>                          
+                        <div className="mr-5">Date: </div>
+                        <div>
+                            <DatePicker
+                                onChange={this.onDateChange}
+                                value={this.state.date}
+                            />
+                        </div>
+
+
+
+                        <div className="mr-5">Timeslot: </div>
 
                         <div>
-                                <Select
+                            <Select
                                 className="selecter"
                                 onChange={this.onTimeChange}
                                 value={selectedOption}
-                                 options={options}
-                                />
-                        </div>                   
+                                options={options}
+                            />
+                        </div>
 
                         <ColoredLine color="black" />
-                        <Button variant="dark"  size="lg" block onClick={this.orderArrangement}>Order</Button>
+                        <Button variant="dark" size="lg" block onClick={this.orderArrangement}>Order</Button>
 
 
                     </div>
@@ -226,14 +229,14 @@ class FlowerDetails extends Component {
                         <div>{this.state.descp}  </div>
                         <h2 className='mt-3'>Seller:</h2>
                         Seller name: {sellerName}
-                        <br/>
-                        <br/>
+                        <br />
+                        <br />
                         <Row>
                             <Col>
-                                Average rating: 
+                                Average rating:
                             </Col>
                             <Col>
-                            <Rating
+                                <Rating
                                     readonly="true"
                                     initialRating={this.state.sellerRate}
                                     emptySymbol="fa fa-star-o fa-2x"
@@ -245,11 +248,11 @@ class FlowerDetails extends Component {
 
                     </div>
                 </div>
-                
-                    <h2 className='mt-3 ml-5'>Comments</h2>
-                    {comments}
-                 
-                
+
+                <h2 className='mt-3 ml-5'>Comments</h2>
+                {comments}
+
+
             </div>
         );
     }

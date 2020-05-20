@@ -24,7 +24,7 @@ class selectDistrictCourier extends Component {
     componentDidMount() {
         const { match: { params } } = this.props;
         this.setState({ account_id: params.account_id })
-        axios.get('http://localhost:5000/province').then(res => {
+        axios.get(window.$globalAddress + '/province').then(res => {
             //console.log(res.data.data)
             if (res.data.status === 1) {
                 this.setState({ provinces: res.data.data })
@@ -39,7 +39,7 @@ class selectDistrictCourier extends Component {
         var data = { province_id: prov.value };
         console.log("DATA");
         console.log(data);
-        axios.post('http://localhost:5000/district', data).then(res => {
+        axios.post(window.$globalAddress + '/district', data).then(res => {
             console.log("Retrieved Data")
             console.log(res)
             if (res.data.status === 1) {

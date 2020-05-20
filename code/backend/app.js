@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mysql = require('mysql2');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
@@ -19,8 +20,10 @@ var orderRouter = require('./routes/order');
 var flowerRouter = require('./routes/flower');
 var complaintRouter = require('./routes/complaint');
 var notificationRouter = require('./routes/notification');
+var reportRouter = require('./routes/report');
 
 var app = express();
+app.use(cors({ origin: '*' , credentials :  true}));
 
 global.dbconnection = mysql.createConnection({
   host      : "127.0.0.1",
@@ -74,6 +77,7 @@ app.use('/order', orderRouter);
 app.use('/flower', flowerRouter);
 app.use('/complaint', complaintRouter);
 app.use('/notification', notificationRouter);
+app.use('/report', reportRouter);
 
 
 // catch 404 and forward to error handler

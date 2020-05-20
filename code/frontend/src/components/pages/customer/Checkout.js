@@ -47,8 +47,8 @@ class Checkout extends Component {
             delivery_status: "Preparing",
             seller_status: "Pending",
             courier_status: "Not Assigned",
-            desired_delivery_date: "2008-05-01",
-            desired_delivery_time: "09:34:21.000001",
+            desired_delivery_date: "",
+            desired_delivery_time: "",
             courier_id: null,
 
             creditCard: "",
@@ -76,17 +76,22 @@ class Checkout extends Component {
         var yyyy = today.getFullYear();
         today = yyyy + '-' + mm + '-' + dd;
         var time = today + " 00:00:01"
-        
+
+            
         this.setState({
             account_id: params.account_id,
             arrangement_id: params.arrangement_id,
             district_id: params.district_id,
+            
+            // desired_delivery_date: this.props.location.state.desired_date,
+            // desired_delivery_time: this.props.location.state.desired_time,
+            desired_delivery_time: "09:34:21.000001" ,
+            desired_delivery_date: today,
             delivery_date: today,
-            desired_delivery_date:today,
             order_date: time,
         });
 
-        Axios.get(`http://localhost:5000/arrangement/${params.arrangement_id}`).then(res => {
+        Axios.get( window.$globalAddress + `/arrangement/${params.arrangement_id}`).then(res => {
             console.log(res)
             if (res.data.status === 1) {
                 this.setState({ arrangemetInfo: res.data.data })
@@ -95,7 +100,7 @@ class Checkout extends Component {
                 console.log("No Arrangement Found")
             }
 
-            Axios.get(`http://localhost:5000/account/${res.data.data.seller_id}`).then(res => {
+            Axios.get( window.$globalAddress + `/account/${res.data.data.seller_id}`).then(res => {
                 console.log(res)
                 if (res.data.status === 1) {
                     this.setState({ sellerInfo: res.data.data })
@@ -108,7 +113,7 @@ class Checkout extends Component {
 
         });
 
-        Axios.get(`http://localhost:5000/account/customer/${params.account_id}/saved_addresses`).then(res => {
+        Axios.get( window.$globalAddress + `/account/customer/${params.account_id}/saved_addresses`).then(res => {
             console.log(res)
             if (res.data.status === 1) {
                 this.setState({ saved_adress: res.data.data })
@@ -127,13 +132,10 @@ class Checkout extends Component {
             }
 
         });
-        Axios.get(`http://localhost:5000/account/customer/${params.account_id}`).then(res => {
+        Axios.get( window.$globalAddress + `/account/customer/${params.account_id}`).then(res => {
             console.log(res)
             if (res.data.status === 1) {
-
                 displayCreditCard = [{ value: res.data.data.credit_card, label: res.data.data.credit_card }]
-
-
             }
             else {
                 console.log("No Credit Card Found")
@@ -168,6 +170,8 @@ class Checkout extends Component {
     finishOrder = dist => {
         console.log("BUTTON CLICKED")
 
+        console.log(this.state.message)
+        console.log(this.state.creditCard)
         let data = {
             payment: this.state.paymentType,
             order_date: this.state.order_date,
@@ -191,7 +195,7 @@ class Checkout extends Component {
 
         console.log(data)
 
-        Axios.post("http://localhost:5000/order", data).then(res => {
+        Axios.post(window.$globalAddress + "/order", data).then(res => {
             console.log(res)
             if (res.data.status === 1) {
                 this.setState({ orderid: res.data.data })
@@ -199,16 +203,18 @@ class Checkout extends Component {
                 this.setState({ redirect: true });
             }
             else {
+                window.confirm(res.data.message)
                 console.log(res.data.message)
             }
 
         });
 
         if (this.state.boolSaveCreditCard === true) {
-            let credData = [{
+            var credData = {
                 credit_card: this.state.creditCard
-            }];
-            Axios.post(`http://localhost:5000/account/customer/${this.state.account_id}/credit_card`, credData).then(res => {
+            };
+            console.log(credData)
+            Axios.post(window.$globalAddress + `/account/customer/${this.state.account_id}/credit_card`, credData).then(res => {
                 console.log(res)
                 if (res.data.status === 1) {
                     console.log("Credit Card Saved")
@@ -222,12 +228,12 @@ class Checkout extends Component {
 
         }
         if (this.state.boolSaveAdress === true) {
-            let addData = [{
+            let addData = {
                 address: this.state.receiverAdress,
                 district_id: this.state.district_id,
                 customer_id: this.state.account_id
-            }];
-            Axios.post(`http://localhost:5000/account/customer/${this.state.account_id}/saved_addresses`, addData).then(res => {
+            };
+            Axios.post(window.$globalAddress + `/account/customer/${this.state.account_id}/saved_addresses`, addData).then(res => {
                 console.log(res)
                 if (res.data.status === 1) {
                     console.logo("Address Saved")
@@ -257,7 +263,7 @@ class Checkout extends Component {
                 <Navbar />
                 <Row>
                     <Col>
-                        <Container className="showOrder" hidden={this.state.showPayment}>
+                        <Container className="showOrder" hidden={this.state.showPayment} disabled={this.state.showPayment}>
                             <h1>Receiver Information</h1>
                             <FormGroup className="arr">
                                 <Input type="text" placeholder="Receiver Name and Surname" onChange={this.changeName} />
@@ -296,16 +302,16 @@ class Checkout extends Component {
                             </FormGroup>
                             <FormGroup className="arr">
                                 <Row>
-                                    <Col><Input type="text" placeholder="Credit Card Number" onChange={this.changeMessage} /></Col>
+                                    <Col><Input type="text" placeholder="Credit Card Number" onChange={this.changeCreditCard} /></Col>
                                     <Col><Select onChange={this.cardSelect} options={displayCreditCard} /></Col>
                                 </Row>
 
                             </FormGroup>
                             <FormGroup className="arr">
                                 <Row>
-                                    <Col><Input type="text" placeholder="Name on Card" onChange={this.changeMessage} /></Col>
-                                    <Col><Input type="text" placeholder="MM / YY" onChange={this.changeMessage} /></Col>
-                                    <Col><Input type="password" placeholder="CCV" onChange={this.changeMessage} /></Col>
+                                    <Col><Input type="text" placeholder="Name on Card" onChange={this.changeNameOnCard} /></Col>
+                                    <Col><Input type="text" placeholder="MM / YY" onChange={this.changeDate} /></Col>
+                                    <Col><Input type="password" placeholder="CCV" onChange={this.changeCVV} /></Col>
                                 </Row>
                             </FormGroup>
                             <FormGroup>
@@ -317,7 +323,7 @@ class Checkout extends Component {
                             <FormGroup>
                                 <h5>Remember Receiver</h5>
                                 <Row className="arr ml-2">
-                                    <input className="mt-1" type="checkbox" aria-label="Checkbox for following text input" onChange={this.saveAdressCheckbox} />
+                                    <input className="mt-1" type="checkbox" aria-label="Checkbox for following text input" onChange={this.saveAdressCheckbox} disabled={displaySavedAdress != {}}/>
                                     <h6 className="ml-5">Save the receiver adress for a faster checkout</h6>
                                 </Row>
                             </FormGroup>

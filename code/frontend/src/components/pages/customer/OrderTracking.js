@@ -23,7 +23,7 @@ class OrderTracking extends Component {
                 { label: 'ID', field: 'order_id' },
                 { label: 'Flower Arrangement Name', field: 'arrangement_name' },
                 { label: 'Price', field: 'price' },
-                { label: 'Order Date', field: 'desired_delivery_date' },
+                { label: 'Order Date', field: 'order_date' },
                 { label: 'Delivery Status', field: 'delivery_status' },
                 { label: 'Seller', field: 'seller_status' },
                 { label: 'Courier', field: 'courier_status' },
@@ -39,7 +39,7 @@ class OrderTracking extends Component {
     componentDidMount() {
         const { match: { params } } = this.props;
         this.setState({ account_id: params.account_id })
-        axios.get('http://localhost:5000/order/customer/' + params.account_id).then(res => {
+        axios.get( window.$globalAddress +'/order/customer/' + params.account_id).then(res => {
             //console.log(res)
             if (res.data.status === 1) {
                 this.setState({ r: res.data.data })
@@ -63,10 +63,26 @@ class OrderTracking extends Component {
         if (this.state.redirectToOrderDetails === true){
             return <Redirect push to={`/orderdetails/accountid=${this.state.account_id}/orderid=${this.state.selectedOrder}`} />
         }
+        
+        
+        var display = this.state.r.map (item => {
+            const container = {};
 
+            container["order_id"] = item.order_id;
+            container["arrangement_name"] = item.arrangement_name;
+            container["price"] = item.price;
+            container["order_date"] = item.order_date;
+            container["delivery_status"] = item.delivery_status;
+            container["seller_status"] = item.seller_status;
+            container["courier_status"] = item.courier_status;
+
+            return container;
+        })
+
+      
         this.state.data = {
             columns: this.state.c,
-            rows: this.state.r
+            rows: display
         };
         return (
             <div>

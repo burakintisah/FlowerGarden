@@ -40,15 +40,15 @@ class OrderTracking extends Component {
     componentDidMount() {
         const { match: { params } } = this.props;
         this.setState({ account_id: params.account_id })
-        axios.get('http://localhost:5000/order/courier/' + params.account_id).then(res => {
-            //console.log(res)
+        axios.get( window.$globalAddress + '/order/courier/' + params.account_id).then(res => {
+            console.log(res)
             if (res.data.status === 1) {
                 this.setState({ r: res.data.data })
                 console.log(res.data.message)
                 console.log(res.data.data)
             }
             else {
-                console.log(res.data.message)
+                window.confirm(res.data.message)
             }
         });
     }
@@ -71,9 +71,24 @@ class OrderTracking extends Component {
             })
         }
 
+        var display = this.state.r.map (item => {
+            const container = {};
+
+            container["order_id"] = item.order_id;
+            container["desired_delivery_date"] = item.desired_delivery_date;
+            container["desired_delivery_time"] = item.desired_delivery_time;
+            container["volume"] = item.volume;
+            container["selName"] = item.selName;
+            container["address_text"] = item.address_text;
+            container["courier_status"] = item.courier_status;
+            container["delivery_status"] = item.delivery_status;
+
+            return container;
+        })
+
         this.state.data = {
             columns: this.state.c,
-            rows: this.state.r
+            rows: display
         };
         return (
             <div>

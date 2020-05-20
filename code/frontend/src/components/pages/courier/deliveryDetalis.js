@@ -29,8 +29,13 @@ class DeliveryDetails extends Component {
 
 
             selPhone: "",
-            selAdress: "",
-            selName: ""
+            selEmailAdress: "",
+            selName: "",
+
+            done: false,
+            showDelivered: false,
+            showRejected: false,
+            showCanBeDeliverd: false,
         }
     }
 
@@ -41,41 +46,66 @@ class DeliveryDetails extends Component {
             delivery_id: params.delivery_id
         })
 
-        axios.get('http://localhost:5000/order/' + params.delivery_id).then(res => {
+        axios.get(window.$globalAddress + '/order/' + params.delivery_id).then(res => {
             console.log(res)
             if (res.data.status === 1) {
                 this.setState({
                     delInfo: res.data.data,
-                    selName: res.data.data.seller.first_name + " " +  res.data.data.seller.middle_name  +  " "  +  res.data.data.seller.last_name
+                    selName: res.data.data.seller.first_name + " " + res.data.data.seller.middle_name + " " + res.data.data.seller.last_name,
+                    selPhone: res.data.data.seller.phone,
+                    selEmailAdress: res.data.data.seller.email
                 })
-                console.log(res.data.message)
                 
+                if (res.data.data.courier_status == "Rejected") {
+                    this.setState({ canceled: true, showRejected: true })
+                }
+                if (res.data.data.delivery_status == "Delivered") {
+                    this.setState({
+                        done: true,
+                        showDelivered: true
+                    })
+                }
+                if (res.data.data.courier_status == "Accepted" &&  res.data.data.delivery_status != "Delivered") {
+                    this.setState({ enableDelivered: true , showCanBeDeliverd: true})
+                }
+                console.log(res.data.message)
+
 
             }
             else {
-                console.log(res.data.message)
+                window.confirm(res.data.message)
             }
         });
     }
 
     acceptDel = event => {
-        this.setState({ enableDelivered: true })
+        this.setState({ enableDelivered: true , showCanBeDeliverd: true})
+        axios.get(window.$globalAddress + "/order/" + this.state.delivery_id + "/courier/accept").then(res => {
+            console.log(res)
+            window.confirm(res.data.message)
+        });
     }
 
     cancelDel = event => {
-        this.setState({ canceled: true })
+        this.setState({ canceled: true , showRejected:true, done:true   })
+        axios.get(window.$globalAddress + "/order/" + this.state.delivery_id + "/courier/reject").then(res => {
+            console.log(res)
+            window.confirm(res.data.message)
+        });
     }
 
     delToRec = event => {
-        this.setState({ deliveredReceiver: true })
+        this.setState({ deliveredReceiver: true , showDelivered: true, showCanBeDeliverd: false, done:true})
+        axios.get(window.$globalAddress + "/order/" + this.state.delivery_id + "/courier/delivered").then(res => {
+            console.log(res)
+            window.confirm(res.data.message)
+        });
     }
 
 
 
     render() {
 
-        if (this.state.delInfo != null) {
-        }
         return (
             <DeliveryContainer>
                 <Navbar />
@@ -105,22 +135,26 @@ class DeliveryDetails extends Component {
                                 <Col className="fon">Delivery Type:</Col>
                                 <Col className="fon">{this.state.delInfo.delivery_type}</Col>
                             </Row>
-                            
+
                             <Row className="btn-mrg ">
                                 <Col sm="4">
-                                    <Button className="mt-4 btn-lg btn-dark mr-5 ml-25 btn-block" onClick={this.cancelDel} disabled={this.state.enableDelivered}>Cancel Delivery</Button>
+                                    <Button className="mt-4 btn-lg btn-dark mr-5 ml-25 btn-block" onClick={this.cancelDel} disabled={(this.state.done) || this.state.enableDelivered}>Reject Delivery</Button>
                                 </Col>
                                 <Col sm="4">
-                                    <Button className="mt-4 btn-lg btn-dark mr-5 ml-25 btn-block" onClick={this.acceptDel} disabled={(this.state.enableDelivered) || (this.state.canceled)}>Accept Delivery</Button>
+                                    <Button className="mt-4 btn-lg btn-dark mr-5 ml-25 btn-block" onClick={this.acceptDel} disabled={(this.state.done) || ((this.state.enableDelivered) || (this.state.canceled))}>Accept Delivery</Button>
                                 </Col>
                             </Row>
                             <Row>
                                 <Col sm="6">
-                                    <Button className="mt-4 btn-lg btn-dark btn-block" onClick={this.delToRec} disabled={!this.state.enableDelivered}>Deliveried to Receiver</Button>
+                                    <Button className="mt-4 btn-lg btn-dark btn-block" onClick={this.delToRec} disabled={(this.state.done) || (!this.state.enableDelivered)}>Delivered to Receiver</Button>
                                 </Col>
+                                <Col className="delivered"  >
+                                    <h4 hidden={!this.state.showDelivered}> You have delivered the order! </h4>
+                                    <h4 hidden={!this.state.showRejected}> You have rejected the order! </h4>
+                                    <h4 hidden={!this.state.showCanBeDeliverd}> You can click if you delivered the order! </h4>
+                                </Col>
+
                             </Row>
-
-
 
 
                         </Container>
@@ -140,8 +174,8 @@ class DeliveryDetails extends Component {
                                 <Col className="fon">{this.state.selPhone}</Col>
                             </Row>
                             <Row>
-                                <Col className="fon">Seller Address:</Col>
-                                <Col className="fon">{this.state.selAdress}</Col>
+                                <Col className="fon">Seller Email Address:</Col>
+                                <Col className="fon">{this.state.selEmailAdress}</Col>
                             </Row>
                             <h1 className="info-margin">Receiver Information</h1>
                             <ColoredLine color="black" />
@@ -187,6 +221,10 @@ const DeliveryContainer = styled.div`
 }
 .btn-mrg {
     margin-top: 25%
+}
+.delivered {
+    margin-top: 4%;
+    margin-left: 5%
 }
 
 
