@@ -27,9 +27,10 @@ router.post('/customer/', (req, res) => {
     var val = [req.body.district_id];
 
     if (req.body.day && req.body.hour){
-      var occasion_query = " AND SWT.day=? AND SWT.hour=? ";
+      var day_query = " AND SWT.day=? AND SWT.hour=? ";
       val.push(req.body.day);
       val.push(req.body.hour);
+      query = query + day_query;
     }
 
     if (req.body.occasions && req.body.occasions.length > 0) {

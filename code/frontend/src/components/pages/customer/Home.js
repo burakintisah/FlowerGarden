@@ -15,7 +15,7 @@ const displayOccasions = [
 ];
 
 const displayPrices = [
-    { value: { upper: 10, lower: 0  }, label: '0 - 10' },
+    { value: { upper: 10, lower: 0 }, label: '0 - 10' },
     { value: { upper: 30, lower: 10 }, label: '10 - 30' },
     { value: { upper: 50, lower: 30 }, label: '30 - 50' },
     { value: { upper: 70, lower: 50 }, label: '50 - 70' }
@@ -45,18 +45,32 @@ class Home extends Component {
 
 
     componentDidMount() {
+        console.group("When component Did mount")
         const { match: { params } } = this.props;
         this.updateValues(params)
         //console.log(params.district_id)
-        console.log("When component Did mount")
+
         var data = {
             district_id: params.district_id,
             day: this.state.day,
             hour: this.state.hour,
-            occasions: this.state.occasions,
-            flowers: this.state.flowers
         }
+
+        //to get flowers
+        axios.get(window.$globalAddress + "/flower").then(res => {
+            //console.log(res.data.data)
+            if (res.data.status === 1) {
+                this.setState({ flowersAll: res.data.data })
+            }
+            else {
+                console.log("No Flower Found")
+            }
+
+        });
+        console.groupEnd();
+
         this.fetchData(data)
+        console.groupEnd();
 
     };
 
@@ -79,7 +93,7 @@ class Home extends Component {
     }
 
     fetchData(data) {
-
+        console.group("FETCH STARTED")
         axios.post(window.$globalAddress + "/arrangement/customer", data).then(res => {
             console.log(res.data.data)
             if (res.data.status === 1) {
@@ -88,19 +102,6 @@ class Home extends Component {
             else {
                 console.log("No Arrangement Found")
             }
-
-        });
-
-        //to get flowers
-        axios.get(window.$globalAddress + "/flower").then(res => {
-            console.log(res.data.data)
-            if (res.data.status === 1) {
-                this.setState({ flowersAll: res.data.data })
-            }
-            else {
-                console.log("No Flower Found")
-            }
-
         });
     }
 
@@ -112,45 +113,53 @@ class Home extends Component {
         })
     };
 
-
     // when filter button clicked
     handleSubmit = event => {
         console.group('Filter Clicked');
         event.preventDefault();
-        var data = {
-            district_id: this.state.district_id,
-            day: this.state.day,
-            hour: this.state.hour,
-            occasions: this.state.occasions.map(item => {
-                const result = {};
-                result["occasion_name"] = item.value;
-                return result;
-            }),
-            flowers: this.state.flowers.map(item => {
-                const result = {};
-                result["flower_id"] = item.value;
-                return result;
-            }),
-            price: this.state.priceFilter.map(item=>{
-                const result = {};
-                result["upper"] = item.value.upper;
-                result["lower"] = item.value.lower;
-                return result
-            }),
+        var data;
+        if (this.state.priceFilter !== []) {
+            data = {
+                district_id: this.state.district_id,
+                day: this.state.day,
+                hour: this.state.hour,
+                occasions: this.state.occasions.map(item => {
+                    const result = {};
+                    result["occasion_name"] = item.value;
+                    return result;
+                }),
+                flowers: this.state.flowers.map(item => {
+                    const result = {};
+                    result["flower_id"] = item.value;
+                    return result;
+                }),
+                price: this.state.priceFilter.map(item => {
+                    const result = {};
+                    result["upper"] = item.value.upper;
+                    result["lower"] = item.value.lower;
+                    return result
+                }),
+            }
         }
-        console.log("Data HERE")
-        console.log(data)
-        var address = window.$globalAddress + "/arrangement/customer"
-        axios.post(address, data).then(res => {
-            console.log(res.data.data)
-            if (res.data.status === 1) {
-                this.setState({ display_content: res.data.data })
+        else {
+            data = {
+                district_id: this.state.district_id,
+                day: this.state.day,
+                hour: this.state.hour,
+                occasions: this.state.occasions.map(item => {
+                    const result = {};
+                    result["occasion_name"] = item.value;
+                    return result;
+                }),
+                flowers: this.state.flowers.map(item => {
+                    const result = {};
+                    result["flower_id"] = item.value;
+                    return result;
+                }),
             }
-            else {
-                console.log("No Arrangement Found")
-            }
-
-        });
+        }
+        
+        this.fetchData(data)
         console.groupEnd();
     };
 
@@ -256,6 +265,7 @@ class Home extends Component {
                                 </div>
                             </Form>
                         </Col>
+
                         {flowCards}
 
 
