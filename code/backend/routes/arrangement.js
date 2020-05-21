@@ -59,7 +59,6 @@ router.post('/customer/', (req, res) => {
       val.push(req.body.price.upper);
       query = query + price_query;
     }
-    console.log(query + "--" + val);
   }
   dbconnection.query(query, val, function (err, result, fields) {
     if (err) {
