@@ -14,6 +14,13 @@ const displayOccasions = [
     { value: 'Just', label: 'Just' }
 ];
 
+const displayPrices = [
+    { value: { upper: 10, lower: 0  }, label: '0 - 10' },
+    { value: { upper: 30, lower: 10 }, label: '10 - 30' },
+    { value: { upper: 50, lower: 30 }, label: '30 - 50' },
+    { value: { upper: 70, lower: 50 }, label: '50 - 70' }
+];
+
 class Home extends Component {
 
     constructor(props) {
@@ -23,13 +30,14 @@ class Home extends Component {
             district_id: null,
             day: "mon",
             hour: 12,
-            occasions: [],
             flowersAll: [],
-            flowers: [],
             display_content: [],
-            
             searchKey: "",
-            searchUsed: false
+            searchUsed: false,
+
+            occasions: [],
+            flowers: [],
+            priceFilter: []
 
         }
 
@@ -53,8 +61,8 @@ class Home extends Component {
     };
 
     componentDidUpdate(prevProps) {
-        
-        if (this.props.match !== prevProps.match){
+
+        if (this.props.match !== prevProps.match) {
             console.log("URL CHANGED")
             const { match: { params } } = this.props;
             this.updateValues(params)
@@ -71,7 +79,7 @@ class Home extends Component {
     }
 
     fetchData(data) {
-        
+
         axios.post(window.$globalAddress + "/arrangement/customer", data).then(res => {
             console.log(res.data.data)
             if (res.data.status === 1) {
@@ -107,6 +115,7 @@ class Home extends Component {
 
     // when filter button clicked
     handleSubmit = event => {
+        console.group('Filter Clicked');
         event.preventDefault();
         var data = {
             district_id: this.state.district_id,
@@ -121,8 +130,15 @@ class Home extends Component {
                 const result = {};
                 result["flower_id"] = item.value;
                 return result;
-            })
+            }),
+            price: this.state.priceFilter.map(item=>{
+                const result = {};
+                result["upper"] = item.value.upper;
+                result["lower"] = item.value.lower;
+                return result
+            }),
         }
+        console.log("Data HERE")
         console.log(data)
         var address = window.$globalAddress + "/arrangement/customer"
         axios.post(address, data).then(res => {
@@ -135,8 +151,10 @@ class Home extends Component {
             }
 
         });
+        console.groupEnd();
     };
 
+    // getting the values from the filter selects
     onChangeOccasions = (newValue, actionMeta) => {
         console.group('Value Changed');
         console.log(newValue);
@@ -163,14 +181,22 @@ class Home extends Component {
         }
     };
 
+    onChangePrices = (newValue, actionMeta) => {
+        console.group('Value Changed');
+        console.log(newValue);
+        console.log(`action: ${actionMeta.action}`);
+        if (newValue != null) {
+            this.setState({ priceFilter: newValue })
+        }
+        else {
+            this.setState({ priceFilter: [] })
+        }
+        console.groupEnd();
+    };
+
 
 
     render() {
-
-
-        console.log("This is for search key inside render")
-        console.log(this.state.searchKey)
-
 
         let displayFlowers = []
         if (this.state.flowersAll != null) {
@@ -200,6 +226,14 @@ class Home extends Component {
                     <Row>
                         <Col sm="2" className="filter">
                             <Form className="login-form bk" onSubmit={this.handleSubmit}>
+                                <FormGroup>
+                                    <Label> Price </Label>
+                                    <Select onChange={this.onChangePrices}
+                                        options={displayPrices}
+                                        isMulti
+                                        className="basic-multi-select"
+                                        classNamePrefix="select" />
+                                </FormGroup>
                                 <FormGroup>
                                     <Label> Flowers Contained</Label>
                                     <Select onChange={this.onChangeFlowers}
