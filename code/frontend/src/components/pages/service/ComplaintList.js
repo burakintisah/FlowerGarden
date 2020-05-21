@@ -80,7 +80,7 @@ class ComplaintList  extends Component {
       if(state.selectedRows.length > 0)
       {
         this.setState({ order_id: state.selectedRows[0].order_id })
-        this.setState({ complaint_id: state.selectedRows[0].order_id })
+        this.setState({ complaint_id: state.selectedRows[0].complaint_id })
         this.setState({ selectedCount: state.selectedRows.length })
         console.log("complaint id: :", state.selectedRows[0].complaint_id )
       }
@@ -90,7 +90,7 @@ class ComplaintList  extends Component {
     render() {
         const redirectToReferrer = this.state.redirectToReferrer;
         if (redirectToReferrer === true) {
-            return <Redirect push to={'/complaint/service/accountid=' + this.state.account_id + '/complaintid=' + this.state.complaint_id + '/orderid=' + this.state.saleID}/> 
+            return <Redirect push to={'/complaint/service/accountid=' + this.state.account_id + '/complaintid=' + this.state.complaint_id + '/orderid=' + this.state.order_id}/> 
         }
 
         return (

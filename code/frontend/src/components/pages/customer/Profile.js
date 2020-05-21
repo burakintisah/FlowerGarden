@@ -18,7 +18,6 @@ class Profile extends Component {
         console.log(this.state.password)
         return (
             <div>
-                <Navbar account_id={this.state.account_id} district_id= {this.state.district_id}/>
                 <h2> Profile page...</h2>
 
                 <Footer />
@@ -27,5 +26,6 @@ class Profile extends Component {
 
     }
 }
+
 
 export default Profile;

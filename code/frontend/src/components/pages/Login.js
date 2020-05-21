@@ -64,7 +64,7 @@ class Login extends Component {
         }
         //customer service
         if (redirectToReferrer === true && this.state.account_type === 7) {
-            return <Redirect push to={`/complaint-list/service/accountid=:account_id=${this.state.account_id}`} />
+            return <Redirect push to={`/complaint-list/service/accountid=${this.state.account_id}`} />
         }
 
         return (
