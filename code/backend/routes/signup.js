@@ -26,7 +26,7 @@ router.post('/', (req, res) => {
                 query = 'INSERT INTO seller (account_id, district_id, address_text, iban_no) VALUES (?)'
                 values = [accountId, req.body.district_id, req.body.address_text, req.body.iban_no];
                 console.log(query);
-            } else if (req.body.account_type == 3) {
+            } else if (req.body.account_type == 7) {
                 query = 'INSERT INTO customer_service (account_id, count) VALUES (?)'
                 values = [accountId, req.body.count];
             } else {
