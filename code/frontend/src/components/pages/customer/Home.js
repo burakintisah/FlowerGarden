@@ -16,10 +16,10 @@ const displayOccasions = [
 ];
 
 const displayPrices = [
-    { value: { upper: 10, lower: 0 }, label: '0 - 10' },
-    { value: { upper: 30, lower: 10 }, label: '10 - 30' },
-    { value: { upper: 50, lower: 30 }, label: '30 - 50' },
-    { value: { upper: 70, lower: 50 }, label: '50 - 70' }
+    { key:1, value: { upper: 10, lower: 0 }, label: '0 - 10' },
+    { key:2, value: { upper: 30, lower: 10 }, label: '10 - 30' },
+    { key:3, value: { upper: 50, lower: 30 }, label: '30 - 50' },
+    { key:4, value: { upper: 70, lower: 50 }, label: '50 - 70' }
 ];
 
 const options = [
@@ -47,13 +47,14 @@ class Home extends Component {
             searchKey: "",
             searchUsed: false,
 
-            occasions: [],
-            flowers: [],
-            priceFilter: [],
+            occasions: null ,
+            flowers: null ,
+
+            priceFilter: null,
 
             date: new Date(),
             time: null,
-            selectedDay:null,
+            selectedDay: null,
             selectedHour: null
         }
 
@@ -68,8 +69,6 @@ class Home extends Component {
 
         var data = {
             district_id: params.district_id,
-            day: this.state.day,
-            hour: this.state.hour,
         }
 
         //to get flowers
@@ -120,6 +119,7 @@ class Home extends Component {
                 console.log("No Arrangement Found")
             }
         });
+        console.groupEnd();
     }
 
     updateValues(params) {
@@ -134,48 +134,41 @@ class Home extends Component {
     handleSubmit = event => {
         console.group('Filter Clicked');
         event.preventDefault();
-        var data;
-        if (this.state.priceFilter !== []) {
-            data = {
-                district_id: this.state.district_id,
-                day: this.state.day,
-                hour: this.state.hour,
-                occasions: this.state.occasions.map(item => {
-                    const result = {};
-                    result["occasion_name"] = item.value;
-                    return result;
-                }),
-                flowers: this.state.flowers.map(item => {
-                    const result = {};
-                    result["flower_id"] = item.value;
-                    return result;
-                }),
-                price: this.state.priceFilter.map(item => {
-                    const result = {};
-                    result["upper"] = item.value.upper;
-                    result["lower"] = item.value.lower;
-                    return result
-                }),
-            }
+        var data = { district_id: parseInt(this.state.district_id) };
+
+        if (this.state.selectedHour !== null) {
+            data.hour = this.state.selectedHour
         }
-        else {
-            data = {
-                district_id: this.state.district_id,
-                day: this.state.day,
-                hour: this.state.hour,
-                occasions: this.state.occasions.map(item => {
-                    const result = {};
-                    result["occasion_name"] = item.value;
-                    return result;
-                }),
-                flowers: this.state.flowers.map(item => {
-                    const result = {};
-                    result["flower_id"] = item.value;
-                    return result;
-                }),
-            }
+        if (this.state.selectedDay !== null) {
+            data.date = this.state.selectedDay
         }
-        
+
+        if (this.state.occasions !==  null) {
+            data.occasions =  this.state.occasions.map(item => {
+                const result = {};
+                result["occasion_name"] = item.value;
+                return result;
+            })
+        }
+
+        if (this.state.flowers !== null) {
+            data.flowers = this.state.flowers.map(item => {
+                const result = {};
+                result["flower_id"] = item.value;
+                return result;
+            })
+        }
+
+        if (this.state.priceFilter !== null) {
+            data.price = this.state.priceFilter.map(item => {
+                const result = {};
+                result["upper"] = item.value.upper;
+                result["lower"] = item.value.lower; 
+                return result;
+            })
+
+        }
+        console.log(data)
         this.fetchData(data)
         console.groupEnd();
     };
@@ -186,11 +179,11 @@ class Home extends Component {
         console.log(newValue);
         console.log(`action: ${actionMeta.action}`);
         console.groupEnd();
-        if (newValue != null) {
+        if ((newValue).length !== 0) {
             this.setState({ occasions: newValue })
         }
         else {
-            this.setState({ occasions: [] })
+            this.setState({ occasions: null })
         }
     };
 
@@ -199,44 +192,46 @@ class Home extends Component {
         console.log(newValue);
         console.log(`action: ${actionMeta.action}`);
         console.groupEnd();
-        if (newValue != null) {
+        if ((newValue).length !== 0) {
             this.setState({ flowers: newValue })
         }
         else {
-            this.setState({ flowers: [] })
+            this.setState({ flowers: null })
         }
     };
 
     onChangePrices = (newValue, actionMeta) => {
-        console.group('Value Changed');
+        console.group('Price Changed');
         console.log(newValue);
         console.log(`action: ${actionMeta.action}`);
-        if (newValue != null) {
+        if ((newValue).length !== 0) {
             this.setState({ priceFilter: newValue })
         }
         else {
-            this.setState({ priceFilter: [] })
+            console.log("eq null")
+            this.setState({ priceFilter: null })
         }
         console.groupEnd();
     };
 
-    onDateChange = date => { 
+    onDateChange = date => {
         this.setState({ date });
         var str = date.toString();
         var splitted = str.split(" ");
-        
-        this.setState({ selectedDay : splitted[0].toLowerCase() });
-        console.log(this.state.selectedDay)  
+
+        this.setState({ selectedDay: splitted[0].toLowerCase() });
+        console.log(this.state.selectedDay)
     }
 
-    onTimeChange = time => { 
-        this.setState({ time }); console.log(time.label); 
-        this.setState({selectedHour : time.value})
+    onTimeChange = time => {
+        this.setState({ time }); console.log(time.label);
+        this.setState({ selectedHour: time.value })
         console.log(this.state.selectedHour)
     }
 
 
     render() {
+
 
         let displayFlowers = []
         if (this.state.flowersAll != null) {
@@ -304,7 +299,7 @@ class Home extends Component {
                                 </FormGroup>
                                 <div> Day </div>
                                 <DatePicker
-                                    className = "homeSelectDay mb-3 mt-2"
+                                    className="homeSelectDay mb-3 mt-2"
                                     onChange={this.onDateChange}
                                     value={this.state.date}
                                 />

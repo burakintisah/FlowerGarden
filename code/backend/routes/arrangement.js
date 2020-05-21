@@ -26,7 +26,7 @@ router.post('/customer/', (req, res) => {
 
     var val = [req.body.district_id];
 
-    if (req.body.day && req.body.hour){
+    if (req.body.day && req.body.hour) {
       var day_query = " AND SWT.day=? AND SWT.hour=? ";
       val.push(req.body.day);
       val.push(req.body.hour);
@@ -53,11 +53,17 @@ router.post('/customer/', (req, res) => {
       query = query + flower_query + ')';
     }
 
-    if (req.body.price && req.body.price != "") {
-      var price_query = " AND TD.price BETWEEN ? AND ?";
-      val.push(req.body.price.lower);
-      val.push(req.body.price.upper);
-      query = query + price_query;
+    if (req.body.price && req.body.price.length > 0) {
+      var price_query = "AND ((TD.price BETWEEN ? AND ?) ";
+      val.push(req.body.price[0].lower);
+      val.push(req.body.price[0].upper);
+
+      for (i = 1; i < req.body.price.length; i++) {
+        price_query = price_query + " OR (TD.price BETWEEN ? AND ?)";
+        val.push(req.body.price[i].lower);
+        val.push(req.body.price[i].upper);
+      }
+      query = query + price_query + ' )';
     }
   }
   dbconnection.query(query, val, function (err, result, fields) {
