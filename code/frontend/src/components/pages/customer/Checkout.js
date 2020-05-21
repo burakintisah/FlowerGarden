@@ -82,11 +82,10 @@ class Checkout extends Component {
             account_id: params.account_id,
             arrangement_id: params.arrangement_id,
             district_id: params.district_id,
-            
-            // desired_delivery_date: this.props.location.state.desired_date,
-            // desired_delivery_time: this.props.location.state.desired_time,
-            desired_delivery_time: "09:34:21.000001" ,
-            desired_delivery_date: today,
+            desired_delivery_date: this.props.location.state.desired_date,
+            desired_delivery_time: this.props.location.state.desired_time,
+            //desired_delivery_time: "09:34:21.000001" ,
+            //desired_delivery_date: today,
             delivery_date: today,
             order_date: time,
         });

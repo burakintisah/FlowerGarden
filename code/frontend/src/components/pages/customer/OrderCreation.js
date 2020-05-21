@@ -41,8 +41,8 @@ class OrderCreation extends Component {
             account_id: params.account_id,
             arrangement_id: params.arrangement_id,
             district_id: params.district_id,
-            //date: this.props.location.state.desired_date,
-            //time: this.props.location.state.desired_time
+            date: this.props.location.state.desired_date,
+            time: this.props.location.state.desired_time
         });
 
         Axios.get(window.$globalAddress + `/arrangement/${params.arrangement_id}`).then(res => {

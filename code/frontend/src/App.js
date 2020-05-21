@@ -66,7 +66,6 @@ class App extends Component {
           <Route path="/sale-list/seller/accountid=:account_id" component={SaleList} /> 
           <Route path="/sale-page/accountid=:account_id/orderid=:order_id" component={SalePage} /> 
           <Route path="/assign-courier/accountid=:account_id/orderid=:order_id" component={AssignCourier} />    
-          <Route path="/selectDistrict/courier/accountid=:account_id" component={selectDistrictCourier} />   
           <Route path="/deliverytracking/accountid=:account_id" component={courierDeliveryList} />   
           <Route path="/deliverydetails/accountid=:account_id/deliveryid=:delivery_id" component={deliveryDetails} />   
           <Route path="/select-district-working-hours/seller/accountid=:account_id" component={SelectDistrictWorkingHours} />   

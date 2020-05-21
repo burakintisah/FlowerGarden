@@ -196,8 +196,8 @@ class FlowerDetails extends Component {
             return <Redirect to={{
                 pathname: '/ordercreation/accountid=' + this.state.account_id + '/districtid=' + this.state.district_id + '/arrangementid=' + this.state.account_id,
                 state: {
-                    desired_date: this.state.date,
-                    desired_time: this.state.time
+                    desired_date: this.state.formattedDate,
+                    desired_time: this.state.formattedTime
                 }}
 
             } />

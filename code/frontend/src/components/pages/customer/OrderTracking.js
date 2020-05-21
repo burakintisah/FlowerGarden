@@ -24,7 +24,8 @@ class OrderTracking extends Component {
                 { label: 'ID', field: 'order_id' },
                 { label: 'Flower Arrangement Name', field: 'arrangement_name' },
                 { label: 'Price', field: 'price' },
-                { label: 'Order Date', field: 'order_date' },
+                { label: 'Desired Delivery Date', field: 'desired_delivery_date' },
+                { label: 'Desired Delivery Time', field: 'desired_delivery_time' },
                 { label: 'Delivery Status', field: 'delivery_status' },
                 { label: 'Seller', field: 'seller_status' },
                 { label: 'Courier', field: 'courier_status' },
@@ -73,7 +74,8 @@ class OrderTracking extends Component {
             container["order_id"] = item.order_id;
             container["arrangement_name"] = item.arrangement_name;
             container["price"] = item.price;
-            container["order_date"] = item.order_date;
+            container["desired_delivery_date"] = item.desired_delivery_date;
+            container["desired_delivery_time"] = item.desired_delivery_time;
             container["delivery_status"] = item.delivery_status;
             container["seller_status"] = item.seller_status;
             container["courier_status"] = item.courier_status;

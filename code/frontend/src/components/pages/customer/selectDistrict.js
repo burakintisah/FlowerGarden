@@ -17,7 +17,6 @@ class selectDistrict extends Component {
         districts: null,
         account_id: null,
         redirectToReferrer: false
-
     }
 
     componentDidMount() {
