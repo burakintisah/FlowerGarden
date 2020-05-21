@@ -3,7 +3,7 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 import Select from 'react-select';
 import styled from 'styled-components'
-import Navbar from '../../layouts/NavbarCustomer'
+import Navbar from '../../layouts/NavbarCustomerNew'
 import Footer from '../../layouts/Footer'
 import axios from 'axios'
 

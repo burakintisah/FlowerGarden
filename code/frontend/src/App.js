@@ -49,7 +49,7 @@ class App extends Component {
       <div>
         <Switch>
           <Route exact path="/" component={Login} />
-          <Route path="/customer/accountid=:account_id/districtid=:district_id" component={Home} />
+          <Route path="/customer/accountid=:account_id/districtid=:district_id/:search_key?" component={Home} />
           <Route path="/selectDistrict/accountid=:account_id" component={SelectDistrict} />
           <Route path="/flowerdetails/accountid=:account_id/districtid=:district_id/arrangementid=:arrangement_id" component={FlowerDetails} />
           <Route path="/ordercreation/accountid=:account_id/districtid=:district_id/arrangementid=:arrangement_id" component={OrderCreation} />

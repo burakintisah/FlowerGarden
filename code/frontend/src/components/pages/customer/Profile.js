@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Navbar from '../../layouts/NavbarCustomer'
+import Navbar from '../../layouts/NavbarCustomerNew'
 import Footer from '../../layouts/Footer'
 import axios from 'axios'
 

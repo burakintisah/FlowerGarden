@@ -5,7 +5,7 @@ import { Button, Input } from 'reactstrap';
 import { MDBDataTable } from 'mdbreact';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import Navbar from '../../layouts/NavbarCustomer'
+import Navbar from '../../layouts/NavbarCustomerNew'
 import Footer from '../../layouts/Footer'
 
 
@@ -16,6 +16,7 @@ class OrderTracking extends Component {
         super(props);
         this.state = {
             account_id: null,
+            district_id: null,
             
             r: [],
 
@@ -40,7 +41,8 @@ class OrderTracking extends Component {
         const { match: { params } } = this.props;
         this.setState({ account_id: params.account_id })
         axios.get( window.$globalAddress +'/order/customer/' + params.account_id).then(res => {
-            //console.log(res)
+            console.log("ALL DATA")
+            console.log(res)
             if (res.data.status === 1) {
                 this.setState({ r: res.data.data })
                 console.log(res.data.message)

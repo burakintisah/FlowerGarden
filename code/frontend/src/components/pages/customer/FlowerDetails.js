@@ -63,17 +63,17 @@ class FlowerDetails extends Component {
         console.log(params.arrangement_id)
 
         axios.get(window.$globalAddress + '/arrangement/' + params.arrangement_id).then(res => {
+            
             if (res.data.status === 1) {
                 this.setState({ arrangementName: res.data.data.arrangement_name })
                 this.setState({ descp: res.data.data.details })
-                //this.setState({ enabled: res.data.data.enabled })
                 this.setState({ price: res.data.data.price })
                 this.setState({ arrangementRate: res.data.data.rate })
-                //this.setState({ sellerRate: res.data.data. })
+                //this.setState({ sellerRate: res.data.data.seller.rating })
                 this.setState({ sellerFirstName: res.data.data.seller.first_name })
                 this.setState({ sellerMiddleName: res.data.data.seller.middle_name })
                 this.setState({ sellerLastName: res.data.data.seller.last_name })
-                this.setState({ sellerRate: res.data.data.seller.rating })
+                this.setState({ sellerRate: res.data.data.seller.rating})
                 this.setState({ volume: res.data.data.volume })
                 this.setState({ flowers: res.data.data.flowers })
                 this.setState({ commentArray: res.data.data.comments })
@@ -81,42 +81,9 @@ class FlowerDetails extends Component {
                 this.setState({ count: res.data.data.count })
                 console.log(res.data)
                 console.log(res.data.data.flowers)
-                console.log(res.data.data.occasions)
+                console.log(res.data.data.occasions )
             }
-<<<<<<< HEAD
-        componentDidMount() {
-            const { match: { params } } = this.props;
-            this.setState({ account_id: params.account_id })
-            this.setState({ arrangement_id: params.arrangement_id })
-            this.setState({ district_id: params.district_id })
-            console.log(params.account_id )
-            console.log(params.arrangement_id)
-
-            axios.get('http://localhost:5000/arrangement/'+params.arrangement_id).then(res => {
-                if (res.data.status === 1) {
-                    this.setState({ arrangementName: res.data.data.arrangement_name })
-                    this.setState({ descp: res.data.data.details })
-                    this.setState({ price: res.data.data.price })
-                    this.setState({ arrangementRate: res.data.data.rate })
-                    //this.setState({ sellerRate: res.data.data.seller.rating })
-                    this.setState({ sellerFirstName: res.data.data.seller.first_name })
-                    this.setState({ sellerMiddleName: res.data.data.seller.middle_name })
-                    this.setState({ sellerLastName: res.data.data.seller.last_name })
-                    this.setState({ sellerRate: res.data.data.seller.rating})
-                    this.setState({ volume: res.data.data.volume })
-                    this.setState({ flowers: res.data.data.flowers })
-                    this.setState({ commentArray: res.data.data.comments })
-                    this.setState({ occasions: res.data.data.occasions })
-                    this.setState({ count: res.data.data.count })
-                    console.log(res.data)
-                    console.log(res.data.data.flowers)
-                    console.log(res.data.data.occasions )
-                }
-                  
-            });
-        }
-=======
->>>>>>> f307db8bef644a33537afdc14af2459c3d23cfa8
+     
 
         });
     }
@@ -185,12 +152,9 @@ class FlowerDetails extends Component {
             )
         });
 
-<<<<<<< HEAD
         const [selectedDate, setSelectedDate] = useState(null)
-        return(
-=======
+
         return (
->>>>>>> f307db8bef644a33537afdc14af2459c3d23cfa8
             <div>
                 <Navbar account_id={this.state.account_id} district_id= {this.state.district_id}></Navbar>
                 <h1 className='ml-5 mt-3'>FlowerGarden</h1>
@@ -228,20 +192,6 @@ class FlowerDetails extends Component {
                         <div className=" mt-3" mt-3>Occasions: {tags}</div>
                         <br /> <h3>Time:</h3>
 
-<<<<<<< HEAD
-                        
-                               <div className="mr-5">Date: </div>
-                               <div>
-                                    <DatePicker
-                                    selected = {selectedDate}
-                                    onChange={date => setSelectedDate(date)}
-                                    dataFormat ='dd/MM/yyyy'
-                                    />
-                                </div>
-                            
-                        
-=======
->>>>>>> f307db8bef644a33537afdc14af2459c3d23cfa8
 
                         <div className="mr-5">Date: </div>
                         <div>
