@@ -69,8 +69,6 @@ class Home extends Component {
 
         var data = {
             district_id: params.district_id,
-            day: this.state.day,
-            hour: this.state.hour,
         }
 
         //to get flowers
@@ -143,7 +141,13 @@ class Home extends Component {
                 district_id: parseInt(this.state.district_id),
                 day: this.state.day,
                 hour: this.state.hour,
-                price: { upper: this.state.priceFilter[0].value.upper, lower: this.state.priceFilter[0].value.lower },
+                price: this.state.priceFilter.map(item => {
+                    const result = {};
+                    result["upper"] = item.value.upper;
+                    result["lower"] = item.value.lower;
+
+                    return result;
+                }),
                 occasions: this.state.occasions.map(item => {
                     const result = {};
                     result["occasion_name"] = item.value;
