@@ -42,60 +42,74 @@ class SignUp extends Component {
         event.preventDefault();
         if( (this.state.firstName===null) || (this.state.lastName===null)|| (this.state.email===null)||(this.state.password===null)||(this.state.repassword===null)||(this.state.password!== this.state.repassword)||!(this.state.termsOfUse)||(this.state.phone===null))
         {
-            alert("You must fill the all required information!"); //diğer bölümleri için de yapabilirsin daha sonra
+            alert("You must fill the all required information!"); 
         }
-        var data = null;
-        if(this.state.account_type ===0 ||this.state.account_type ===3)
+        else if((this.state.account_type === 1) && ( ( this.state.iban===null) ||(this.state.sellerAddress === null) ||(this.state.province_id === null) ||(this.state.district_id === null) ))
         {
-            data = { first_name: this.state.firstName, middle_name: this.state.middleName,last_name: this.state.lastName, email: this.state.email, password: this.state.password, phone: this.state.phone, account_type: this.state.account_type, }
+            alert("You must fill the all required information!"); 
         }
-        else if(this.state.account_type ===1 )
+        else if((this.state.account_type === 2) && ( ( this.state.iban===null) ||(this.state.courierVolume === null) ))
         {
-            data = { first_name: this.state.firstName, middle_name: this.state.middleName,last_name: this.state.lastName, email: this.state.email, password: this.state.password, phone: this.state.phone, account_type: this.state.account_type, district_id: this.state.district_id, address_text:this.state.sellerAddress , iban_no: this.state.iban }
+            alert("You must fill the all required information!"); 
         }
-        else if(this.state.account_type ===2 )
+        else if( this.state.phone.length !== 11)
         {
-            data = { first_name: this.state.firstName, middle_name: this.state.middleName,last_name: this.state.lastName, email: this.state.email, password: this.state.password, phone: this.state.phone, account_type: this.state.account_type, max_volume: this.state.courierVolume, iban_no: this.state.iban }
-        }
-        else{
-            console.log("There is a porblem with account type")
-        }
-        console.log("Sent data:")
-        console.log(data)
-        axios.post(window.$globalAddress + '/signup', data).then(res => {
-            console.log("RES data:")    
-            console.log(res);
-            if (res.data.status === 1) {
-                var id = res.data.data.account_id
-                this.setState({ account_id: id })
-                this.setState({ redirectToReferrer: true })
+            alert("Phone should be exactly 11 number"); 
+        }else
+        {
+            var data = null;
+            if(this.state.account_type ===0 ||this.state.account_type ===7)
+            {
+                data = { first_name: this.state.firstName, middle_name: this.state.middleName,last_name: this.state.lastName, email: this.state.email, password: this.state.password, phone: this.state.phone, account_type: this.state.account_type, }
             }
-            else {
-                alert("There is no such user");
+            else if(this.state.account_type ===1 )
+            {
+                data = { first_name: this.state.firstName, middle_name: this.state.middleName,last_name: this.state.lastName, email: this.state.email, password: this.state.password, phone: this.state.phone, account_type: this.state.account_type, district_id: this.state.district_id, address_text:this.state.sellerAddress , iban_no: this.state.iban }
             }
+            else if(this.state.account_type ===2 )
+            {
+                data = { first_name: this.state.firstName, middle_name: this.state.middleName,last_name: this.state.lastName, email: this.state.email, password: this.state.password, phone: this.state.phone, account_type: this.state.account_type, max_volume: this.state.courierVolume, iban_no: this.state.iban }
+            }
+            else{
+                console.log("There is a porblem with account type")
+            }
+            console.log("Sent data:")
+            console.log(data)
+            axios.post(window.$globalAddress + '/signup', data).then(res => {
+                console.log("RES data:",res)    
+                if (res.data.status === 1) {
+                    var id = res.data.data.account_id
+                    this.setState({ account_id: id })
+                    this.setState({ redirectToReferrer: true })
+                }
+                else {
+                    alert("There is no such user");
+                }
 
-        });
+            });
+        }
+        
     };
 
-    changeFirstName = event => { event.preventDefault(); this.setState({ firstName: event.target.value }); console.log(this.state.firstName); }
-    changeMiddleName = event => { event.preventDefault(); this.setState({ middleName: event.target.value }); console.log(this.state.middleName); }
-    changeLastName = event => { event.preventDefault(); this.setState({ lastName: event.target.value }); console.log(this.state.lastName); }
-    changePhone = event => { event.preventDefault(); this.setState({ phone: event.target.value }); console.log(this.state.phone); }
-    changeEmail = event => { event.preventDefault(); this.setState({ email: event.target.value }); console.log(this.state.email); }
-    changePassword = event => { event.preventDefault(); this.setState({ password: event.target.value }); console.log(this.state.password) }
-    changeRePassword = event => { event.preventDefault(); this.setState({ repassword: event.target.value }); console.log(this.state.repassword) }
-    changeTermsOfUse = event => { event.preventDefault(); this.setState({ termsOfUse: !(this.state.termsOfUse) }); console.log(this.state.termsOfUse); }
-    changeIBAN = event => { event.preventDefault(); this.setState({ iban: event.target.value }); console.log(this.state.iban); }
-    changeAddress = event => { event.preventDefault(); this.setState({ sellerAddress: event.target.value }); console.log(this.state.sellerAddress); }
-    changeVolume = event => { event.preventDefault(); this.setState({ courierVolume: event.target.value }); console.log(this.state.courierVolume); }
+    changeFirstName = event => { event.preventDefault(); this.setState({ firstName: event.target.value });  if(event.target.value.length===0) {this.setState({ firstName: null})}}
+    changeMiddleName = event => { event.preventDefault(); this.setState({ middleName: event.target.value }); if(event.target.value.length===0) {this.setState({ middleName: null})} }
+    changeLastName = event => { event.preventDefault(); this.setState({ lastName: event.target.value }); if(event.target.value.length===0) {this.setState({ lastName: null})} }
+    changePhone = event => { event.preventDefault(); this.setState({ phone: event.target.value }); if(event.target.value.length===0) {this.setState({ phone: null})} }
+    changeEmail = event => { event.preventDefault(); this.setState({ email: event.target.value }); if(event.target.value.length===0) {this.setState({ email: null})} }
+    changePassword = event => { event.preventDefault(); this.setState({ password: event.target.value });  if(event.target.value.length===0) {this.setState({ password: null})}}
+    changeRePassword = event => { event.preventDefault(); this.setState({ repassword: event.target.value }); if(event.target.value.length===0) {this.setState({ repassword: null})}}
+    changeTermsOfUse = event => { event.preventDefault(); this.setState({ termsOfUse: !(this.state.termsOfUse) }); if(event.target.value.length===0) {this.setState({ termsOfUse: null})} }
+    changeIBAN = event => { event.preventDefault(); this.setState({ iban: event.target.value }); if(event.target.value.length===0) {this.setState({ iban: null})} }
+    changeAddress = event => { event.preventDefault(); this.setState({ sellerAddress: event.target.value });if(event.target.value.length===0) {this.setState({ sellerAddress: null})} }
+    changeVolume = event => { event.preventDefault(); this.setState({ courierVolume: event.target.value }); if(event.target.value.length===0) {this.setState({ courierVolume: null})} }
 
 
     handleOptionChange = changeEvent => {
         this.setState({selectedOption: changeEvent.target.value});
-        if (changeEvent.target.value === "customer") {this.setState({account_type: 0}); console.log(this.state.account_type);}
-        else if (changeEvent.target.value === "seller") {this.setState({account_type: 1}); console.log(this.state.account_type);}
-        else if (changeEvent.target.value === "courier") {this.setState({account_type: 2}); console.log(this.state.account_type);}
-        else {this.setState({account_type: 3});}
+        if (changeEvent.target.value === "customer") {this.setState({account_type: 0}); }
+        else if (changeEvent.target.value === "seller") {this.setState({account_type: 1}); }
+        else if (changeEvent.target.value === "courier") {this.setState({account_type: 2}); }
+        else {this.setState({account_type: 7});}
     };
 
 
@@ -111,11 +125,9 @@ class SignUp extends Component {
         // getting the districts according to province!!
         console.log(`Option selected:`, prov.value);
         var data = { province_id: prov.value};
-        console.log("DATA");
-        console.log(data);
+        console.log("DATA",data);
         axios.post(window.$globalAddress + '/district', data).then(res => {
-            console.log("Retrieved Data")
-            console.log(res)
+            console.log("Retrieved Data",res)
             if (res.data.status === 1) {
                 this.setState({ districts: res.data.data })
             }
@@ -140,15 +152,15 @@ class SignUp extends Component {
         }
         //courier
         if (redirectToReferrer === true && this.state.account_type === 1) {
-            return <Redirect to={`/select-district-and-working-hours/courier/accountid=${this.state.account_id}`} />
+            return <Redirect to={`/select-district-working-hours/seller/accountid=${this.state.account_id}`} />
         }
         //seller
         if (redirectToReferrer === true && this.state.account_type === 2) {
-            return <Redirect to={`/seller/${this.state.account_id}`} />
+            return <Redirect to={`/select-district-and-working-hours/courier/accountid=${this.state.account_id}`} />
         }
         //customer service
-        if (redirectToReferrer === true && this.state.account_type === 3) {
-            return <Redirect to={`/service/${this.state.account_id}`} />
+        if (redirectToReferrer === true && this.state.account_type === 7) {
+            return <Redirect to={`/complaint-list/service/accountid=${this.state.account_id}`} />
         }
 
         var display_provinces = []
