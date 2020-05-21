@@ -62,6 +62,15 @@ router.get('/', async (req, res) => {
     });
     order.courier = rows[0][0];
 
+    if (!order.courier){
+        order.courier = {};
+        order.courier.first_name = null;
+        order.courier.last_name = null;
+        order.courier.middle_name = null;
+        order.courier.phone = null;
+        order.courier.email = null;
+    }
+
     val = [order.customer_id];
     rows = await dbconnection.promise().query('SELECT first_name, middle_name, last_name, phone, email FROM account WHERE account_id = ?', val).catch((err) => {
         console.log('Error at: ' + err);

@@ -40,7 +40,7 @@ router.post('/', async (req, res) => {
     var val = [req.body.payment, req.body.order_date, req.body.receiver_name, req.body.receiver_phone,
     req.body.district_id, req.body.address_text, req.body.delivery_date, req.body.delivery_type,
     req.body.delivery_status, req.body.desired_delivery_date, req.body.desired_delivery_time,
-    req.body.message, req.body.seler_status, req.body.courier_status, req.body.seller_id,
+    req.body.message, req.body.seller_status, req.body.courier_status, req.body.seller_id,
     req.body.courier_id, req.body.customer_id, req.body.arrangement_id];
 
     rows = await dbconnection.promise().query(query, val).catch((err) => {
