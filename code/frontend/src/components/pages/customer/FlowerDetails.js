@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { Component, useState } from 'react'
 import Navbar from '../../layouts/NavbarCustomer'
 import Footer from '../../layouts/Footer'
 import { Redirect } from 'react-router-dom';
@@ -7,7 +7,7 @@ import axios from 'axios';
 import {Image, Col} from 'react-bootstrap'
 import Rating from 'react-rating'
 import CommentCard from '../seller/CommentCard';
-import DatePicker from 'react-date-picker';
+import DatePicker from 'react-datepicker';
 import Select from 'react-select'
 const ColoredLine = ({ color }) => (
     <hr
@@ -66,10 +66,9 @@ class FlowerDetails extends Component {
                 if (res.data.status === 1) {
                     this.setState({ arrangementName: res.data.data.arrangement_name })
                     this.setState({ descp: res.data.data.details })
-                    //this.setState({ enabled: res.data.data.enabled })
                     this.setState({ price: res.data.data.price })
                     this.setState({ arrangementRate: res.data.data.rate })
-                    //this.setState({ sellerRate: res.data.data. })
+                    //this.setState({ sellerRate: res.data.data.seller.rating })
                     this.setState({ sellerFirstName: res.data.data.seller.first_name })
                     this.setState({ sellerMiddleName: res.data.data.seller.middle_name })
                     this.setState({ sellerLastName: res.data.data.seller.last_name })
@@ -148,6 +147,7 @@ class FlowerDetails extends Component {
             )
         });
 
+        const [selectedDate, setSelectedDate] = useState(null)
         return(
             <div>
                 <Navbar></Navbar>
@@ -190,8 +190,9 @@ class FlowerDetails extends Component {
                                <div className="mr-5">Date: </div>
                                <div>
                                     <DatePicker
-                                    onChange={this.onDateChange}
-                                    value={this.state.date}
+                                    selected = {selectedDate}
+                                    onChange={date => setSelectedDate(date)}
+                                    dataFormat ='dd/MM/yyyy'
                                     />
                                 </div>
                             

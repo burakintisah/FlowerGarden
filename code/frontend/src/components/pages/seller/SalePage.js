@@ -25,8 +25,9 @@ class SaleList extends Component {
             timeslot:null,
             message:null,
             orderStatus:null,
-            courierName:null,
+            courier_name:null,
             courierPhone:null,
+            courier_email:null,
             seller_status:null,
             customer_id: null
         }
@@ -49,8 +50,20 @@ class SaleList extends Component {
                     this.setState({ timeslot: res.data.data.desired_delivery_time})
                     this.setState({ message: res.data.data.message })
                     this.setState({ orderStatus: res.data.data.delivery_status })
-                    //this.setState({ courierName: res.data.data.courier.first_name + " " +res.data.data.courier.last_name })
-                    //this.setState({ courierPhone: res.data.data.courier.phone })
+
+
+                    //courier
+                    var courierName = ""
+                    if (res.data.data.courier.first_name != null)
+                        courierName = res.data.data.courier.first_name
+                    if (res.data.data.courier.middle_name != null)
+                        courierName = courierName + " " +res.data.data.courier.middle_name
+                    if (res.data.data.courier.last_name != null)
+                        courierName = courierName + " " +res.data.data.courier.last_name
+                    this.setState({  courier_acceptance_status : res.data.data.courier_status})
+                    this.setState({  courier_name : courierName})
+                    this.setState({  courier_email : res.data.data.courier.email})
+                    this.setState({ courierPhone: res.data.data.courier.phone })
                     this.setState({ seller_status: res.data.data.seller_status })
               
                   }
@@ -171,7 +184,7 @@ class SaleList extends Component {
                     </div>
                    
                    <div class="input-group-prepend">
-                        <h3>Courier Name:  </h3> <h5 className="mt-2"> {this.state.courierName} </h5>
+                        <h3>Courier Name:  </h3> <h5 className="mt-2"> {this.state.courier_name} </h5>
                     </div>
                    
                     <div class="input-group-prepend">

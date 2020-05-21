@@ -26,6 +26,11 @@ class Arrangements  extends Component {
           sortable: true,
         },
         {
+          name: 'Occasion',
+          selector: 'occasion_name',
+          sortable: true,
+        },
+        {
             name: 'Volume',
             selector: 'volume',
             sortable: true,
@@ -35,11 +40,7 @@ class Arrangements  extends Component {
             selector: 'price',
             sortable: true,
           },
-         /* {
-            name: 'Occasions',
-            selector: 'occasion_name',
-            sortable: true,
-          },*/
+
         
         ]
     }
@@ -49,8 +50,22 @@ class Arrangements  extends Component {
       this.setState({ account_id: params.account_id })
       axios.get('http://localhost:5000/arrangement/seller/' + params.account_id).then(res => {
             if (res.data.status === 1) {
+
+              //res.data.data[0].occasion_name = "esra"
+              
+             // console.log("Length",res.data.data.length)
+              /*for (var i = 0; i <res.data.data.length; i++ )
+              {
+                var tempOccasion = "";
+                for(var j = 0; j < res.data.data[i].occasions.length; j++)
+                {
+                   tempOccasion = tempOccasion + res.data.data[i].occasions[j].occasion_name + ",";
+                }
+                 res.data.data[i].occasions = tempOccasion
+              }*/
+
               this.setState({ data: res.data.data })
-              console.log(res.data)
+              console.log(res.data.data)
             }
             
       });

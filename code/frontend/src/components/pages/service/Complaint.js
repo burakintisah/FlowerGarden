@@ -98,10 +98,17 @@ class Complaint extends Component {
                     this.setState({  seller_address: res.data.data.order.seller.address_text})
 
                     //courier
-                    //this.setState({  courier_acceptance_status : res.data.data})
-                   // this.setState({  courier_name : res.data.data})
-                    //this.setState({  courier_phone : res.data.data})
-                   // this.setState({  courier_email : res.data.data})
+                    var courierName = ""
+                    if (res.data.data.order.courier.first_name != null)
+                        courierName = res.data.data.order.courier.first_name
+                    if (res.data.data.order.courier.middle_name != null)
+                        courierName = courierName + " " +res.data.data.order.courier.middle_name
+                    if (res.data.data.order.courier.last_name != null)
+                        courierName = courierName + " " +res.data.data.order.courier.last_name
+                    this.setState({  courier_acceptance_status : res.data.data.order.courier_status})
+                    this.setState({  courier_name : courierName})
+                    this.setState({  courier_phone : res.data.data.order.courier.phone})
+                    this.setState({  courier_email : res.data.data.order.courier.email})
 
                     //customer
                     this.setState({  customer_name : res.data.data.order.customer.first_name + " " + res.data.data.order.customer.middle_name + " " + res.data.data.order.customer.last_name})

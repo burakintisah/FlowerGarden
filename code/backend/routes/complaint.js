@@ -3,9 +3,9 @@ var express = require('express');
 var router = express.Router();
 
 router.post('/create', (req, res) => {
-    var val = [req.body.order_id, req.body.complaint_date, 4, null, "Waiting"];
-    var query = 'INSERT INTO complaint (order_id, complaint_date, customer_service_id, response_date, complaint_status) '
-        + ' VALUES ( ?, ?, ?, ?, ?)';
+    var val = [req.body.order_id, req.body.complaint_date, 28, null, "Waiting", req.body.complaint_text];
+    var query = 'INSERT INTO complaint (order_id, complaint_date, customer_service_id, response_date, complaint_status, complaint_text) '
+        + ' VALUES ( ?, ?, ?, ?, ?, ?)';
 
     dbconnection.query(query, val, function (err, result, fields) {
         if (err) {
@@ -16,7 +16,6 @@ router.post('/create', (req, res) => {
         sendResponse(res, 1, 'Done.', { complaint_id: result.insertId, order_id: req.body.order_id });
     });
 });
-
 
 router.get('/', async (req, res) => {
     var val = [req.query.complaint_id, req.query.order_id];
@@ -62,6 +61,15 @@ router.get('/', async (req, res) => {
         sendResponse(res, 0, err.sqlMessage, null);
     });
     order.courier = rows[0][0];
+
+    if (!order.courier){
+        order.courier = {};
+        order.courier.first_name = null;
+        order.courier.last_name = null;
+        order.courier.middle_name = null;
+        order.courier.phone = null;
+        order.courier.email = null;
+    }
 
     val = [order.customer_id];
     rows = await dbconnection.promise().query('SELECT first_name, middle_name, last_name, phone, email FROM account WHERE account_id = ?', val).catch((err) => {
