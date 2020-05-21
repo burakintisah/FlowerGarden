@@ -49,7 +49,7 @@ class App extends Component {
       <div>
         <Switch>
           <Route exact path="/" component={Login} />
-          <Route path="/customer/accountid=:account_id/districtid=:district_id" component={Home} />
+          <Route path="/customer/accountid=:account_id/districtid=:district_id/:search_key?" component={Home} />
           <Route path="/selectDistrict/accountid=:account_id" component={SelectDistrict} />
           <Route path="/flowerdetails/accountid=:account_id/districtid=:district_id/arrangementid=:arrangement_id" component={FlowerDetails} />
           <Route path="/ordercreation/accountid=:account_id/districtid=:district_id/arrangementid=:arrangement_id" component={OrderCreation} />
@@ -66,7 +66,6 @@ class App extends Component {
           <Route path="/sale-list/seller/accountid=:account_id" component={SaleList} /> 
           <Route path="/sale-page/accountid=:account_id/orderid=:order_id" component={SalePage} /> 
           <Route path="/assign-courier/accountid=:account_id/orderid=:order_id" component={AssignCourier} />    
-          <Route path="/selectDistrict/courier/accountid=:account_id" component={selectDistrictCourier} />   
           <Route path="/deliverytracking/accountid=:account_id" component={courierDeliveryList} />   
           <Route path="/deliverydetails/accountid=:account_id/deliveryid=:delivery_id" component={deliveryDetails} />   
           <Route path="/select-district-working-hours/seller/accountid=:account_id" component={SelectDistrictWorkingHours} />   

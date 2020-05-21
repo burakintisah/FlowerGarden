@@ -62,6 +62,7 @@ class FlowerDetails extends Component {
         console.log(params.arrangement_id)
 
         axios.get(window.$globalAddress + '/arrangement/' + params.arrangement_id).then(res => {
+            
             if (res.data.status === 1) {
                 this.setState({ arrangementName: res.data.data.arrangement_name })
                 this.setState({ descp: res.data.data.details })
@@ -71,7 +72,7 @@ class FlowerDetails extends Component {
                 this.setState({ sellerFirstName: res.data.data.seller.first_name })
                 this.setState({ sellerMiddleName: res.data.data.seller.middle_name })
                 this.setState({ sellerLastName: res.data.data.seller.last_name })
-                this.setState({ sellerRate: res.data.data.seller.rating })
+                this.setState({ sellerRate: res.data.data.seller.rating})
                 this.setState({ volume: res.data.data.volume })
                 this.setState({ flowers: res.data.data.flowers })
                 this.setState({ commentArray: res.data.data.comments })
@@ -79,7 +80,7 @@ class FlowerDetails extends Component {
                 this.setState({ count: res.data.data.count })
                 console.log(res.data)
                 console.log(res.data.data.flowers)
-                console.log(res.data.data.occasions)
+                console.log(res.data.data.occasions )
             }
 
         });
@@ -195,8 +196,8 @@ class FlowerDetails extends Component {
             return <Redirect to={{
                 pathname: '/ordercreation/accountid=' + this.state.account_id + '/districtid=' + this.state.district_id + '/arrangementid=' + this.state.account_id,
                 state: {
-                    desired_date: this.state.date,
-                    desired_time: this.state.time
+                    desired_date: this.state.formattedDate,
+                    desired_time: this.state.formattedTime
                 }}
 
             } />

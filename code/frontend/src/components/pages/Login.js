@@ -56,7 +56,7 @@ class Login extends Component {
         }
         //courier
         if (redirectToReferrer === true && this.state.account_type === 1) {
-            return <Redirect push to={`/select-district-and-working-hours/courier/accountid=${this.state.account_id}`} />
+            return <Redirect push to={`/deliverytracking/accountid=${this.state.account_id}`} />
         }
         //seller
         if (redirectToReferrer === true && this.state.account_type === 2) {

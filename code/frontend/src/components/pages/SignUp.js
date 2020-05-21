@@ -138,13 +138,15 @@ class SignUp extends Component {
         if (redirectToReferrer === true && this.state.account_type === 0) {
             return <Redirect to={`/selectDistrict/accountid=${this.state.account_id}`} />
         }
-        //seller
+        //courier
         if (redirectToReferrer === true && this.state.account_type === 1) {
+            return <Redirect to={`/select-district-and-working-hours/courier/accountid=${this.state.account_id}`} />
+        }
+        //seller
+        if (redirectToReferrer === true && this.state.account_type === 2) {
             return <Redirect to={`/seller/${this.state.account_id}`} />
         }
-        if (redirectToReferrer === true && this.state.account_type === 2) {
-            return <Redirect to={`/courier/${this.state.account_id}`} />
-        }
+        //customer service
         if (redirectToReferrer === true && this.state.account_type === 3) {
             return <Redirect to={`/service/${this.state.account_id}`} />
         }

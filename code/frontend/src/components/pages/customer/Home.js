@@ -25,8 +25,12 @@ class Home extends Component {
             hour: 12,
             occasions: [],
             flowersAll: [],
-            flowers:  [],
-            display_content: []
+            flowers: [],
+            display_content: [],
+            
+            searchKey: "",
+            searchUsed: false
+
         }
 
     }
@@ -36,7 +40,7 @@ class Home extends Component {
         const { match: { params } } = this.props;
         this.updateValues(params)
         //console.log(params.district_id)
-
+        console.log("When component Did mount")
         var data = {
             district_id: params.district_id,
             day: this.state.day,
@@ -44,7 +48,30 @@ class Home extends Component {
             occasions: this.state.occasions,
             flowers: this.state.flowers
         }
+        this.fetchData(data)
 
+    };
+
+    componentDidUpdate(prevProps) {
+        
+        if (this.props.match !== prevProps.match){
+            console.log("URL CHANGED")
+            const { match: { params } } = this.props;
+            this.updateValues(params)
+            var data = {
+                district_id: params.district_id,
+                day: this.state.day,
+                hour: this.state.hour,
+                occasions: this.state.occasions,
+                flowers: this.state.flowers,
+                search_text: params.search_key
+            }
+            this.fetchData(data)
+        }
+    }
+
+    fetchData(data) {
+        
         axios.post(window.$globalAddress + "/arrangement/customer", data).then(res => {
             console.log(res.data.data)
             if (res.data.status === 1) {
@@ -60,21 +87,23 @@ class Home extends Component {
         axios.get(window.$globalAddress + "/flower").then(res => {
             console.log(res.data.data)
             if (res.data.status === 1) {
-                this.setState({flowersAll :res.data.data})
+                this.setState({ flowersAll: res.data.data })
             }
             else {
                 console.log("No Flower Found")
             }
 
         });
-    };
+    }
 
     updateValues(params) {
         this.setState({
             account_id: params.account_id,
-            district_id: params.district_id
+            district_id: params.district_id,
+            searchKey: params.search_key
         })
     };
+
 
     // when filter button clicked
     handleSubmit = event => {
@@ -113,11 +142,11 @@ class Home extends Component {
         console.log(newValue);
         console.log(`action: ${actionMeta.action}`);
         console.groupEnd();
-        if (newValue != null){
+        if (newValue != null) {
             this.setState({ occasions: newValue })
         }
         else {
-            this.setState({ occasions: []})
+            this.setState({ occasions: [] })
         }
     };
 
@@ -126,14 +155,21 @@ class Home extends Component {
         console.log(newValue);
         console.log(`action: ${actionMeta.action}`);
         console.groupEnd();
-        if ( newValue != null ){
-            this.setState({ flowers: newValue })}
+        if (newValue != null) {
+            this.setState({ flowers: newValue })
+        }
         else {
-            this.setState({ flowers: []})
+            this.setState({ flowers: [] })
         }
     };
 
+
+
     render() {
+
+
+        console.log("This is for search key inside render")
+        console.log(this.state.searchKey)
 
 
         let displayFlowers = []
@@ -150,7 +186,7 @@ class Home extends Component {
 
         let flowCards = this.state.display_content.map(flower => {
             return (
-                <Col sm="2" mr-5 ><FlowerCard flower={flower} account_id={this.state.account_id} district_id={this.state.district_id}/></Col>
+                <Col sm="2" mr-5 ><FlowerCard flower={flower} account_id={this.state.account_id} district_id={this.state.district_id} /></Col>
             )
         });
 
@@ -158,7 +194,7 @@ class Home extends Component {
 
             <HomeContainer>
 
-                <Navbar account_id={this.state.account_id} district_id= {this.state.district_id}/>
+                <Navbar account_id={this.state.account_id} district_id={this.state.district_id} />
                 <div>
 
                     <Row>

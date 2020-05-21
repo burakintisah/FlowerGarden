@@ -30,8 +30,8 @@ class OrderCreation extends Component {
             arrangemetInfo: [],
             sellerInfo: [],
 
-            time: null,
-            date: null,
+            time: "00:00:01",
+            date: "2008-11-11",
         }
     }
 

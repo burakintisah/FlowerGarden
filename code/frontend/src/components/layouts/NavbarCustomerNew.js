@@ -38,13 +38,6 @@ class Navbar extends Component {
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
 
-                    <form className="form-inline ml-auto">
-                        <input className="form-control mr-sm-2 ms-5" type="search" placeholder="Search" aria-label="Search" onChange={this.changeSearch} />
-                        <Link to={"/customer/accountid=" + this.props.account_id +"/districtid="+ this.props.district_id + "/" + this.state.search }>
-                            <button className="btn btn-outline-primary my-2 my-sm-0 " type="submit" disabled={this.state.search === ""} >Search</button>
-                        </Link>
-                    </form>
-
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
                             <Link className="nav-link text-white text-uppercase ml-5" to={"/notification-list/accountid=" + this.props.account_id}>Notifications&nbsp;<i class="fas fa-bell"></i></Link>
