@@ -6,6 +6,7 @@ import Footer from '../../layouts/Footer';
 import styled from 'styled-components';
 import axios from 'axios';
 import FlowerCard from './FlowerCard';
+import DatePicker from 'react-date-picker';
 
 const displayOccasions = [
     { value: 'Birthday', label: 'Birthday' },
@@ -19,6 +20,17 @@ const displayPrices = [
     { value: { upper: 30, lower: 10 }, label: '10 - 30' },
     { value: { upper: 50, lower: 30 }, label: '30 - 50' },
     { value: { upper: 70, lower: 50 }, label: '50 - 70' }
+];
+
+const options = [
+    { value: '10', label: '10:00' },
+    { value: '11', label: '11:00' },
+    { value: '12', label: '12:00' },
+    { value: '13', label: '13:00' },
+    { value: '14', label: '14:00' },
+    { value: '15', label: '15:00' },
+    { value: '16', label: '16:00' },
+    { value: '17', label: '17:00' }
 ];
 
 class Home extends Component {
@@ -38,8 +50,12 @@ class Home extends Component {
             occasions: [],
             flowers: [],
 
-            priceFilter: null
+            priceFilter: null,
 
+            date: new Date(),
+            time: null,
+            selectedDay:null,
+            selectedHour: null
         }
 
     }
@@ -74,6 +90,7 @@ class Home extends Component {
         console.groupEnd();
 
     };
+
 
     componentDidUpdate(prevProps) {
 
@@ -204,6 +221,20 @@ class Home extends Component {
         console.groupEnd();
     };
 
+    onDateChange = date => { 
+        this.setState({ date });
+        var str = date.toString();
+        var splitted = str.split(" ");
+        
+        this.setState({ selectedDay : splitted[0].toLowerCase() });
+        console.log(this.state.selectedDay)  
+    }
+
+    onTimeChange = time => { 
+        this.setState({ time }); console.log(time.label); 
+        this.setState({selectedHour : time.value})
+        console.log(this.state.selectedHour)
+    }
 
 
     render() {
@@ -225,6 +256,8 @@ class Home extends Component {
                 <Col sm="2" mr-5 ><FlowerCard flower={flower} account_id={this.state.account_id} district_id={this.state.district_id} /></Col>
             )
         });
+
+        const { selectedOption } = this.state;
 
         return (
 
@@ -260,7 +293,22 @@ class Home extends Component {
                                         className="basic-multi-select"
                                         classNamePrefix="select" />
                                 </FormGroup>
-
+                                <FormGroup>
+                                    <Label> Hour </Label>
+                                    <Select
+                                        className="basic-multi-select"
+                                        classNamePrefix="select"
+                                        onChange={this.onTimeChange}
+                                        value={selectedOption}
+                                        options={options}
+                                    />
+                                </FormGroup>
+                                <div> Day </div>
+                                <DatePicker
+                                    className = "homeSelectDay mb-3 mt-2"
+                                    onChange={this.onDateChange}
+                                    value={this.state.date}
+                                />
                                 <div className="col-md-6 co">
                                     <Button className="btn-plc btn-lg btn-dark btn-block mt-3 ml-5">Filter</Button>
                                 </div>

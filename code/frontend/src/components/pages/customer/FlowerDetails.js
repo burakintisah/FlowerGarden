@@ -26,6 +26,7 @@ const options = [
     { value: '14', label: '14:00' },
     { value: '15', label: '15:00' },
     { value: '16', label: '16:00' },
+    { value: '17', label: '17:00' },
 ];
 
 class FlowerDetails extends Component {
