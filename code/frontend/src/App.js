@@ -59,7 +59,7 @@ class App extends Component {
           <Route path="/ordertracking/accountid=:account_id" component={OrderTracking} />
           <Route path="/orderdetails/accountid=:account_id/orderid=:order_id" component={OrderDetails} />
           <Route path="/sign-up" component={SignUp} />
-          <Route path="/profile/:id" component={Profile} />
+          <Route path="/profile/" component={Profile} />
           <Route path="/forgot-password" component={ForgotPassword} />
           <Route path="/createarrangements/accountid=:account_id" component={CreateArrangement} />
           <Route path="/arrangements/accountid=:account_id" component={Arrangements} />   
