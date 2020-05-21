@@ -252,7 +252,7 @@ class Home extends Component {
 
         let flowCards = this.state.display_content.map(flower => {
             return (
-                <Col sm="2" mr-5 ><FlowerCard flower={flower} account_id={this.state.account_id} district_id={this.state.district_id} /></Col>
+               <FlowerCard flower={flower} account_id={this.state.account_id} district_id={this.state.district_id} />
             )
         });
 
@@ -266,7 +266,7 @@ class Home extends Component {
                 <div>
 
                     <Row>
-                        <Col sm="2" className="filter">
+                        <Col sm="2" className="filter ml-3" >
                             <Form className="login-form bk" onSubmit={this.handleSubmit}>
                                 <FormGroup>
                                     <Label> Price </Label>
@@ -313,8 +313,13 @@ class Home extends Component {
                                 </div>
                             </Form>
                         </Col>
-
-                        {flowCards}
+                        <Col style={{ maxWidth: '50000px' }}>
+                            <Row> {flowCards} </Row>
+                        
+                        </Col>
+                       
+                        
+                        
 
 
                     </Row>
