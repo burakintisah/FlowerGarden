@@ -13,7 +13,6 @@ import ForgotPassword from './components/pages/ForgotPassword'
 import Home from './components/pages/customer/Home';
 import Profile from './components/pages/customer/Profile';
 import OrderTracking from './components/pages/customer/OrderTracking'
-import ChangeDestination from './components/pages/customer/ChangeDestination'
 import SelectDistrict from './components/pages/customer/selectDistrict'
 import FlowerDetails from './components/pages/customer/FlowerDetails'
 import OrderCreation from './components/pages/customer/OrderCreation'
@@ -59,7 +58,6 @@ class App extends Component {
           <Route path="/orderdetails/accountid=:account_id/orderid=:order_id" component={OrderDetails} />
           <Route path="/sign-up" component={SignUp} />
           <Route path="/profile/:id" component={Profile} />
-          <Route path="/change-destination" component={ChangeDestination}/>
           <Route path="/forgot-password" component={ForgotPassword} />
           <Route path="/createarrangements/accountid=:account_id" component={CreateArrangement} />
           <Route path="/arrangements/accountid=:account_id" component={Arrangements} />   

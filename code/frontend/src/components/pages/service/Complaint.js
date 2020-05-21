@@ -71,7 +71,7 @@ class Complaint extends Component {
             this.setState({ complaint_id: params.complaint_id })
             this.setState({ order_id: params.order_id })
 
-            axios.get('http://localhost:5000/complaint/?complaint_id=' +params.complaint_id + '&order_id=' + params.order_id).then(res => {
+            axios.get(window.$globalAddress + '/complaint/?complaint_id=' +params.complaint_id + '&order_id=' + params.order_id).then(res => {
                 if (res.data.status === 1) {
                     console.log("The data esra:", res.data.data.order)
                     

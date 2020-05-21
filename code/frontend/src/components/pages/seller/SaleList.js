@@ -52,7 +52,7 @@ class SaleList  extends Component {
     componentDidMount() {
       const { match: { params } } = this.props;
       this.setState({ account_id: params.account_id })
-      axios.get('http://localhost:5000/order/seller/'+params.account_id).then(res => {
+      axios.get(window.$globalAddress + '/order/seller/'+params.account_id).then(res => {
           if (res.data.status === 1) {
               this.setState({ data: res.data.data })
               console.log(res.data)

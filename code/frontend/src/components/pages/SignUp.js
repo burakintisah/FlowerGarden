@@ -62,7 +62,7 @@ class SignUp extends Component {
         }
         console.log("Sent data:")
         console.log(data)
-        axios.post('http://localhost:5000/signup', data).then(res => {
+        axios.post(window.$globalAddress + '/signup', data).then(res => {
             console.log("RES data:")    
             console.log(res);
             if (res.data.status === 1) {
@@ -100,7 +100,7 @@ class SignUp extends Component {
 
 
     componentDidMount() {
-        axios.get('http://localhost:5000/province').then(res => {
+        axios.get(window.$globalAddress + '/province').then(res => {
             //console.log(res.data.data)
             if (res.data.status === 1) {
                 this.setState({ provinces: res.data.data })
@@ -113,7 +113,7 @@ class SignUp extends Component {
         var data = { province_id: prov.value};
         console.log("DATA");
         console.log(data);
-        axios.post('http://localhost:5000/district', data).then(res => {
+        axios.post(window.$globalAddress + '/district', data).then(res => {
             console.log("Retrieved Data")
             console.log(res)
             if (res.data.status === 1) {

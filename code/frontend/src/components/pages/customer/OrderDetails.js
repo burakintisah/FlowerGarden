@@ -34,7 +34,7 @@ class OrderDetails extends Component {
             complaint: "",
         }
     }
-    
+
 
     componentDidMount() {
         const { match: { params } } = this.props;
@@ -43,7 +43,7 @@ class OrderDetails extends Component {
             order_id: params.order_id,
         });
 
-        Axios.get(`http://localhost:5000/order/${params.order_id}`).then(res => {
+        Axios.get(window.$globalAddress + `/order/${params.order_id}`).then(res => {
             console.log(res);
             if (res.data.status === 1) {
                 this.setState({ orderInfo: res.data.data })
@@ -66,31 +66,32 @@ class OrderDetails extends Component {
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = today.getFullYear();
         today = yyyy + '-' + mm + '-' + dd;
-        var time = today + " 00:00:01"
+        var time = today + " 00:00:01.00"
 
         var data = {
             description: this.state.comment,
-            customer_id: this.state.account_id,
+            customer_id: parseInt(this.state.account_id),
             date: time,
             rating: this.state.rating,
-            arrangement_id: 2
+            arrangement_id: this.state.orderInfo.arrangement_id
         }
 
         console.log(this.state.orderInfo)
-        Axios.post(`http://localhost:5000/comment/create`, data).then(res => {
+        Axios.post(window.$globalAddress + `/comment/create`, data).then(res => {
             console.log(res)
             if (res.data.status === 1) {
                 this.setState({ arrangemetInfo: res.data.data })
                 window.confirm('Your comment received')
-                
+
             }
-            else {
+            else {  
                 console.log(res.data.message)
                 window.confirm('Your comment received')
             }
         });
 
     }
+
     complaintButton = event => {
         event.preventDefault();
         console.log("complaint CLICKED");
@@ -99,18 +100,16 @@ class OrderDetails extends Component {
         var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
         var yyyy = today.getFullYear();
         today = yyyy + '-' + mm + '-' + dd;
-        var time = today + " 00:00:01"
+        var time = today + " 00:00:01.00"
 
         var data = {
             order_id: this.state.order_id,
             complaint_date: today,
-            customer_service_id: 4,
-            response_date: null,
-            complaint_status: "Waiting"
+            complaint_text: this.state.complaint
         }
 
         console.log(this.state.orderInfo)
-        Axios.post(`http://localhost:5000/complaint/create `, data).then(res => {
+        Axios.post(window.$globalAddress + `/complaint/create `, data).then(res => {
             console.log(res)
             if (res.data.status === 1) {
                 this.setState({ arrangemetInfo: res.data.data })
@@ -127,10 +126,19 @@ class OrderDetails extends Component {
     render() {
 
         if (this.state.orderInfo != null) {
+            var sellerInformation = ""
+            var curInformation = ""
+            if (this.state.orderInfo.seller != null){
+                sellerInformation = this.state.orderInfo.seller.first_name + " " + this.state.orderInfo.seller.middle_name + " " + this.state.orderInfo.seller.last_name
+            }
+            if (this.state.orderInfo.courier != null){
+                curInformation = this.state.orderInfo.courier.first_name+ " " + this.state.orderInfo.courier.middle_name + " " + this.state.orderInfo.courier.last_name
+            }
+                
             return (
                 <CheckoutContainer>
 
-                    <Navbar />
+                    <Navbar account_id={this.state.account_id} district_id= {this.state.district_id}/>
                     <div>
 
                         <Row>
@@ -194,11 +202,11 @@ class OrderDetails extends Component {
 
                                     <Row className="mt-3">
                                         <Col><Input type="text" placeholder="Comment" onChange={this.changeComment} /></Col>
-                                        <Col sm="3"><Button className="btn btn-dark btn-block" onClick={this.commentButton} disabled={this.state.comment==""}>Comment</Button></Col>
+                                        <Col sm="3"><Button className="btn btn-dark btn-block" onClick={this.commentButton} disabled={this.state.comment == ""}>Comment</Button></Col>
                                     </Row>
                                     <Row className="mt-3">
                                         <Col><Input type="text" placeholder="Complaint" onChange={this.changeComplaint} /></Col>
-                                        <Col sm="3" ><Button className="btn btn-dark btn-block" onClick={this.complaintButton} disabled= {this.state.complaint==""}>Complaint</Button></Col>
+                                        <Col sm="3" ><Button className="btn btn-dark btn-block" onClick={this.complaintButton} disabled={this.state.complaint == ""}>Complaint</Button></Col>
                                     </Row>
                                 </Container>
                             </Col>
@@ -235,11 +243,11 @@ class OrderDetails extends Component {
                                             </Row>
                                             <Row className="mt-2">
                                                 <Col sm="6"><h5>Seller:</h5></Col>
-                                                <Col><h7>{this.state.orderInfo.seller.first_name} {this.state.orderInfo.seller.middle_name} {this.state.orderInfo.seller.last_name}</h7></Col>
+                                                <Col><h7>{sellerInformation}</h7></Col>
                                             </Row>
                                             <Row className="mt-2">
                                                 <Col sm="6"><h5>Courier: </h5></Col>
-                                                <Col><h7>{this.state.orderInfo.courier.first_name} {this.state.orderInfo.courier.middle_name} {this.state.orderInfo.courier.last_name}</h7></Col>
+                                                <Col><h7>{curInformation}</h7></Col>
 
                                             </Row>
 

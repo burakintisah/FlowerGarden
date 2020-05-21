@@ -45,7 +45,7 @@ class Home extends Component {
             flowers: this.state.flowers
         }
 
-        axios.post("http://localhost:5000/arrangement/customer", data).then(res => {
+        axios.post(window.$globalAddress + "/arrangement/customer", data).then(res => {
             console.log(res.data.data)
             if (res.data.status === 1) {
                 this.setState({ display_content: res.data.data })
@@ -57,7 +57,7 @@ class Home extends Component {
         });
 
         //to get flowers
-        axios.get("http://localhost:5000/flower").then(res => {
+        axios.get(window.$globalAddress + "/flower").then(res => {
             console.log(res.data.data)
             if (res.data.status === 1) {
                 this.setState({flowersAll :res.data.data})
@@ -95,7 +95,8 @@ class Home extends Component {
             })
         }
         console.log(data)
-        axios.post("http://localhost:5000/arrangement/customer", data).then(res => {
+        var address = window.$globalAddress + "/arrangement/customer"
+        axios.post(address, data).then(res => {
             console.log(res.data.data)
             if (res.data.status === 1) {
                 this.setState({ display_content: res.data.data })
@@ -112,7 +113,12 @@ class Home extends Component {
         console.log(newValue);
         console.log(`action: ${actionMeta.action}`);
         console.groupEnd();
-        this.setState({ occasions: newValue })
+        if (newValue != null){
+            this.setState({ occasions: newValue })
+        }
+        else {
+            this.setState({ occasions: []})
+        }
     };
 
     onChangeFlowers = (newValue, actionMeta) => {
@@ -120,7 +126,11 @@ class Home extends Component {
         console.log(newValue);
         console.log(`action: ${actionMeta.action}`);
         console.groupEnd();
-        this.setState({ flowers: newValue })
+        if ( newValue != null ){
+            this.setState({ flowers: newValue })}
+        else {
+            this.setState({ flowers: []})
+        }
     };
 
     render() {
@@ -148,7 +158,7 @@ class Home extends Component {
 
             <HomeContainer>
 
-                <Navbar />
+                <Navbar account_id={this.state.account_id} district_id= {this.state.district_id}/>
                 <div>
 
                     <Row>

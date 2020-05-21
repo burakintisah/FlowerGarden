@@ -162,14 +162,14 @@ class SelectDistrictWorkingHours extends Component {
         const { match: { params } } = this.props;
         this.setState({ account_id: params.account_id })
         console.log("accccccccount:",params.account_id)
-        axios.get('http://localhost:5000/province').then(res => {
+        axios.get(window.$globalAddress + '/province').then(res => {
             //console.log(res.data.data)
             if (res.data.status === 1) {
                 this.setState({ provinces: res.data.data })
             }
         });
 
-        axios.get('http://localhost:5000/account/courier/' + params.account_id + '/district_hour').then(res => {
+        axios.get(window.$globalAddress + '/account/courier/' + params.account_id + '/district_hour').then(res => {
             if (res.data.status === 1) {
                 this.setState({ getDistrictData: res.data.data.districts });
                 this.setState({ getHoursData: res.data.data.working_times });
@@ -211,7 +211,7 @@ class SelectDistrictWorkingHours extends Component {
         var data = { province_id: prov.value};
         console.log("DATA");
         console.log(data);
-        axios.post('http://localhost:5000/district', data).then(res => {
+        axios.post(window.$globalAddress + '/district', data).then(res => {
             console.log("Retrieved Data")
             console.log(res)
             if (res.data.status === 1) {
@@ -240,7 +240,7 @@ class SelectDistrictWorkingHours extends Component {
             working_times: selectedHours
         }
              console.log("data: ", data);
-        axios.post('http://localhost:5000/account/courier/' + this.state.account_id+ '/district_hour', data).then(res => { 
+        axios.post(window.$globalAddress + '/account/courier/' + this.state.account_id+ '/district_hour', data).then(res => { 
             console.log(res); 
             if (res.data.status === 1){
                 this.setState({ redirectToReferrer: true})
@@ -289,7 +289,7 @@ class SelectDistrictWorkingHours extends Component {
         return (
             
             <div>
-                <Navbar/>
+                <Navbar account_id={this.state.account_id}/>
                 <h1>FlowerGarden</h1>
                 
                 

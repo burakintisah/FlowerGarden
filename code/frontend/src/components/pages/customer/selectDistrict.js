@@ -23,7 +23,8 @@ class selectDistrict extends Component {
     componentDidMount() {
         const { match: { params } } = this.props;
         this.setState({ account_id: params.account_id })
-        axios.get('http://localhost:5000/province').then(res => {
+        var address = window.$globalAddress + "/province"
+        axios.get(address).then(res => {
             //console.log(res.data.data)
             if (res.data.status === 1) {
                 this.setState({ provinces: res.data.data })
@@ -38,7 +39,8 @@ class selectDistrict extends Component {
         var data = { province_id: prov.value };
         console.log("DATA");
         console.log(data);
-        axios.post('http://localhost:5000/district', data).then(res => {
+        var address = window.$globalAddress + "/district"
+        axios.post(address, data).then(res => {
             console.log("Retrieved Data")
             console.log(res)
             if (res.data.status === 1) {
@@ -103,7 +105,7 @@ class selectDistrict extends Component {
         return (
 
             <div>
-                <Navbar />
+                <Navbar account_id={this.state.account_id} district_id= {this.state.district_id}/>
 
                 <DistrictContainer >
                     <div className='header'>

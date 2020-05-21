@@ -10,6 +10,9 @@ import { BrowserRouter as Router } from 'react-router-dom';
 // import "bootstrap-css-only/css/bootstrap.min.css";
 // import "mdbreact/dist/css/mdb.css";
 
+//window.$globalAddress = "http://217.131.253.177:5000"  
+window.$globalAddress = "http://localhost:5000"  
+
 ReactDOM.render(
   
     <Router>

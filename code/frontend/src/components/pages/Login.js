@@ -3,14 +3,16 @@ import { Button, Form, FormGroup, Label, Input, Jumbotron } from 'reactstrap';
 import styled from 'styled-components'
 import Footer from '../layouts/Footer';
 import axios from 'axios'
+import App from '../../App'
 import { Redirect } from 'react-router-dom';
 
-class Login extends Component {
 
+class Login extends Component {
+    
 
     state = {
-        email: "banu@gmail.com",
-        password: "23456",
+        email: "cus1@gmail.com",
+        password: "cus1",
         account_id: null,
         account_type: 0,
         redirectToReferrer: false
@@ -20,7 +22,8 @@ class Login extends Component {
         event.preventDefault();
         var data = { email: this.state.email, password: this.state.password }
         console.log(data)
-        axios.post('http://localhost:5000/login', data).then(res => {
+        var address = window.$globalAddress + "/login"
+        axios.post( address, data).then(res => {
             console.log(res);
             // console.log(res.data.data.account_id)
             // Here we are checking whether we were able to log in or not ! 
@@ -33,6 +36,7 @@ class Login extends Component {
                 this.setState({ redirectToReferrer: true })
             }
             else {
+                window.confirm("There is no such user")
                 console.log("There is no such user")
             }
 
@@ -51,15 +55,17 @@ class Login extends Component {
         if (redirectToReferrer === true && this.state.account_type === 0) {
             return <Redirect push to={`/selectDistrict/accountid=${this.state.account_id}`} />
         }
-        //seller
+        //courier
         if (redirectToReferrer === true && this.state.account_type === 1) {
+            return <Redirect push to={`/select-district-and-working-hours/courier/accountid=${this.state.account_id}`} />
+        }
+        //seller
+        if (redirectToReferrer === true && this.state.account_type === 2) {
             return <Redirect push to={`/seller/${this.state.account_id}`} />
         }
-        if (redirectToReferrer === true && this.state.account_type === 2) {
-            return <Redirect push to={`/courier/${this.state.account_id}`} />
-        }
+        //customer service
         if (redirectToReferrer === true && this.state.account_type === 3) {
-            return <Redirect push to={`/service/${this.state.account_id}`} />
+            return <Redirect push to={`/complaint-list/service/accountid=:account_id=${this.state.account_id}`} />
         }
 
         return (
@@ -71,11 +77,11 @@ class Login extends Component {
                         <Form className="login-form bk" onSubmit={this.handleSubmit}>
                             <FormGroup>
                                 <Label> Email</Label>
-                                <Input type="email" placeholder="Email" value="banu@gmail.com" onChange={this.changeEmail} />
+                                <Input type="email" placeholder="Email" value="cus1@gmail.com" onChange={this.changeEmail} />
                             </FormGroup>
                             <FormGroup>
                                 <Label> Password</Label>
-                                <Input type="password" placeholder="Password" value="23456" onChange={this.changePassword} />
+                                <Input type="password" placeholder="Password" value="cus1" onChange={this.changePassword} />
                             </FormGroup>
                             <Button className="btn-lg btn-dark btn-block">Log in</Button>
                             <div className='text-center mt-3 mb-3'>

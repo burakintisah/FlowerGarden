@@ -28,7 +28,7 @@ class AssignCourier extends Component {
             this.setState({ account_id: params.account_id })
             this.setState({ order_id: params.order_id })
 
-            axios.get('http://localhost:5000/order/' +params.order_id).then(res => {
+            axios.get(window.$globalAddress + '/order/' +params.order_id).then(res => {
                 if (res.data.status === 1) {
                     console.log("The data:", res.data.data)
                     this.setState({ order_id : res.data.data.order_id })
@@ -39,9 +39,9 @@ class AssignCourier extends Component {
                 
             });
 
-            var str = 'http://localhost:5000/order/' + params.order_id + "/seller/assign"
+            var str = window.$globalAddress + '/order/' + params.order_id + "/seller/assign"
             console.log("str:", str)
-            axios.get('http://localhost:5000/order/' + params.order_id + "/seller/assign").then(res => {
+            axios.get(window.$globalAddress + '/order/' + params.order_id + "/seller/assign").then(res => {
                 
                 if (res.data.status === 1) {
                     console.log("courier data", res.data.data)
@@ -56,7 +56,7 @@ class AssignCourier extends Component {
             event.preventDefault();
             var data = { courier_id: this.state.courier_id }
             console.log("Sent data:", data)
-            axios.post('http://localhost:5000/order/' + this.state.order_id+ "/seller/assign", data).then(res => {
+            axios.post(window.$globalAddress + '/order/' + this.state.order_id+ "/seller/assign", data).then(res => {
                 console.log("RES data:",res)    
                 if (res.data.status === 1) {
                     this.setState({ redirectToReferrerSales: true })
