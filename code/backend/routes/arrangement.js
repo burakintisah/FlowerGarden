@@ -40,7 +40,6 @@ router.post('/customer/', (req, res) => {
         val.push(req.body.occasions[i].occasion_name);
       }
       query = query + occasion_query + ')';
-<<<<<<< HEAD
     }
 
     if (req.body.flowers && req.body.flowers.length > 0) {
@@ -53,20 +52,6 @@ router.post('/customer/', (req, res) => {
       query = query + flower_query + ')';
     }
 
-=======
-    }
-
-    if (req.body.flowers && req.body.flowers.length > 0) {
-      var flower_query = " AND ( flower_id=?";
-      val.push(req.body.flowers[0].flower_id);
-      for (i = 1; i < req.body.flowers.length; i++) {
-        flower_query = flower_query + " OR flower_id=?";
-        val.push(req.body.flowers[i].flower_id);
-      }
-      query = query + flower_query + ')';
-    }
-
->>>>>>> f307db8bef644a33537afdc14af2459c3d23cfa8
     if (req.body.price && req.body.price != "") {
       var price_query = " AND TD.price BETWEEN ? AND ?";
       val.push(req.body.price.lower);
@@ -136,13 +121,8 @@ router.get('/:id', async (req, res) => {
 
 });
 
-<<<<<<< HEAD
 router.get('/seller/:id', async (req, res) => {
   var query = 'SELECT * FROM enabled_arrangements WHERE seller_id = ?';
-=======
-router.get('/seller/:id', (req, res) => {
-  var query = 'SELECT * FROM enabled_arrangements NATURAL JOIN occasion WHERE seller_id = ?';
->>>>>>> f307db8bef644a33537afdc14af2459c3d23cfa8
   var val = [req.params.id];
 
   let rows = await dbconnection.promise().query(query, val).catch((err) => {
