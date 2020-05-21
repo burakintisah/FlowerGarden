@@ -105,7 +105,7 @@ class selectDistrict extends Component {
         return (
 
             <div>
-                <Navbar account_id={this.state.account_id}/>
+                <Navbar account_id={this.state.account_id} district_id= {this.state.district_id}/>
 
                 <DistrictContainer >
                     <div className='header'>

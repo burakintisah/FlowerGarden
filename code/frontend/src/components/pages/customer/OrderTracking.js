@@ -86,7 +86,7 @@ class OrderTracking extends Component {
         };
         return (
             <div>
-                <Navbar account_id={this.state.account_id}/>
+                <Navbar account_id={this.state.account_id} district_id= {this.state.district_id}/>
                 <Container>
                     <MDBDataTable
                         striped

@@ -11,8 +11,8 @@ class Login extends Component {
     
 
     state = {
-        email: "ser1@gmail.com",
-        password: "ser1",
+        email: "cus1@gmail.com",
+        password: "cus1",
         account_id: null,
         account_type: 0,
         redirectToReferrer: false
