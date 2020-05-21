@@ -68,11 +68,7 @@ class FlowerDetails extends Component {
                 this.setState({ descp: res.data.data.details })
                 this.setState({ price: res.data.data.price })
                 this.setState({ arrangementRate: res.data.data.rate })
-<<<<<<< HEAD
-                //this.setState({ sellerRate: res.data.data.seller.rating })
-=======
                 this.setState({ sellerRate: res.data.data.seller.rating })
->>>>>>> 7f29f5e994194869700abbebb7161b62ba8859ad
                 this.setState({ sellerFirstName: res.data.data.seller.first_name })
                 this.setState({ sellerMiddleName: res.data.data.seller.middle_name })
                 this.setState({ sellerLastName: res.data.data.seller.last_name })
@@ -86,10 +82,6 @@ class FlowerDetails extends Component {
                 console.log(res.data.data.flowers)
                 console.log(res.data.data.occasions )
             }
-<<<<<<< HEAD
-     
-=======
->>>>>>> 7f29f5e994194869700abbebb7161b62ba8859ad
 
         });
     }
@@ -220,11 +212,6 @@ class FlowerDetails extends Component {
             )
         });
 
-<<<<<<< HEAD
-        const [selectedDate, setSelectedDate] = useState(null)
-
-=======
->>>>>>> 7f29f5e994194869700abbebb7161b62ba8859ad
         return (
             <div>
                 <Navbar account_id={this.state.account_id} district_id= {this.state.district_id}></Navbar>
