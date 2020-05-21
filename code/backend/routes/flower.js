@@ -21,7 +21,6 @@ router.post('/stock/:id', async (req, res) => {
         sendResponse(res, 0, err.sqlMessage, null);
     });
 
-
     val = [req.body.flower_id, req.params.id, req.body.stock];
     rows = await dbconnection.promise().query('INSERT INTO flower_stock (flower_id, seller_id, stock) VALUES ( ? , ? , ? )', val).catch((err) => {
         console.log('Error at: ' + err);
