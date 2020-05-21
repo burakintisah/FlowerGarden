@@ -10,12 +10,11 @@ import { Redirect } from 'react-router-dom';
 class FlowerStockUpdate extends Component {
   
         state = {
-            redirectToReferrerSales: false,
-            redirectToReferrerSalePage:false,
             account_id:null,
             flowers: null,
             stock:null,
-            flower_id:null
+            flower_id:null,
+            placeHold: "Stock... "
         }
 
         changeStok = event => { event.preventDefault(); this.setState({ stock: event.target.value }); console.log(this.state.stock)  }
@@ -40,13 +39,12 @@ class FlowerStockUpdate extends Component {
 
         onUpdate = event => {
             event.preventDefault();
-            var data = [{ "flower_id": this.state.flower_id,"stock": this.state.stock  }]
+            var data = { "flower_id": this.state.flower_id,"stock": this.state.stock  }
             console.log("Sent data:", data)
             axios.post(window.$globalAddress + '/flower/stock/' + this.state.account_id, data).then(res => {
                 console.log("RES data:",res)    
                 if (res.data.status === 1) {
-                    this.setState({ redirectToReferrerSales: true })
-                    alert("Stock is updated.")
+                    alert("Stock of the flower is updated. You can update another flower.");
                 }
                 else {
                     alert("Stock could not updated, please enter valid numbers.");
@@ -58,10 +56,6 @@ class FlowerStockUpdate extends Component {
 
     render() {
 
-        const redirectToReferrer = this.state.redirectToReferrerSales;
-        if (redirectToReferrer === true) {
-            return <Redirect push to={`/arrangements/accountid=` + this.state.account_id}/>
-        }
         var display_flowers = []
         if (this.state.flowers != null) {
             display_flowers = this.state.flowers.map(item => {
@@ -87,7 +81,7 @@ class FlowerStockUpdate extends Component {
                     options={display_flowers}
                 />  
             <h5 className="mt-5">Enter the flower stock:</h5>
-                <Input type="text" placeholder="" onChange={this.changeStok}/>
+                <Input type="text" placeholder={this.state.placeHold} onChange={this.changeStok}/>
 
                 <Button className="btn-lg btn-dark mt-5 btn-block "  onClick={this.onUpdate}>Update</Button>
             </div>

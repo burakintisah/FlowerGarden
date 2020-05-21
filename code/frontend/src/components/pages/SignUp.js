@@ -6,8 +6,6 @@ import Select from 'react-select';
 import axios from 'axios'
 import { Redirect } from 'react-router-dom';
 
-
-
 class SignUp extends Component {
     constructor(props) {
         super(props);
@@ -35,8 +33,6 @@ class SignUp extends Component {
             redirectToReferrer: false
         };
     }
-
-   
 
     signUpPost = event => {
         event.preventDefault();
@@ -223,7 +219,6 @@ class SignUp extends Component {
                                 and
                                 <a className='ml-1 mr-1' href="\privacy-policy">Privacy Policy</a>
                                 .
-
                             </div>
 
                             <div class="input-group mb-3">
@@ -231,8 +226,6 @@ class SignUp extends Component {
                                     <button class="btn btn-outline-secondary" type="button" id="button-addon1" onClick={this.signUpPost}> Sign Up </button>
                                 </div>
                                 <a className='ml-4 mt-2' href="\sign-up">Learn More</a>
-
-
                             </div>
 
                             *Required
@@ -251,9 +244,7 @@ class SignUp extends Component {
                             <Input type="text" placeholder="" hidden =  {this.state.selectedOption !=="courier"} onChange={this.changeVolume}  />
 
                             <div hidden ={this.state.selectedOption !=="seller"}>*Address</div>
-                            <Input type="text" placeholder="" hidden =  { this.state.selectedOption !=="seller"} onChange={this.changeAddress}  />
-
-                            
+                            <Input type="text" placeholder="" hidden =  { this.state.selectedOption !=="seller"} onChange={this.changeAddress}  />                           
                             <div   hidden =  { this.state.selectedOption !=="seller"} >
                                 <FormGroup>
                                     <Label> Province</Label>
@@ -318,7 +309,6 @@ class SignUp extends Component {
             </Jumbotron>
             <Footer />
             </div>
-
         )
     }
 }

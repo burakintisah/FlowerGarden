@@ -26,7 +26,7 @@ class CreateArrangement extends Component{
             selectedFlowers:[],
             selectedOccasions: [],
             flowers: [],
-            totalCount: null,
+            totalCount: 0,
             occasions: [{'name': 'Anniversary' }, {'name' : 'Congratulations'}, {'name' : 'Just Because'}],
             redirectToReferrer: false
         }
@@ -50,7 +50,6 @@ class CreateArrangement extends Component{
     changeCount5 = event => { event.preventDefault(); this.setState({ count5: event.target.value }); console.log(this.state.count5); if(event.target.value.length===0) {this.setState({ count5: null})}}
     changeCount6 = event => { event.preventDefault(); this.setState({ count6: event.target.value }); console.log(this.state.count6); if(event.target.value.length===0) {this.setState({ count6: null})}}
     changeCount7 = event => { event.preventDefault(); this.setState({ count7: event.target.value }); console.log(this.state.count7); if(event.target.value.length===0) {this.setState({ count7: null})}}
-    changeTotal = event => { event.preventDefault(); this.setState({ totalCount: event.target.value }); console.log(this.state.totalCount); if(event.target.value.length===0) {this.setState({ totalCount: null})}}
 
     onSelect(selectedList, selectedItem) {
         this.state.selectedOccasions.push({"occasion_name": selectedItem.name })
@@ -91,7 +90,7 @@ class CreateArrangement extends Component{
         if (this.state.selectedOption6 !== null && this.state.count6 !== null) flowerList.push({"flower_id": this.state.selectedOption6.value,"count": Number(this.state.count6) });
         if (this.state.selectedOption7 !== null && this.state.count7 !== null) flowerList.push({"flower_id": this.state.selectedOption7.value,"count": Number(this.state.count7) });
         
-        if((this.state.name === null) || (this.state.price === null) || (this.state.volume === null) || (this.state.description === null) || (this.state.totalCount === null ) || (flowerList.length === 0) ||(this.state.selectedOccasions.length ===0))
+        if((this.state.name === null) || (this.state.price === null) || (this.state.volume === null) || (this.state.description === null) || (flowerList.length === 0) )
         {
             alert("Please fill the all required information and add at least one flower!")
         }
@@ -101,7 +100,7 @@ class CreateArrangement extends Component{
                 rating: null,
                 image_path:null,
                 seller_id:Number(this.state.account_id), 
-                count: Number(this.state.totalCount), 
+                count: 0, 
                 arrangement_name: this.state.name, 
                 price: Number(this.state.price), 
                 volume: Number(this.state.volume),
@@ -114,9 +113,10 @@ class CreateArrangement extends Component{
                 console.log(res); 
                 if (res.data.status === 1){
                     this.setState({ redirectToReferrer: true})
+                    alert("Arrangement is created")
                 }
                 else {
-                    console.log("Could not create the arrangement")
+                    alert("Could not create the arrangement")
                 }
                 })
         } 
@@ -221,8 +221,7 @@ class CreateArrangement extends Component{
                                         onRemove={this.onRemove} // Function will trigger on remove event
                                         displayValue="name" // Property name to display in the dropdown options
                                     /> 
-                                    Total count of the arrangment:  
-                                    <div className="mt-2"><input  type="text" className="form-control" placeholder="" onChange={this.changeTotal}/></div>
+                                    
                                  
                         </div>
                         {/*Column 3 */}

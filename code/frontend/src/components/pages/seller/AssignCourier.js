@@ -58,7 +58,7 @@ class AssignCourier extends Component {
             axios.post(window.$globalAddress + '/order/' + this.state.order_id+ "/seller/assign", data).then(res => {
                 console.log("RES data:",res)    
                 if (res.data.status === 1) {
-                    this.setState({ redirectToReferrerSales: true })
+                    //this.setState({ redirectToReferrerSales: true })
                     alert("Arrangement is assigned.")
                 }
                 else {
@@ -138,8 +138,8 @@ class AssignCourier extends Component {
             <div className="col-md-2 col-sm-2"> </div>
             </Row>
             
-            <Row>
-            <div class="input-group mb-3" className="" >
+            <Row className = " mt -5"> 
+            <div class="input-group mb-3 mt-5" className="" >
                         <div class="input-group-prepend assignPageButtons">
 
                             <Button className="btn-lg btn-dark mr-3"  onClick={this.goBack}>Back</Button>

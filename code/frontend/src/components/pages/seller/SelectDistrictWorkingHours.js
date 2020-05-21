@@ -243,10 +243,10 @@ class SelectDistrictWorkingHours extends Component {
             console.log(res); 
             if (res.data.status === 1){
                 this.setState({ redirectToReferrer: true})
-                
+                alert("Districts and working hours are updated.")
             }
             else {
-                console.log("Could not save the districts and working hours")
+                alert("Could not save the districts and working hours")
             }
             })
     };
