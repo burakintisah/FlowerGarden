@@ -140,7 +140,7 @@ class AssignCourier extends Component {
             
             <Row>
             <div class="input-group mb-3" className="" >
-                        <div class="input-group-prepend assignPageButtons">
+                        <div class="input-group-prepend assignPageButtons " style={{marginTop: "10%"}} >
 
                             <Button className="btn-lg btn-dark mr-3"  onClick={this.goBack}>Back</Button>
                             <Button className="btn-lg btn-dark "  onClick={this.assignEvent}>Assign</Button>

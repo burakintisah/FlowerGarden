@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Container, Row, Col, Form, FormGroup, Label, Button, Input } from 'reactstrap';
-import Navbar from '../../layouts/NavbarCustomer'
+import Navbar from '../../layouts/NavbarCustomerNew'
 import Footer from '../../layouts/Footer'
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components'

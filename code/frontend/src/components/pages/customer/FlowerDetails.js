@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Navbar from '../../layouts/NavbarCustomer'
+import Navbar from '../../layouts/NavbarCustomerNew'
 import { Redirect } from 'react-router-dom';
 import { Button, Row } from 'reactstrap';
 import axios from 'axios';
