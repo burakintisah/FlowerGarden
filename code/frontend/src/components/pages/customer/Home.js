@@ -16,10 +16,10 @@ const displayOccasions = [
 ];
 
 const displayPrices = [
-    { key:1, value: { upper: 10, lower: 0 }, label: '0 - 10' },
-    { key:2, value: { upper: 30, lower: 10 }, label: '10 - 30' },
-    { key:3, value: { upper: 50, lower: 30 }, label: '30 - 50' },
-    { key:4, value: { upper: 70, lower: 50 }, label: '50 - 70' }
+    { key: 1, value: { upper: 10, lower: 0 }, label: '0 - 10' },
+    { key: 2, value: { upper: 30, lower: 10 }, label: '10 - 30' },
+    { key: 3, value: { upper: 50, lower: 30 }, label: '30 - 50' },
+    { key: 4, value: { upper: 70, lower: 50 }, label: '50 - 70' }
 ];
 
 const options = [
@@ -47,8 +47,8 @@ class Home extends Component {
             searchKey: "",
             searchUsed: false,
 
-            occasions: null ,
-            flowers: null ,
+            occasions: null,
+            flowers: null,
 
             priceFilter: null,
 
@@ -143,8 +143,8 @@ class Home extends Component {
             data.date = this.state.selectedDay
         }
 
-        if (this.state.occasions !==  null) {
-            data.occasions =  this.state.occasions.map(item => {
+        if (this.state.occasions !== null) {
+            data.occasions = this.state.occasions.map(item => {
                 const result = {};
                 result["occasion_name"] = item.value;
                 return result;
@@ -163,7 +163,7 @@ class Home extends Component {
             data.price = this.state.priceFilter.map(item => {
                 const result = {};
                 result["upper"] = item.value.upper;
-                result["lower"] = item.value.lower; 
+                result["lower"] = item.value.lower;
                 return result;
             })
 
@@ -216,11 +216,17 @@ class Home extends Component {
 
     onDateChange = date => {
         this.setState({ date });
-        var str = date.toString();
-        var splitted = str.split(" ");
+        if (date !== null) {
+            var str = date.toString();
+            var splitted = str.split(" ");
 
-        this.setState({ selectedDay: splitted[0].toLowerCase() });
-        console.log(this.state.selectedDay)
+            this.setState({ selectedDay: splitted[0].toLowerCase() });
+
+        }
+        else {
+            this.setState({ selectedDay: null });
+        }
+
     }
 
     onTimeChange = time => {

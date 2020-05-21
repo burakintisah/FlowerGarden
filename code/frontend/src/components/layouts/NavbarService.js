@@ -39,7 +39,7 @@ class Navbar extends Component  {
                             <Link className="nav-link text-white text-uppercase ml-5" to={"/complaint-list/service/accountid=" + this.props.account_id}>Complaints&nbsp; <i class="fas fa-home"></i></Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link text-white text-uppercase ml-5" to="/selectDistrict">My Account&nbsp;<i class="fas fa-user"></i></Link>
+                            <Link className="nav-link text-white text-uppercase ml-5" to="/profile">My Account&nbsp;<i class="fas fa-user"></i></Link>
                         </li>
                     </ul>
         
