@@ -4,6 +4,7 @@ import { Button } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
+import Navbar from '../../layouts/NavbarService'
 
 
 
@@ -94,12 +95,9 @@ class ComplaintList  extends Component {
 
         return (
             <div>
-               
-                <h1 className='ml-3 mt-3'>FlowerGarden</h1>
+               <Navbar account_id={this.state.account_id}></Navbar>
                 <br />
                 <br />
-                
-
                 <Container>
                 <DataTable
                     title="COMPLAINTS"

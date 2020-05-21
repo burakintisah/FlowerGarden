@@ -8,7 +8,6 @@ class NotFoundPage extends Component {
     render() {
         return (
             <div>
-                <Navbar />
                 <ComponentNotFound className="container">
 
                     <div className="row">

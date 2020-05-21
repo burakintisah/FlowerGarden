@@ -139,7 +139,6 @@ class CreateArrangement extends Component{
         return (
         <div>
             <Navbar account_id={this.state.account_id}></Navbar>
-            <h1 className='ml-3 mt-3'>FlowerGarden</h1>
             <div className="container" >
                     <div className="form-row">
                         {/*Column 1 */}

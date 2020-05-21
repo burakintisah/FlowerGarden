@@ -3,6 +3,8 @@ import {  Row, Col } from 'reactstrap';
 import { Button } from 'reactstrap';
 import { Redirect} from 'react-router-dom';
 import axios from 'axios';
+import Navbar from '../../layouts/NavbarService'
+
 
 
 const ColoredLine = ({ color }) => (
@@ -166,7 +168,7 @@ class Complaint extends Component {
         {}
         return (
             <div>
-            <h1 className='ml-3 mt-3'>FlowerGarden</h1>
+            <Navbar account_id={this.state.account_id}></Navbar>
             <br/>
             <br/>
             <Row>

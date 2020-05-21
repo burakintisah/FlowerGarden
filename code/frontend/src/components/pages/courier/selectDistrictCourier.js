@@ -124,7 +124,6 @@ class selectDistrictCourier extends Component {
 
                 <DistrictContainer >
                     <div className='header'>
-                        <p className='ml-2'><h1> FlowerGarden</h1> </p>
                         <h4> Choose the districts you will serve..</h4>
                     </div>
                     <Form className="login-form bk" onSubmit={this.handleSubmit}>
