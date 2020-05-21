@@ -178,12 +178,19 @@ class Home extends Component {
         console.log(newValue);
         console.log(`action: ${actionMeta.action}`);
         console.groupEnd();
-        if ((newValue).length !== 0) {
-            this.setState({ occasions: newValue })
+        if (newValue !== null) {
+            if ((newValue).length !== 0) {
+                this.setState({ occasions: newValue })
+            }
+            else {
+                this.setState({ flowers: null })
+            }
         }
         else {
             this.setState({ occasions: null })
         }
+        console.groupEnd()
+
     };
 
     onChangeFlowers = (newValue, actionMeta) => {
@@ -191,25 +198,40 @@ class Home extends Component {
         console.log(newValue);
         console.log(`action: ${actionMeta.action}`);
         console.groupEnd();
-        if ((newValue).length !== 0) {
-            this.setState({ flowers: newValue })
+        if (newValue !== null) {
+            if ((newValue).length !== 0) {
+                this.setState({ flowers: newValue })
+            }
+            else {
+                this.setState({ flowers: null })
+            }
+
         }
         else {
             this.setState({ flowers: null })
         }
+
     };
 
     onChangePrices = (newValue, actionMeta) => {
         console.group('Price Changed');
         console.log(newValue);
         console.log(`action: ${actionMeta.action}`);
-        if ((newValue).length !== 0) {
-            this.setState({ priceFilter: newValue })
+        if (newValue !== null) {
+            if ((newValue).length !== 0) {
+                this.setState({ priceFilter: newValue })
+            }
+            else {
+                console.log("eq null")
+                this.setState({ priceFilter: null })
+            }
+
         }
         else {
             console.log("eq null")
             this.setState({ priceFilter: null })
         }
+
         console.groupEnd();
     };
 
@@ -252,7 +274,7 @@ class Home extends Component {
 
         let flowCards = this.state.display_content.map(flower => {
             return (
-               <FlowerCard flower={flower} account_id={this.state.account_id} district_id={this.state.district_id} />
+                <FlowerCard flower={flower} account_id={this.state.account_id} district_id={this.state.district_id} />
             )
         });
 
@@ -315,11 +337,11 @@ class Home extends Component {
                         </Col>
                         <Col style={{ maxWidth: '50000px' }}>
                             <Row> {flowCards} </Row>
-                        
+
                         </Col>
-                       
-                        
-                        
+
+
+
 
 
                     </Row>
