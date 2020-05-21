@@ -83,7 +83,7 @@ class OrderTracking extends Component {
                 //console.log(res.data.data)
             }
             else {
-                window.confirm(res.data.message)
+                console.log(res.data.message)
             }
         });
     }

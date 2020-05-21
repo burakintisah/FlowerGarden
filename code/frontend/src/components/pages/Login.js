@@ -10,8 +10,8 @@ class Login extends Component {
     
 
     state = {
-        email: "cus1@gmail.com",
-        password: "cus1",
+        email: "",
+        password: "",
         account_id: null,
         account_type: 0,
         redirectToReferrer: false
@@ -60,10 +60,10 @@ class Login extends Component {
         }
         //seller
         if (redirectToReferrer === true && this.state.account_type === 2) {
-            return <Redirect push to={`/seller/${this.state.account_id}`} />
+            return <Redirect push to={`/sale-list/seller/accountid=${this.state.account_id}`} />
         }
         //customer service
-        if (redirectToReferrer === true && this.state.account_type === 3) {
+        if (redirectToReferrer === true && this.state.account_type === 7) {
             return <Redirect push to={`/complaint-list/service/accountid=:account_id=${this.state.account_id}`} />
         }
 
@@ -76,11 +76,11 @@ class Login extends Component {
                         <Form className="login-form bk" onSubmit={this.handleSubmit}>
                             <FormGroup>
                                 <Label> Email</Label>
-                                <Input type="email" placeholder="Email" value="cus1@gmail.com" onChange={this.changeEmail} />
+                                <Input type="email" placeholder="Email"  onChange={this.changeEmail} />
                             </FormGroup>
                             <FormGroup>
                                 <Label> Password</Label>
-                                <Input type="password" placeholder="Password" value="cus1" onChange={this.changePassword} />
+                                <Input type="password" placeholder="Password"  onChange={this.changePassword} />
                             </FormGroup>
                             <Button className="btn-lg btn-dark btn-block">Log in</Button>
                             <div className='text-center mt-3 mb-3'>

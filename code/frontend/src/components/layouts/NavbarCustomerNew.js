@@ -40,7 +40,7 @@ class Navbar extends Component {
 
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
-                            <Link className="nav-link text-white text-uppercase ml-5" to={"/notification-list/accountid=" + this.props.account_id}>Notifications&nbsp;<i class="fas fa-bell"></i></Link>
+                            <Link className="nav-link text-white text-uppercase ml-5" to={"/notification-list/customer/accountid=" + this.props.account_id}>Notifications&nbsp;<i class="fas fa-bell"></i></Link>
                         </li>
                         <li className="nav-item active">
                             <Link className="nav-link text-white text-uppercase ml-5" to={"/selectDistrict/accountid=" + this.props.account_id}>Change Destination&nbsp; <i class="fas fa-home"></i></Link>

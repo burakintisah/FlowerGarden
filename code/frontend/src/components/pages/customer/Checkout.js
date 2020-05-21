@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import styled from 'styled-components'
 import Axios from 'axios';
 
-import Navbar from '../../layouts/NavbarCustomer'
+import Navbar from '../../layouts/NavbarCustomerNew'
 import Footer from '../../layouts/Footer'
 
 const deliveryTypes = [
