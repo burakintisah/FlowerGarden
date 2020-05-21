@@ -1,9 +1,6 @@
-import { MDBCard, MDBCardHeader, MDBCardBody, MDBTableEditable } from "mdbreact";
 import React, { Component } from 'react'
 import { Container } from 'reactstrap';
-import { Button, Input } from 'reactstrap';
-import { MDBDataTable } from 'mdbreact';
-import { Redirect } from 'react-router-dom';
+import { Button } from 'reactstrap';
 import axios from 'axios';
 import Image from 'react-bootstrap/Image'
 import DataTable from 'react-data-table-component';

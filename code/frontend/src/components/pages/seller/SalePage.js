@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import {  Container, Row, Col } from 'reactstrap';
-import { Button,  Input } from 'reactstrap';
+import { Row } from 'reactstrap';
+import { Button} from 'reactstrap';
 import Navbar from '../../layouts/NavbarSeller'
-import { MDBDataTable  } from 'mdbreact';
 import { Redirect} from 'react-router-dom';
 import axios from 'axios';
 
@@ -135,7 +134,7 @@ class SaleList extends Component {
         
         return (
             <div>
-            <Navbar />
+            <Navbar account_id={this.state.account_id}></Navbar>
             <h1 className='ml-3 mt-3'>FlowerGarden</h1>
             <br/>
             <br/>
@@ -145,54 +144,54 @@ class SaleList extends Component {
             <div className="col-md-6 col-sm-6">
                     
                     <div class="input-group-prepend">
-                        <h3>Sale ID: </h3> <h5 className="mt-2"> {this.state.saleID}</h5>
+                        <h5>Sale ID: </h5> <div> {this.state.saleID}</div>
                     </div>
                    
                    
                     <div class="input-group-prepend">
-                         <h3>Arrangement Name: </h3> <h5 className="mt-2"> {this.state.arrangementName} </h5>
+                         <h5>Arrangement Name: </h5> <div> {this.state.arrangementName} </div>
                     </div>
                     
                     
                     <div class="input-group-prepend">
-                        <h3>Customer Name: </h3> <h5 className="mt-2"> {this.state.customerName} </h5>
+                        <h5>Customer Name: </h5> <div> {this.state.customerName} </div>
                     </div>
                    
                     
                     <div class="input-group-prepend">
-                        <h3>Customer Phone:</h3> <h5 className="mt-2"> {this.state.customerPhone} </h5>
+                        <h5>Customer Phone:</h5> <div> {this.state.customerPhone} </div>
                     </div>
                
                     <div class="input-group-prepend">
-                        <h3>Sale Date: </h3> <h5 className="mt-2"> {this.state.saleDate} </h5>
+                        <h5>Sale Date: </h5> <div> {this.state.saleDate} </div>
                     </div>
            
                     <div class="input-group-prepend">
-                        <h3>Delivery Date:</h3> <h5 className="mt-2"> {this.state.deliveryDate} </h5>
+                        <h5>Delivery Date:</h5> <div> {this.state.deliveryDate} </div>
                     </div>
                  
                     <div class="input-group-prepend">
-                        <h3>Desired Delivery Time:  </h3> <h5 className="mt-2"> {this.state.timeslot} </h5>
+                        <h5>Desired Delivery Time:  </h5> <div> {this.state.timeslot} </div>
                     </div>
                   
                     <div class="input-group-prepend">
-                         <h3>Message:  </h3> <h5 className="mt-2"> {this.state.message} </h5>
+                         <h5>Message:  </h5> <div> {this.state.message} </div>
                     </div>
                    
                     <div class="input-group-prepend">
-                        <h3>Order Staus:  </h3> <h5 className="mt-2"> {this.state.orderStatus} </h5>
+                        <h5>Order Staus:  </h5> <div> {this.state.orderStatus} </div>
                     </div>
                    
                    <div class="input-group-prepend">
-                        <h3>Courier Name:  </h3> <h5 className="mt-2"> {this.state.courier_name} </h5>
+                        <h5>Courier Name:  </h5> <div> {this.state.courier_name} </div>
                     </div>
                    
                     <div class="input-group-prepend">
-                        <h3>Courier Phone: </h3> <h5 className="mt-2"> {this.state.courierPhone} </h5>
+                        <h5>Courier Phone: </h5> <div> {this.state.courierPhone} </div>
                     </div>
                 
                     <div class="input-group-prepend">
-                        <h3>Acceptance Status: </h3> <h5 className="mt-2"> {this.state.seller_status} </h5>
+                        <h5>Acceptance Status: </h5> <div> {this.state.seller_status} </div>
                     </div>
                     
                     </div>

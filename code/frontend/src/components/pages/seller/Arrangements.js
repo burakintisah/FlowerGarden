@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { Container } from 'reactstrap';
-import { Button, Input } from 'reactstrap';
+import { Button } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
-
+import Navbar from '../../layouts/NavbarSeller'
 
 
 class Arrangements  extends Component {
@@ -73,7 +73,7 @@ class Arrangements  extends Component {
 
   seeArrangementDetails   = event => {
     event.preventDefault();
-    if(this.state.selectedCount != 1)
+    if(this.state.selectedCount !== 1)
     {
         alert("Please select only one sale!")
     }
@@ -113,7 +113,7 @@ class Arrangements  extends Component {
         
         return (
             <div>
-               
+                <Navbar account_id={this.state.account_id}></Navbar>
                 <h1 className='ml-3 mt-3'>FlowerGarden</h1>
                 <br />
                 <br />

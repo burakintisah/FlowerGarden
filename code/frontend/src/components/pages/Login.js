@@ -3,7 +3,6 @@ import { Button, Form, FormGroup, Label, Input, Jumbotron } from 'reactstrap';
 import styled from 'styled-components'
 import Footer from '../layouts/Footer';
 import axios from 'axios'
-import App from '../../App'
 import { Redirect } from 'react-router-dom';
 
 
