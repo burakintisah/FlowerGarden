@@ -235,7 +235,7 @@ class Checkout extends Component {
             Axios.post(window.$globalAddress + `/account/customer/${this.state.account_id}/saved_addresses`, addData).then(res => {
                 console.log(res)
                 if (res.data.status === 1) {
-                    console.logo("Address Saved")
+                    console.log("Address Saved")
                     console.log(res.data.message)
                 }
                 else {
@@ -300,7 +300,7 @@ class Checkout extends Component {
                                 </Row>
                             </FormGroup>
                             <FormGroup className="arr">
-                                <Row>
+                                <Row hidden={ this.state.paymentType !== "card"}    >
                                     <Col><Input type="text" placeholder="Credit Card Number" onChange={this.changeCreditCard} /></Col>
                                     <Col><Select onChange={this.cardSelect} options={displayCreditCard} /></Col>
                                 </Row>
@@ -314,7 +314,7 @@ class Checkout extends Component {
                                 </Row>
                             </FormGroup>
                             <FormGroup>
-                                <Row className="arr ml-2">
+                                <Row className="arr ml-2" hidden={ this.state.paymentType !== "card"}>
                                     <input type="checkbox" aria-label="Checkbox for following text input" className="mt-1" onChange={this.saveCreditCardCheckbox} />
                                     <h6 className="ml-5">Save credit card number</h6>
                                 </Row>
@@ -322,7 +322,7 @@ class Checkout extends Component {
                             <FormGroup>
                                 <h5>Remember Receiver</h5>
                                 <Row className="arr ml-2">
-                                    <input className="mt-1" type="checkbox" aria-label="Checkbox for following text input" onChange={this.saveAdressCheckbox} disabled={displaySavedAdress != {}}/>
+                                    <input className="mt-1" type="checkbox" aria-label="Checkbox for following text input" onChange={this.saveAdressCheckbox} disabled={displaySavedAdress !== []}/>
                                     <h6 className="ml-5">Save the receiver adress for a faster checkout</h6>
                                 </Row>
                             </FormGroup>
