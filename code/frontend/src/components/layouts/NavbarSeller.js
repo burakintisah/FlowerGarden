@@ -12,7 +12,7 @@ class Navbar extends Component  {
     render () {
         return (
             <nav className="navbar navbar-expand-lg navbar-light bg-dark">
-                <Link className="navbar-brand text-white ml-5 " to="/" >FlowerGarden   &nbsp;     
+                <Link className="navbar-brand text-white ml-5 " to={"/sale-list/seller/accountid=" + this.props.account_id} >FlowerGarden   &nbsp;     
                     <img src={logo} alt="logo" style={{width:'35px' }}/>
                 </Link>
                     

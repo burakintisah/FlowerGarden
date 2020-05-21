@@ -138,9 +138,9 @@ class AssignCourier extends Component {
             <div className="col-md-2 col-sm-2"> </div>
             </Row>
             
-            <Row className = " mt -5"> 
-            <div class="input-group mb-3 mt-5" className="" >
-                        <div class="input-group-prepend assignPageButtons">
+            <Row>
+            <div class="input-group mb-3" className="" >
+                        <div class="input-group-prepend assignPageButtons " style={{marginTop: "10%"}} >
 
                             <Button className="btn-lg btn-dark mr-3"  onClick={this.goBack}>Back</Button>
                             <Button className="btn-lg btn-dark "  onClick={this.assignEvent}>Assign</Button>

@@ -20,7 +20,7 @@ class Navbar extends Component {
 
         return (
             <nav className="navbar navbar-expand-lg navbar-light bg-dark">
-                <Link className="navbar-brand text-white ml-5 " to="/" >FlowerGarden   &nbsp;
+                <Link className="navbar-brand text-white ml-5 " to={"/selectDistrict/accountid="+this.props.account_id} >FlowerGarden   &nbsp;
                     <img src={logo} alt="logo" style={{ width: '35px' }} />
                 </Link>
 
@@ -48,9 +48,7 @@ class Navbar extends Component {
                         <li className="nav-item">
                             <Link className="nav-link text-white text-uppercase ml-5" to={"/ordertracking/accountid=" + this.props.account_id}>Order Tracking&nbsp;<i class="fas fa-truck-moving"></i></Link>
                         </li>
-                        <li className="nav-item">
-                            <Link className="nav-link text-white text-uppercase ml-5" to={{ pathname: "/profile" }}>My Account&nbsp;<i class="fas fa-user"></i></Link>
-                        </li>
+
                     </ul>
 
                 </div>

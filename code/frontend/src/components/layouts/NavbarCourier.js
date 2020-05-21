@@ -14,7 +14,7 @@ class Navbar extends Component {
     render (){
         return (
             <nav className="navbar navbar-expand-lg navbar-light bg-dark">
-                <Link className="navbar-brand text-white ml-5 " to="/" >FlowerGarden   &nbsp;     
+                <Link className="navbar-brand text-white ml-5 " to={"/deliverytracking/accountid=" + this.props.account_id} >FlowerGarden   &nbsp;     
                     <img src={logo} alt="logo" style={{width:'35px' }}/>
                 </Link>
                     
@@ -38,9 +38,6 @@ class Navbar extends Component {
                         </li>
                         <li className="nav-item active">
                             <Link className="nav-link text-white text-uppercase ml-5" to={"/select-district-and-working-hours/courier/accountid="+ this.props.account_id}>Change Service District&nbsp; <i class="fas fa-home"></i></Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link text-white text-uppercase ml-5" to={{pathname:"/profile"}}>My Account&nbsp;<i class="fas fa-user"></i></Link>
                         </li>
                     </ul>
         

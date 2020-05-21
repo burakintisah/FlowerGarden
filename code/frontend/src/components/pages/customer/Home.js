@@ -136,12 +136,11 @@ class Home extends Component {
         event.preventDefault();
         var data = { district_id: parseInt(this.state.district_id) };
 
-        if (this.state.selectedHour !== null) {
+        if (this.state.selectedHour !== null && this.state.selectedDay !== null) {
             data.hour = this.state.selectedHour
+            data.day = this.state.selectedDay
         }
-        if (this.state.selectedDay !== null) {
-            data.date = this.state.selectedDay
-        }
+
 
         if (this.state.occasions !== null) {
             data.occasions = this.state.occasions.map(item => {
