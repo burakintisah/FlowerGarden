@@ -6,8 +6,6 @@ import axios from 'axios';
 import DataTable from 'react-data-table-component';
 import Navbar from '../../layouts/NavbarSeller'
 
-
-
 class SaleList  extends Component {
 
     state = {
