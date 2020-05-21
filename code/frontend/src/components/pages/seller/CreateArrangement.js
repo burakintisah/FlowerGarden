@@ -26,14 +26,14 @@ class CreateArrangement extends Component{
             selectedFlowers:[],
             selectedOccasions: [],
             flowers: [],
-            totalCount:0,
+            totalCount: null,
             occasions: [{'name': 'Anniversary' }, {'name' : 'Congratulations'}, {'name' : 'Just Because'}],
             redirectToReferrer: false
         }
-    changeName = event => { event.preventDefault(); this.setState({ name: event.target.value }); console.log(this.state.name); }
-    changePrice = event => { event.preventDefault(); this.setState({ price: event.target.value }); console.log(this.state.price); }
-    changeVolume = event => { event.preventDefault(); this.setState({ volume: event.target.value }); console.log(this.state.volume); }
-    changeDescription = event => { event.preventDefault(); this.setState({ description: event.target.value }); console.log(this.state.description); }
+    changeName = event => { event.preventDefault(); this.setState({ name: event.target.value }); console.log(this.state.name);  if(event.target.value.length===0) {this.setState({ name: null})} }
+    changePrice = event => { event.preventDefault(); this.setState({ price: event.target.value }); console.log(this.state.price); if(event.target.value.length===0) {this.setState({ price: null})} }
+    changeVolume = event => { event.preventDefault(); this.setState({ volume: event.target.value }); console.log(this.state.volume); if(event.target.value.length===0) {this.setState({ volume: null})}}
+    changeDescription = event => { event.preventDefault(); this.setState({ description: event.target.value }); console.log(this.state.description); if(event.target.value.length===0) {this.setState({ description: null})}}
 
     flowerChange1 = selectedOption1 => {this.setState({ selectedOption1 }); console.log(`Option selected:`, selectedOption1);};
     flowerChange2 = selectedOption2 => {this.setState({ selectedOption2 }); console.log(`Option selected:`, selectedOption2);};
@@ -43,14 +43,14 @@ class CreateArrangement extends Component{
     flowerChange6 = selectedOption6 => {this.setState({ selectedOption6 }); console.log(`Option selected:`, selectedOption6);};
     flowerChange7 = selectedOption7 => {this.setState({ selectedOption7 }); console.log(`Option selected:`, selectedOption7);};  
 
-    changeCount1 = event => { event.preventDefault(); this.setState({ count1: event.target.value }); console.log(this.state.count1); }
-    changeCount2 = event => { event.preventDefault(); this.setState({ count2: event.target.value }); console.log(this.state.count2); }
-    changeCount3 = event => { event.preventDefault(); this.setState({ count3: event.target.value }); console.log(this.state.count3); }
-    changeCount4 = event => { event.preventDefault(); this.setState({ count4: event.target.value }); console.log(this.state.count4); }
-    changeCount5 = event => { event.preventDefault(); this.setState({ count5: event.target.value }); console.log(this.state.count5); }
-    changeCount6 = event => { event.preventDefault(); this.setState({ count6: event.target.value }); console.log(this.state.count6); }
-    changeCount7 = event => { event.preventDefault(); this.setState({ count7: event.target.value }); console.log(this.state.count7); }
-    changeTotal = event => { event.preventDefault(); this.setState({ totalCount: event.target.value }); console.log(this.state.totalCount); }
+    changeCount1 = event => { event.preventDefault(); this.setState({ count1: event.target.value }); console.log(this.state.count1); if(event.target.value.length===0) {this.setState({ count1: null})}}
+    changeCount2 = event => { event.preventDefault(); this.setState({ count2: event.target.value }); console.log(this.state.count2); if(event.target.value.length===0) {this.setState({ count2: null})}}
+    changeCount3 = event => { event.preventDefault(); this.setState({ count3: event.target.value }); console.log(this.state.count3); if(event.target.value.length===0) {this.setState({ count3: null})}}
+    changeCount4 = event => { event.preventDefault(); this.setState({ count4: event.target.value }); console.log(this.state.count4); if(event.target.value.length===0) {this.setState({ count4: null})}}
+    changeCount5 = event => { event.preventDefault(); this.setState({ count5: event.target.value }); console.log(this.state.count5); if(event.target.value.length===0) {this.setState({ count5: null})}}
+    changeCount6 = event => { event.preventDefault(); this.setState({ count6: event.target.value }); console.log(this.state.count6); if(event.target.value.length===0) {this.setState({ count6: null})}}
+    changeCount7 = event => { event.preventDefault(); this.setState({ count7: event.target.value }); console.log(this.state.count7); if(event.target.value.length===0) {this.setState({ count7: null})}}
+    changeTotal = event => { event.preventDefault(); this.setState({ totalCount: event.target.value }); console.log(this.state.totalCount); if(event.target.value.length===0) {this.setState({ totalCount: null})}}
 
     onSelect(selectedList, selectedItem) {
         this.state.selectedOccasions.push({"occasion_name": selectedItem.name })
@@ -91,28 +91,35 @@ class CreateArrangement extends Component{
         if (this.state.selectedOption6 !== null && this.state.count6 !== null) flowerList.push({"flower_id": this.state.selectedOption6.value,"count": Number(this.state.count6) });
         if (this.state.selectedOption7 !== null && this.state.count7 !== null) flowerList.push({"flower_id": this.state.selectedOption7.value,"count": Number(this.state.count7) });
         
-        var data = {
-            rating: null,
-            image_path:null,
-            seller_id:Number(this.state.account_id), 
-            count: Number(this.state.totalCount), 
-            arrangement_name: this.state.name, 
-            price: Number(this.state.price), 
-            volume: Number(this.state.volume),
-             details: this.state.description, 
-             enabled: 1,
-             occasions: this.state.selectedOccasions,
-             flowers: flowerList}
-             console.log(data);
-        axios.post(window.$globalAddress + '/arrangement/create', data).then(res => { 
-            console.log(res); 
-            if (res.data.status === 1){
-                this.setState({ redirectToReferrer: true})
-            }
-            else {
-                console.log("Could not create the arrangement")
-            }
-            })
+        if((this.state.name === null) || (this.state.price === null) || (this.state.volume === null) || (this.state.description === null) || (this.state.totalCount === null ) || (flowerList.length === 0) ||(this.state.selectedOccasions.length ===0))
+        {
+            alert("Please fill the all required information and add at least one flower!")
+        }
+        else
+        {
+            var data = {
+                rating: null,
+                image_path:null,
+                seller_id:Number(this.state.account_id), 
+                count: Number(this.state.totalCount), 
+                arrangement_name: this.state.name, 
+                price: Number(this.state.price), 
+                volume: Number(this.state.volume),
+                 details: this.state.description, 
+                 enabled: 1,
+                 occasions: this.state.selectedOccasions,
+                 flowers: flowerList}
+                 console.log(data);
+            axios.post(window.$globalAddress + '/arrangement/create', data).then(res => { 
+                console.log(res); 
+                if (res.data.status === 1){
+                    this.setState({ redirectToReferrer: true})
+                }
+                else {
+                    console.log("Could not create the arrangement")
+                }
+                })
+        } 
     }
     render () { 
 

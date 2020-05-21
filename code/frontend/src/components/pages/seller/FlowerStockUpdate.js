@@ -4,6 +4,7 @@ import { Button,  Input } from 'reactstrap';
 import Navbar from '../../layouts/NavbarSeller'
 import axios from 'axios';
 import Select from 'react-select';
+import { Redirect } from 'react-router-dom';
 
 
 class FlowerStockUpdate extends Component {
@@ -57,6 +58,10 @@ class FlowerStockUpdate extends Component {
 
     render() {
 
+        const redirectToReferrer = this.state.redirectToReferrerSales;
+        if (redirectToReferrer === true) {
+            return <Redirect push to={`/arrangements/accountid=` + this.state.account_id}/>
+        }
         var display_flowers = []
         if (this.state.flowers != null) {
             display_flowers = this.state.flowers.map(item => {

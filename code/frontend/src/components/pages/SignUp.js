@@ -42,15 +42,15 @@ class SignUp extends Component {
         event.preventDefault();
         if( (this.state.firstName===null) || (this.state.lastName===null)|| (this.state.email===null)||(this.state.password===null)||(this.state.repassword===null)||(this.state.password!== this.state.repassword)||!(this.state.termsOfUse)||(this.state.phone===null))
         {
-            alert("You must fill the all required information!"); 
+            alert("Please fill the all required information!"); 
         }
         else if((this.state.account_type === 1) && ( ( this.state.iban===null) ||(this.state.sellerAddress === null) ||(this.state.province_id === null) ||(this.state.district_id === null) ))
         {
-            alert("You must fill the all required information!"); 
+            alert("Please fill the all required information!"); 
         }
         else if((this.state.account_type === 2) && ( ( this.state.iban===null) ||(this.state.courierVolume === null) ))
         {
-            alert("You must fill the all required information!"); 
+            alert("Please fill the all required information!"); 
         }
         else if( this.state.phone.length !== 11)
         {
