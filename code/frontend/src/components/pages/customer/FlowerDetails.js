@@ -1,13 +1,12 @@
-import React, { Component, useState } from 'react'
+import React, { Component} from 'react'
 import Navbar from '../../layouts/NavbarCustomer'
-import Footer from '../../layouts/Footer'
 import { Redirect } from 'react-router-dom';
 import { Button, Row } from 'reactstrap';
 import axios from 'axios';
 import { Image, Col } from 'react-bootstrap'
 import Rating from 'react-rating'
 import CommentCard from '../seller/CommentCard';
-import DatePicker from 'react-datepicker';
+import DatePicker from 'react-date-picker';
 import Select from 'react-select'
 const ColoredLine = ({ color }) => (
     <hr
@@ -37,8 +36,6 @@ class FlowerDetails extends Component {
         arrangementName: null,
         volume: null,
         price: null,
-        occasions: [],
-        flowers: null,
         descp: null,
         arrangementRate: null,
         sellerRate: null,
@@ -52,7 +49,9 @@ class FlowerDetails extends Component {
         occasions: [],
         redirectToOrderPage: false,
         date: new Date(),
-        time: null
+        time: null,
+        formattedDate:null,
+        formattedTime: null
     }
     componentDidMount() {
         const { match: { params } } = this.props;
@@ -66,10 +65,9 @@ class FlowerDetails extends Component {
             if (res.data.status === 1) {
                 this.setState({ arrangementName: res.data.data.arrangement_name })
                 this.setState({ descp: res.data.data.details })
-                //this.setState({ enabled: res.data.data.enabled })
                 this.setState({ price: res.data.data.price })
                 this.setState({ arrangementRate: res.data.data.rate })
-                //this.setState({ sellerRate: res.data.data. })
+                this.setState({ sellerRate: res.data.data.seller.rating })
                 this.setState({ sellerFirstName: res.data.data.seller.first_name })
                 this.setState({ sellerMiddleName: res.data.data.seller.middle_name })
                 this.setState({ sellerLastName: res.data.data.seller.last_name })
@@ -83,40 +81,6 @@ class FlowerDetails extends Component {
                 console.log(res.data.data.flowers)
                 console.log(res.data.data.occasions)
             }
-<<<<<<< HEAD
-        componentDidMount() {
-            const { match: { params } } = this.props;
-            this.setState({ account_id: params.account_id })
-            this.setState({ arrangement_id: params.arrangement_id })
-            this.setState({ district_id: params.district_id })
-            console.log(params.account_id )
-            console.log(params.arrangement_id)
-
-            axios.get('http://localhost:5000/arrangement/'+params.arrangement_id).then(res => {
-                if (res.data.status === 1) {
-                    this.setState({ arrangementName: res.data.data.arrangement_name })
-                    this.setState({ descp: res.data.data.details })
-                    this.setState({ price: res.data.data.price })
-                    this.setState({ arrangementRate: res.data.data.rate })
-                    //this.setState({ sellerRate: res.data.data.seller.rating })
-                    this.setState({ sellerFirstName: res.data.data.seller.first_name })
-                    this.setState({ sellerMiddleName: res.data.data.seller.middle_name })
-                    this.setState({ sellerLastName: res.data.data.seller.last_name })
-                    this.setState({ sellerRate: res.data.data.seller.rating})
-                    this.setState({ volume: res.data.data.volume })
-                    this.setState({ flowers: res.data.data.flowers })
-                    this.setState({ commentArray: res.data.data.comments })
-                    this.setState({ occasions: res.data.data.occasions })
-                    this.setState({ count: res.data.data.count })
-                    console.log(res.data)
-                    console.log(res.data.data.flowers)
-                    console.log(res.data.data.occasions )
-                }
-                  
-            });
-        }
-=======
->>>>>>> f307db8bef644a33537afdc14af2459c3d23cfa8
 
         });
     }
@@ -129,8 +93,70 @@ class FlowerDetails extends Component {
 
 
 
-    onDateChange = date => { this.setState({ date }); console.log(this.state.date); }
-    onTimeChange = time => { this.setState({ time }); console.log(time); }
+    onDateChange = date => { 
+        this.setState({ date });
+        var str = date.toString();
+        var splitted = str.split(" ");
+        console.log(str);
+        /*console.log(splitted[0]); 
+        console.log(splitted[1]); //ay
+        console.log(splitted[2]); //gün
+        console.log(splitted[3]);  //yıl
+*/
+        var month = "01";
+        switch(splitted[1])
+        {
+            case "Jan":
+                month = "01";
+                break;
+            case "Feb":
+                month = "02";
+                break;
+            case "Mar":
+                month = "03";
+                break;
+            case "Apr":
+                month = "04";
+                break;   
+            case "May":
+                month = "05";
+                break;  
+            case "Jun":
+                month = "06";
+                break;
+            case "Jul":
+                month = "07";
+                break;
+            case "Aug":
+                month = "08";
+                break;
+            case "Sep":
+                month = "09";
+                break;
+            case "Oct":
+                month = "10";
+                break;
+            case "Nov":
+                month = "11";
+                break;
+            case "Dec":
+                month = "12";
+                break;       
+
+        }
+        //format : yıl-ay-gün
+        var parsedDate = splitted[3] + "-" + month + "-" + splitted[2];
+        this.setState({ formattedDate : parsedDate });
+        console.log(this.state.formattedDate)
+        
+        
+    }
+    onTimeChange = time => { 
+        this.setState({ time }); console.log(time.label); 
+        var timeStr = time.label+ ":00.000000";
+        this.setState({formattedTime : timeStr})
+        console.log(this.state.formattedTime)
+    }
 
 
     intersperseOccasions(arr) {
@@ -185,12 +211,7 @@ class FlowerDetails extends Component {
             )
         });
 
-<<<<<<< HEAD
-        const [selectedDate, setSelectedDate] = useState(null)
-        return(
-=======
         return (
->>>>>>> f307db8bef644a33537afdc14af2459c3d23cfa8
             <div>
                 <Navbar account_id={this.state.account_id} district_id= {this.state.district_id}></Navbar>
                 <h1 className='ml-5 mt-3'>FlowerGarden</h1>
@@ -228,20 +249,6 @@ class FlowerDetails extends Component {
                         <div className=" mt-3" mt-3>Occasions: {tags}</div>
                         <br /> <h3>Time:</h3>
 
-<<<<<<< HEAD
-                        
-                               <div className="mr-5">Date: </div>
-                               <div>
-                                    <DatePicker
-                                    selected = {selectedDate}
-                                    onChange={date => setSelectedDate(date)}
-                                    dataFormat ='dd/MM/yyyy'
-                                    />
-                                </div>
-                            
-                        
-=======
->>>>>>> f307db8bef644a33537afdc14af2459c3d23cfa8
 
                         <div className="mr-5">Date: </div>
                         <div>

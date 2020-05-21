@@ -1,12 +1,10 @@
-import { MDBCard, MDBCardHeader, MDBCardBody, MDBTableEditable } from "mdbreact";
 import React, { Component } from 'react'
 import { Container } from 'reactstrap';
-import { Button, Input } from 'reactstrap';
-import { MDBDataTable } from 'mdbreact';
+import { Button} from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
-import Image from 'react-bootstrap/Image'
 import DataTable from 'react-data-table-component';
+import Navbar from '../../layouts/NavbarSeller'
 
 
 
@@ -63,7 +61,7 @@ class SaleList  extends Component {
 
   seeSaleDetails   = event => {
     event.preventDefault();
-    if(this.state.selectedCount != 1)
+    if(this.state.selectedCount !== 1)
     {
         alert("Please select only one sale!")
     }
@@ -94,7 +92,7 @@ class SaleList  extends Component {
         return (
             <div>
                
-                <h1 className='ml-3 mt-3'>FlowerGarden</h1>
+               <Navbar account_id={this.state.account_id}></Navbar>
                 <br />
                 <br />
                 

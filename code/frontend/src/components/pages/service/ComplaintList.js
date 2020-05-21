@@ -1,8 +1,6 @@
-import { MDBCard, MDBCardHeader, MDBCardBody, MDBTableEditable } from "mdbreact";
 import React, { Component } from 'react'
 import { Container } from 'reactstrap';
-import { Button, Input } from 'reactstrap';
-import { MDBDataTable } from 'mdbreact';
+import { Button } from 'reactstrap';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import DataTable from 'react-data-table-component';
@@ -66,7 +64,7 @@ class ComplaintList  extends Component {
 
   seeComplaintDetails   = event => {
     event.preventDefault();
-    if(this.state.selectedCount != 1)
+    if(this.state.selectedCount !== 1)
     {
         alert("Please select only one complaint!")
     }

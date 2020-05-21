@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
-import {  Container, Row, Col } from 'reactstrap';
+import { Row } from 'reactstrap';
 import { Button,  Input } from 'reactstrap';
 import Navbar from '../../layouts/NavbarSeller'
-import { MDBDataTable  } from 'mdbreact';
-import { Redirect} from 'react-router-dom';
 import axios from 'axios';
 import Select from 'react-select';
 
@@ -73,8 +71,7 @@ class FlowerStockUpdate extends Component {
         
         return (
             <div>
-            <Navbar />
-            <h1 className='ml-3 mt-3'>FlowerGarden</h1>
+            <Navbar account_id={this.state.account_id}></Navbar>
             <br/>
             <br/>
             <Row>

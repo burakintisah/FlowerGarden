@@ -56,16 +56,16 @@ class DeliveryDetails extends Component {
                     selEmailAdress: res.data.data.seller.email
                 })
                 
-                if (res.data.data.courier_status == "Rejected") {
+                if (res.data.data.courier_status === "Rejected") {
                     this.setState({ canceled: true, showRejected: true })
                 }
-                if (res.data.data.delivery_status == "Delivered") {
+                if (res.data.data.delivery_status === "Delivered") {
                     this.setState({
                         done: true,
                         showDelivered: true
                     })
                 }
-                if (res.data.data.courier_status == "Accepted" &&  res.data.data.delivery_status != "Delivered") {
+                if (res.data.data.courier_status === "Accepted" &&  res.data.data.delivery_status !== "Delivered") {
                     this.setState({ enableDelivered: true , showCanBeDeliverd: true})
                 }
                 console.log(res.data.message)

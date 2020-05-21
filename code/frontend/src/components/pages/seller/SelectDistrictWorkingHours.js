@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Jumbotron,Container, Row, Col,Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Container, Row, Col,Button, FormGroup } from 'reactstrap';
 import Select from 'react-select';
 import axios from 'axios'
 import { Redirect } from 'react-router-dom';
@@ -173,7 +173,7 @@ class SelectDistrictWorkingHours extends Component {
             if (res.data.status === 1) {
                 this.setState({ getDistrictData: res.data.data.districts });
                 this.setState({ getHoursData: res.data.data.working_times });
-                console.log("DistrictData", res.data.data.working_times);
+                console.log("DistrictData", res.data.data);
                 
 
                 var str ="Current selected districts:";
@@ -186,13 +186,12 @@ class SelectDistrictWorkingHours extends Component {
                         this.setState({text : str})
                     }
 
-
-                str ="Current selected hours:";
+               str ="";
                 if(res.data.data.working_times !== null )
                 {
                     for(var i = 0; i < res.data.data.working_times.length; i++)
                     { 
-                        str = str + res.data.data.working_times.day[i] + ":" + res.data.data.working_times.hour[i] + ",";
+                        str = str + res.data.data.working_times[i].day + "     :     " + res.data.data.working_times[i].hour + " , ";
                     }
                     str = str + " "
                     this.setState({hourTxt : str})
@@ -240,7 +239,7 @@ class SelectDistrictWorkingHours extends Component {
             working_times: selectedHours
         }
              console.log("data: ", data);
-        axios.post(window.$globalAddress + '/account/courier/' + this.state.account_id+ '/district_hour', data).then(res => { 
+        axios.post(window.$globalAddress + '/account/seller/' + this.state.account_id+ '/district_hour', data).then(res => { 
             console.log(res); 
             if (res.data.status === 1){
                 this.setState({ redirectToReferrer: true})
@@ -289,17 +288,11 @@ class SelectDistrictWorkingHours extends Component {
         return (
             
             <div>
-                <Navbar />
-                <h1>FlowerGarden</h1>
-                
-                
+                <Navbar account_id={this.state.account_id}></Navbar>                           
                 <br/><br/>
                 <h3 className="workingHoursHeader" > Choose the district you will serve: </h3>
-                
                 <Container>
-                
                     <Row>
-                        
                         <Col>
                             <FormGroup>
                                 <h4>Provinces:</h4>
@@ -400,7 +393,10 @@ class SelectDistrictWorkingHours extends Component {
                             />   
                             <Button className="saveButton btn-lg btn-dark"  onClick={this.saveAll}>Save All</Button>                       
                          </Col>
-                        <Col>{this.state.hourTxt}</Col>
+                        <Col className="mr-5"> Current selected hours: 
+                            <Col></Col>
+                            <Col>{this.state.hourTxt}</Col>
+                        </Col>
                      </Row>
                      
                 

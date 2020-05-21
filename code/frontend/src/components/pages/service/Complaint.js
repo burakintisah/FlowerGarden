@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import {  Container, Row, Col } from 'reactstrap';
-import { Button,  Input } from 'reactstrap';
-import { MDBDataTable  } from 'mdbreact';
+import {  Row, Col } from 'reactstrap';
+import { Button } from 'reactstrap';
 import { Redirect} from 'react-router-dom';
 import axios from 'axios';
 
