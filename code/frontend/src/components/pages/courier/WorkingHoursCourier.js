@@ -289,7 +289,7 @@ class SelectDistrictWorkingHours extends Component {
         return (
             
             <div>
-                <Navbar/>
+                <Navbar account_id={this.state.account_id}/>
                 <h1>FlowerGarden</h1>
                 
                 

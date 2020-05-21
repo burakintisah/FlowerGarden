@@ -108,7 +108,7 @@ class DeliveryDetails extends Component {
 
         return (
             <DeliveryContainer>
-                <Navbar />
+                <Navbar account_id={this.state.account_id}/>
                 <Row className="start">
                     <Col className="del-info">
                         <Container >

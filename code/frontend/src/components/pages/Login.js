@@ -11,8 +11,8 @@ class Login extends Component {
     
 
     state = {
-        email: "cus1@gmail.com",
-        password: "cus1",
+        email: "ser1@gmail.com",
+        password: "ser1",
         account_id: null,
         account_type: 0,
         redirectToReferrer: false
@@ -57,7 +57,7 @@ class Login extends Component {
         }
         //courier
         if (redirectToReferrer === true && this.state.account_type === 1) {
-            return <Redirect push to={`/courier/${this.state.account_id}`} />
+            return <Redirect push to={`/select-district-and-working-hours/courier/accountid=${this.state.account_id}`} />
         }
         //seller
         if (redirectToReferrer === true && this.state.account_type === 2) {
@@ -65,7 +65,7 @@ class Login extends Component {
         }
         //customer service
         if (redirectToReferrer === true && this.state.account_type === 3) {
-            return <Redirect push to={`/service/${this.state.account_id}`} />
+            return <Redirect push to={`/complaint-list/service/accountid=:account_id=${this.state.account_id}`} />
         }
 
         return (
