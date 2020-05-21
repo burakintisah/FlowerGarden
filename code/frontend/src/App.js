@@ -18,7 +18,7 @@ import FlowerDetails from './components/pages/customer/FlowerDetails'
 import OrderCreation from './components/pages/customer/OrderCreation'
 import Checkout from './components/pages/customer/Checkout'
 import OrderDetails from './components/pages/customer/OrderDetails'
-
+import NotificationListCustomer from './components/pages/customer/NotificationListCustomer';
 
 // Importing Seller Pages
 import CreateArrangement from './components/pages/seller/CreateArrangement'
@@ -29,19 +29,21 @@ import SelectDistrictWorkingHours from './components/pages/seller/SelectDistrict
 import SalePage from './components/pages/seller/SalePage'
 import AssignCourier from './components/pages/seller/AssignCourier'
 import FlowerStockUpdate from './components/pages/seller/FlowerStockUpdate'
+import NotificationListSeller from './components/pages/seller/NotificationListSeller';
 
 // Importing Courier Pages
 import selectDistrictCourier from './components/pages/courier/selectDistrictCourier';
 import courierDeliveryList from './components/pages/courier/courierDeliveryList';
 import deliveryDetails from './components/pages/courier/deliveryDetalis';
 import WorkingHoursCourier from './components/pages/courier/WorkingHoursCourier';
+import NotificationListCourier from './components/pages/courier/NotificationListCourier';
 
 // Importing Customer Service Pages
 import Complaint from './components/pages/service/Complaint';
 import ComplaintList from './components/pages/service/ComplaintList';
+import NotificationListService from './components/pages/service/NotificationListService';
 
-//Import common pages
-import NotificationList from './components/pages/NotificationList';
+
 
 class App extends Component {
   render() {
@@ -72,7 +74,10 @@ class App extends Component {
           <Route path="/select-district-and-working-hours/courier/accountid=:account_id" component={WorkingHoursCourier} />  
           <Route path="/complaint/service/accountid=:account_id/complaintid=:complaint_id/orderid=:order_id" component={Complaint} />
           <Route path="/complaint-list/service/accountid=:account_id" component={ComplaintList} />    
-          <Route path="/notification-list/accountid=:account_id" component={NotificationList} />    
+          <Route path="/notification-list/courier/accountid=:account_id" component={NotificationListCourier} />  
+          <Route path="/notification-list/customer/accountid=:account_id" component={NotificationListCustomer} />  
+          <Route path="/notification-list/seller/accountid=:account_id" component={NotificationListSeller} />  
+          <Route path="/notification-list/service/accountid=:account_id" component={NotificationListService} />    
           <Route component={NotFoundPage} />
         </Switch>
         </div>

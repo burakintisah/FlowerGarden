@@ -4,10 +4,10 @@ import { Button } from 'reactstrap';
 import axios from 'axios';
 import Image from 'react-bootstrap/Image'
 import DataTable from 'react-data-table-component';
+import Navbar from '../../layouts/NavbarSeller'
 
 
-
-class NotificationList extends Component {
+class NotificationListSeller extends Component {
 
     state = {
         redirectToReferrer:false,
@@ -83,14 +83,13 @@ class NotificationList extends Component {
     }*/
         return (
             <div>
-               
-                <h1 className='ml-3 mt-3'>FlowerGarden</h1>
+                <Navbar account_id={this.state.account_id}></Navbar>
                 <br />
                 <br />
                 
 
                 <Container>
-                <Image  className= "notificationIcon"src={require('./notification_icon.png')}  />
+                <Image  className= "notificationIcon"src={require('../notification_icon.png')}  />
                 <DataTable
                     title="NOTIFICATIONS"
                     columns={this.state.columns}
@@ -109,4 +108,6 @@ class NotificationList extends Component {
 }
 
 
-export default NotificationList;
+export default NotificationListSeller;
+
+

@@ -108,7 +108,6 @@ class selectDistrict extends Component {
 
                 <DistrictContainer >
                     <div className='header'>
-                        <p className='ml-2'><h1> FlowerGarden</h1> </p>
 
                         <h7> With FlowerGarden, your flower is just a few clicks away! </h7>
                         <h9> Choose the destination district and order.</h9>

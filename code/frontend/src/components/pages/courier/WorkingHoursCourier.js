@@ -289,10 +289,7 @@ class SelectDistrictWorkingHours extends Component {
         return (
             
             <div>
-                <Navbar account_id={this.state.account_id}/>
-                <h1>FlowerGarden</h1>
-                
-                
+                <Navbar account_id={this.state.account_id}/>               
                 <br/><br/>
                 <h3 className="workingHoursHeader" > Choose the district you will serve: </h3>
                 

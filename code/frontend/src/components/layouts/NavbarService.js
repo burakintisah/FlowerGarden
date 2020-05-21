@@ -33,19 +33,13 @@ class Navbar extends Component  {
                     
                     <ul className="navbar-nav ml-auto">
                         <li className="nav-item">
-                            <Link className="nav-link text-white text-uppercase ml-5" to={"/notification-list/seller/accountid=" + this.props.account_id}>Notifications&nbsp;<i class="fas fa-bell"></i></Link>
+                            <Link className="nav-link text-white text-uppercase ml-5" to={"/notification-list/service/accountid=" + this.props.account_id}>Notifications&nbsp;<i class="fas fa-bell"></i></Link>
                         </li>
                         <li className="nav-item active">
-                            <Link className="nav-link text-white text-uppercase ml-5" to={"/select-district-working-hours/seller/accountid=" + this.props.account_id}>Change District/Hours&nbsp; <i class="fas fa-home"></i></Link>
+                            <Link className="nav-link text-white text-uppercase ml-5" to={"/complaint-list/service/accountid=" + this.props.account_id}>Complaints&nbsp; <i class="fas fa-home"></i></Link>
                         </li>
                         <li className="nav-item">
-                            <Link className="nav-link text-white text-uppercase ml-5" to={"/sale-list/seller/accountid=" + this.props.account_id}>Sales&nbsp;<i class="fas fa-handshake"></i></Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link text-white text-uppercase ml-5" to={"/arrangements/accountid=" + this.props.account_id}>Arrangements&nbsp;<i class="fab fa-pagelines"></i></Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link className="nav-link text-white text-uppercase ml-5" to="/selectDistrict   ">My Account&nbsp;<i class="fas fa-user"></i></Link>
+                            <Link className="nav-link text-white text-uppercase ml-5" to="/selectDistrict">My Account&nbsp;<i class="fas fa-user"></i></Link>
                         </li>
                     </ul>
         
