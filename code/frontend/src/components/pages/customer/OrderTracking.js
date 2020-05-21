@@ -36,8 +36,8 @@ class OrderTracking extends Component {
                   sortable: true,
                 },
                 {
-                  name: 'Order Date',
-                  selector: 'order_date',
+                  name: 'Desired Delivery Date',
+                  selector: 'desired_delivery_date',
                   sortable: true,
                 },
                 {
@@ -85,7 +85,7 @@ class OrderTracking extends Component {
         event.preventDefault();
         if(this.state.selectedCount !== 1)
         {
-            alert("Please select only one sale!")
+            alert("Please select only one order!")
         }
         else{
             this.setState({redirectToOrderDetails : true})
