@@ -37,7 +37,8 @@ class Home extends Component {
 
             occasions: [],
             flowers: [],
-            priceFilter: []
+
+            priceFilter: null
 
         }
 
@@ -103,6 +104,7 @@ class Home extends Component {
                 console.log("No Arrangement Found")
             }
         });
+        console.groupEnd();
     }
 
     updateValues(params) {
@@ -118,11 +120,13 @@ class Home extends Component {
         console.group('Filter Clicked');
         event.preventDefault();
         var data;
-        if (this.state.priceFilter !== []) {
+        if (this.state.priceFilter !== null) {
+
             data = {
-                district_id: this.state.district_id,
+                district_id: parseInt(this.state.district_id),
                 day: this.state.day,
                 hour: this.state.hour,
+                price: { upper: this.state.priceFilter[0].value.upper, lower: this.state.priceFilter[0].value.lower },
                 occasions: this.state.occasions.map(item => {
                     const result = {};
                     result["occasion_name"] = item.value;
@@ -133,13 +137,9 @@ class Home extends Component {
                     result["flower_id"] = item.value;
                     return result;
                 }),
-                price: this.state.priceFilter.map(item => {
-                    const result = {};
-                    result["upper"] = item.value.upper;
-                    result["lower"] = item.value.lower;
-                    return result
-                }),
             }
+
+
         }
         else {
             data = {
@@ -158,7 +158,7 @@ class Home extends Component {
                 }),
             }
         }
-        
+        console.log(data)
         this.fetchData(data)
         console.groupEnd();
     };
@@ -191,14 +191,15 @@ class Home extends Component {
     };
 
     onChangePrices = (newValue, actionMeta) => {
-        console.group('Value Changed');
+        console.group('Price Changed');
         console.log(newValue);
         console.log(`action: ${actionMeta.action}`);
-        if (newValue != null) {
+        if ((newValue).length !== 0) {
             this.setState({ priceFilter: newValue })
         }
         else {
-            this.setState({ priceFilter: [] })
+            console.log("eq null")
+            this.setState({ priceFilter: null })
         }
         console.groupEnd();
     };
