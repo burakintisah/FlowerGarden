@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 
 import { Container } from 'reactstrap';
 import { Button, Input } from 'reactstrap';
-import { MDBDataTable } from 'mdbreact';
+import DataTable from 'react-data-table-component';
 import { Redirect } from 'react-router-dom';
 import axios from 'axios';
 import Navbar from '../../layouts/NavbarCustomerNew'
@@ -18,19 +18,45 @@ class OrderTracking extends Component {
             account_id: null,
             district_id: null,
             
-            r: [],
-
-            c: [
-                { label: 'ID', field: 'order_id' },
-                { label: 'Flower Arrangement Name', field: 'arrangement_name' },
-                { label: 'Price', field: 'price' },
-                { label: 'Desired Delivery Date', field: 'desired_delivery_date' },
-                { label: 'Desired Delivery Time', field: 'desired_delivery_time' },
-                { label: 'Delivery Status', field: 'delivery_status' },
-                { label: 'Seller', field: 'seller_status' },
-                { label: 'Courier', field: 'courier_status' },
-            ],
             data: [],
+
+            columns: [  {
+                name: 'ID',
+                selector: 'order_id',
+                sortable: true,
+              },
+              {
+                name: 'Flower Arrangement Name',
+                selector: 'arrangement_name',
+                sortable: true,
+              },
+              {
+                  name: 'Price',
+                  selector: 'price',
+                  sortable: true,
+                },
+                {
+                  name: 'Order Date',
+                  selector: 'order_date',
+                  sortable: true,
+                },
+                {
+                  name: 'Delivery Status',
+                  selector: 'delivery_status',
+                  sortable: true,
+                },
+                {
+                  name: 'Seller',
+                  selector: 'seller_status',
+                  sortable: true,
+                },       
+                {
+                  name: 'Courier',
+                  selector: 'courier_status',
+                  sortable: true,
+                }   
+              ],
+              selectedCount: 0,           
 
             selectedOrder: null,
             redirectToOrderDetails: false
@@ -45,7 +71,7 @@ class OrderTracking extends Component {
             console.log("ALL DATA")
             console.log(res)
             if (res.data.status === 1) {
-                this.setState({ r: res.data.data })
+                this.setState({ data: res.data.data })
                 console.log(res.data.message)
                 console.log(res.data.data)
             }
@@ -55,11 +81,27 @@ class OrderTracking extends Component {
         });
     }
 
-    takeOrderId = event => { event.preventDefault(); this.setState({ selectedOrder: event.target.value }); console.log(this.state.selectedOrder); }
-
     seeOrderDetails = event => {
-        this.setState({redirectToOrderDetails: true})
+        event.preventDefault();
+        if(this.state.selectedCount !== 1)
+        {
+            alert("Please select only one sale!")
+        }
+        else{
+            this.setState({redirectToOrderDetails : true})
+        } 
     }
+
+    handleChange = (state) => {
+        // You can use setState or dispatch with something like Redux so we can use the retrieved data
+        console.log('Selected Rows: ', state.selectedRows);
+        if(state.selectedRows.length > 0)
+        {
+          this.setState({ selectedOrder: state.selectedRows[0].order_id })
+          this.setState({ selectedCount: state.selectedRows.length })
+          console.log("order ID:", state.selectedRows[0].order_id )
+        }
+    };
 
     render() {
 
@@ -67,41 +109,21 @@ class OrderTracking extends Component {
             return <Redirect push to={`/orderdetails/accountid=${this.state.account_id}/orderid=${this.state.selectedOrder}`} />
         }
         
-        
-        var display = this.state.r.map (item => {
-            const container = {};
-
-            container["order_id"] = item.order_id;
-            container["arrangement_name"] = item.arrangement_name;
-            container["price"] = item.price;
-            container["desired_delivery_date"] = item.desired_delivery_date;
-            container["desired_delivery_time"] = item.desired_delivery_time;
-            container["delivery_status"] = item.delivery_status;
-            container["seller_status"] = item.seller_status;
-            container["courier_status"] = item.courier_status;
-
-            return container;
-        })
-
-      
-        this.state.data = {
-            columns: this.state.c,
-            rows: display
-        };
         return (
             <div>
                 <Navbar account_id={this.state.account_id} district_id= {this.state.district_id}/>
                 <Container>
-                    <MDBDataTable
-                        striped
-                        bordered
-                        small
+                    <DataTable
+                        title="ORDER TRACKING"
+                        columns={this.state.columns}
                         data={this.state.data}
+                        selectableRows // add for checkbox selection
+                        Clicked
+                        onSelectedRowsChange={this.handleChange}
                     />
                     <br /> <br />
                     <div class="input-group mb-3" className="mt-4" style={{ float: 'right' }}>
                         <div class="input-group-prepend">
-                            <Input className="mr-5" style={{ width: '350px' }} type="text" placeholder="Enter the id of the order..." onChange={this.takeOrderId} />
                             <Button className="btn-lg btn-dark mr-5 ml-25" onClick={this.seeOrderDetails}disabled={this.state.selectedOrder===null}>Order Details</Button>
                         </div>
                     </div>
