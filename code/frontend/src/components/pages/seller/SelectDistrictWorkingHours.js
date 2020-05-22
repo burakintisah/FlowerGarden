@@ -42,7 +42,7 @@ class SelectDistrictWorkingHours extends Component {
         districts: null,
         hourTxt:"",
         text:"",
-        redirectToArrangements: false,
+        redirectToReferrer: false,
         hours : [
             { 'name' : '7:00-8:00', 'value': 7},
             { 'name': '8:00-9:00', 'value': 8},
@@ -255,8 +255,8 @@ class SelectDistrictWorkingHours extends Component {
     
     render() {
 
-        const redirectToReferrer = this.state.redirectToArrangements;
-        if (redirectToReferrer === true ) {
+        
+        if (this.state.redirectToReferrer === true ) {
             return <Redirect push to={'/arrangements/accountid=' +this.state.account_id} />
         }
 
