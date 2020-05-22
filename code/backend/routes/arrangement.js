@@ -155,7 +155,7 @@ router.get('/seller/:id', async (req, res) => {
 
 router.post('/create', async (req, res) => {
   var query = 'INSERT INTO flower_arrangement ( image_path, arrangement_name, volume, price, seller_id, details, rate, count, enabled) VALUES ( ? , ?, ?, ?, ?, ?, ?, ?, ? )';
-  var val = [req.body.image_path, req.body.arrangement_name, req.body.volume, req.body.price, req.body.seller_id, req.body.details, req.body.rate, req.body.count, req.body.enabled];
+  var val = [req.body.image_path, req.body.arrangement_name, req.body.volume, req.body.price, req.body.seller_id, req.body.details, 0, 0, req.body.enabled];
 
   let rows = await dbconnection.promise().query(query, val).catch((err) => {
     console.log('Error at: ' + err);
