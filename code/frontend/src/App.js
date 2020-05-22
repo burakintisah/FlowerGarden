@@ -30,6 +30,7 @@ import SalePage from './components/pages/seller/SalePage'
 import AssignCourier from './components/pages/seller/AssignCourier'
 import FlowerStockUpdate from './components/pages/seller/FlowerStockUpdate'
 import NotificationListSeller from './components/pages/seller/NotificationListSeller';
+import Statistics from './components/pages/seller/Statistics'
 
 // Importing Courier Pages
 import selectDistrictCourier from './components/pages/courier/selectDistrictCourier';
@@ -67,6 +68,7 @@ class App extends Component {
           <Route path="/stock-update/seller/accountid=:account_id" component={FlowerStockUpdate} /> 
           <Route path="/sale-list/seller/accountid=:account_id" component={SaleList} /> 
           <Route path="/sale-page/accountid=:account_id/orderid=:order_id" component={SalePage} /> 
+          <Route path="/statistics/seller/accountid=:account_id" component={Statistics} /> 
           <Route path="/assign-courier/accountid=:account_id/orderid=:order_id" component={AssignCourier} />    
           <Route path="/deliverytracking/accountid=:account_id" component={courierDeliveryList} />   
           <Route path="/deliverydetails/accountid=:account_id/deliveryid=:delivery_id" component={deliveryDetails} />   

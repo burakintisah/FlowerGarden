@@ -125,17 +125,16 @@ class Complaint extends Component {
                 
             });
         }
-  
+
         onSolved = event => {
             event.preventDefault();
-            axios.get('' +this.state.order_id+ '').then(res => {
+            axios.get(window.$globalAddress + "/complaint/solved/?complaint_id=" + this.state.complaint_id + "&order_id=" + this.state.order_id).then(res => {
                 if (res.data.status === 1) {
                     console.log("The data:", res.data.data);
                     alert("The complaint is succesfully solved. ");
-
                   }
                   else{
-                      //alert("Cannot solve the complaint");
+                      alert("Cannot solve the complaint");
                   }
                 
             }); 
@@ -144,27 +143,22 @@ class Complaint extends Component {
 
         onReplied = event => {
             event.preventDefault();
-            axios.get('' +this.state.order_id+ '').then(res => {
+            axios.get(window.$globalAddress + "/complaint/replied/?complaint_id=" + this.state.complaint_id + "&order_id=" + this.state.order_id).then(res => {
                 if (res.data.status === 1) {
                     console.log("The data:", res.data.data);
                     alert("The complaint is succesfully replied. ");
 
                   }
                   else{
-                      //alert("Cannot reply the complaint");
+                      alert("Cannot reply the complaint");
                   }
-                
             }); 
             this.setState({ redirectToReferrer: true})
         }
-
-    render() {
-
-        
+    render() {      
         if (this.state.redirectToReferrer === true) {
-            return <Redirect push to={'/complaint-list/accountid=' + this.state.account_id}/>  
+            return <Redirect push to={'/complaint-list/service/accountid=' + this.state.account_id}/>  
         }
-
         {}
         return (
             <div>

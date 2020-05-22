@@ -204,9 +204,9 @@ class SaleList extends Component {
                 <Row>
                     <div class="input-group mb-3" className="salePageButtons" >
                         <div class="input-group-prepend">
-                            <Button className="btn-lg btn-dark mr-5 ml-10" disabled={this.state.seller_status !== "Assigned to Courier"} onClick={this.onDeliveredTo}>Delivered to Courier</Button>
-                            <Button className="btn-lg btn-dark mr-5 ml-10" disabled={this.state.seller_status === "Assigned to Courier" || this.state.seller_status === "Accepted" } onClick={this.onReject}>Reject Sale</Button>
-                            <Button className="btn-lg btn-dark mr-5 ml-10" disabled={this.state.seller_status === "Assigned to Courier" || this.state.seller_status === "Accepted"} onClick={this.onAccept}>Accept Sale</Button>
+                            <Button className="btn-lg btn-dark mr-5 ml-10" disabled={this.state.seller_status !== "Assigned  to Courier"} onClick={this.onDeliveredTo}>Delivered to Courier</Button>
+                            <Button className="btn-lg btn-dark mr-5 ml-10" disabled={this.state.seller_status === "Assigned  to Courier" || this.state.seller_status === "Accepted"} onClick={this.onReject}>Reject Sale</Button>
+                            <Button className="btn-lg btn-dark mr-5 ml-10" disabled={this.state.seller_status === "Assigned  to Courier" || this.state.seller_status === "Accepted"} onClick={this.onAccept}>Accept Sale</Button>
                             <Button className="btn-lg btn-dark mr-5 ml-10" disabled={this.state.seller_status !== "Accepted"} onClick={this.assignCourier}>Assign to Courier</Button>
 
                         </div>

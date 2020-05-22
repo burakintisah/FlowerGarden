@@ -47,6 +47,9 @@ class Navbar extends Component  {
                         <li className="nav-item">
                             <Link className="nav-link text-white text-uppercase ml-5" to={"/stock-update/seller/accountid=" + this.props.account_id} >Stock Update&nbsp;<i class="fas fa-user"></i></Link>
                         </li>
+                        <li className="nav-item">
+                            <Link className="nav-link text-white text-uppercase ml-5" to={"/statistics/seller/accountid=" + this.props.account_id}>Statistics&nbsp;<i class="fas fa-bell"></i></Link>
+                        </li>
                     </ul>
         
                 </div>
