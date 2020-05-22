@@ -307,7 +307,7 @@ router.get('/:id/seller/reject', async (req, res) => {
 
 router.post('/:id/seller/assign', async (req, res) => {
 
-    var query = 'UPDATE flowergarden.order SET courier_status = "Pending", seller_status = " Assigned to Courier", courier_id = ? WHERE order_id = ?';
+    var query = 'UPDATE flowergarden.order SET courier_status = "Pending", seller_status = "Assigned  to Courier", courier_id = ? WHERE order_id = ?';
 
     var val = [req.body.courier_id, req.params.id];
 
