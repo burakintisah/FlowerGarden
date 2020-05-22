@@ -10,7 +10,7 @@ In this project, we have proposed, designed, and implemented an online flower sh
 
 **Project Description:** Developing a database application.
 
-**Group Number:** 12
+**Group Number:** 32
 
 **Group Members**
 - [Meryem Banu CAVLAK](https://github.com/banucavlak)
