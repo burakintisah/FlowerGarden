@@ -9,10 +9,12 @@ import FlowerCard from './FlowerCard';
 import DatePicker from 'react-date-picker';
 
 const displayOccasions = [
+    
+
     { value: 'Birthday', label: 'Birthday' },
     { value: 'Anniversary', label: 'Anniversary' },
     { value: 'Congratulations', label: 'Congratulations' },
-    { value: 'Just', label: 'Just' }
+    { value: 'Just Because', label: 'Just Because' }
 ];
 
 const displayPrices = [
@@ -23,6 +25,9 @@ const displayPrices = [
 ];
 
 const options = [
+    { value: '7', label: '7:00' },
+    { value: '8', label: '8:00' },
+    { value: '9', label: '9:00' },
     { value: '10', label: '10:00' },
     { value: '11', label: '11:00' },
     { value: '12', label: '12:00' },

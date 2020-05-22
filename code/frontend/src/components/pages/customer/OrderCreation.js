@@ -54,6 +54,7 @@ class OrderCreation extends Component {
                 console.log("No Arrangement Found")
             }
 
+
             Axios.get(window.$globalAddress + `/account/${res.data.data.seller_id}`).then(res => {
                 console.log(res)
                 if (res.data.status === 1) {

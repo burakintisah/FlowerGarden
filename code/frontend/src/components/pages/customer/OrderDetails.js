@@ -5,6 +5,8 @@ import Footer from '../../layouts/Footer'
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components'
 import Axios from 'axios';
+import Rating from 'react-rating'
+import Select from 'react-select'
 
 
 const ColoredLine = ({ color }) => (
@@ -16,6 +18,14 @@ const ColoredLine = ({ color }) => (
         }}
     />
 );
+
+var ratingDisplay = [
+    { value: 1, label: '1' },
+    { value: 2, label: '2 ' },
+    { value: 3, label: '3' },
+    { value: 4, label: '4' },
+    { value: 5, label: '5' }
+];
 
 
 class OrderDetails extends Component {
@@ -84,7 +94,7 @@ class OrderDetails extends Component {
                 window.confirm('Your comment received')
 
             }
-            else {  
+            else {
                 console.log(res.data.message)
                 window.confirm('Your comment received')
             }
@@ -123,22 +133,29 @@ class OrderDetails extends Component {
 
     }
 
+    ratingSelect = rate => {
+        // getting the districts according to province!!
+        console.log(`Option selected:`, rate.value);
+        this.setState({ rating: rate.value })
+    };
+
     render() {
+
 
         if (this.state.orderInfo != null) {
             var sellerInformation = ""
             var curInformation = ""
-            if (this.state.orderInfo.seller != null){
+            if (this.state.orderInfo.seller != null) {
                 sellerInformation = this.state.orderInfo.seller.first_name + " " + this.state.orderInfo.seller.middle_name + " " + this.state.orderInfo.seller.last_name
             }
-            if (this.state.orderInfo.courier != null){
-                curInformation = this.state.orderInfo.courier.first_name+ " " + this.state.orderInfo.courier.middle_name + " " + this.state.orderInfo.courier.last_name
+            if (this.state.orderInfo.courier != null) {
+                curInformation = this.state.orderInfo.courier.first_name + " " + this.state.orderInfo.courier.middle_name + " " + this.state.orderInfo.courier.last_name
             }
-                
+
             return (
                 <CheckoutContainer>
 
-                    <Navbar account_id={this.state.account_id} district_id= {this.state.district_id}/>
+                    <Navbar account_id={this.state.account_id} district_id={this.state.district_id} />
                     <div>
 
                         <Row>
@@ -202,6 +219,11 @@ class OrderDetails extends Component {
 
                                     <Row className="mt-3">
                                         <Col><Input type="text" placeholder="Comment" onChange={this.changeComment} /></Col>
+                                        <Col>
+                                            <Select onChange = {this.ratingSelect}
+                                                options={ratingDisplay}
+                                            />
+                                        </Col>
                                         <Col sm="3"><Button className="btn btn-dark btn-block" onClick={this.commentButton} disabled={this.state.comment == ""}>Comment</Button></Col>
                                     </Row>
                                     <Row className="mt-3">

@@ -19,6 +19,9 @@ const ColoredLine = ({ color }) => (
 );
 
 const options = [
+    { value: '7', label: '7:00' },
+    { value: '8', label: '8:00' },
+    { value: '9', label: '9:00' },
     { value: '10', label: '10:00' },
     { value: '11', label: '11:00' },
     { value: '12', label: '12:00' },
@@ -152,8 +155,8 @@ class FlowerDetails extends Component {
             this.setState({ formattedDate: parsedDate });
             console.log(this.state.formattedDate)
         }
-        else{
-            this.setState({formattedDate: null})
+        else {
+            this.setState({ formattedDate: null })
         }
 
 
@@ -201,7 +204,7 @@ class FlowerDetails extends Component {
         const redirectToOrderPage = this.state.redirectToReferrer;
         if (redirectToOrderPage === true) {
             return <Redirect to={{
-                pathname: '/ordercreation/accountid=' + this.state.account_id + '/districtid=' + this.state.district_id + '/arrangementid=' + this.state.account_id,
+                pathname: '/ordercreation/accountid=' + this.state.account_id + '/districtid=' + this.state.district_id + '/arrangementid=' + this.state.arrangement_id,
                 state: {
                     desired_date: this.state.formattedDate,
                     desired_time: this.state.formattedTime
@@ -210,7 +213,10 @@ class FlowerDetails extends Component {
 
             } />
         }
-        var sellerName = this.state.sellerFirstName + " " + this.state.sellerMiddleName + " " + this.state.sellerLastName;
+        
+        
+        var sellerName = "";         
+        if (this.state.sellerMiddleName !== null) { sellerName = this.state.sellerFirstName + " " + this.state.sellerMiddleName + " " + this.state.sellerLastName; } else { sellerName = this.state.sellerFirstName + " " + this.state.sellerLastName; }
 
         var tags = this.intersperseOccasions(this.state.occasions);
         var flowerNames = this.intersperseFlowers(this.state.flowers);
@@ -244,7 +250,7 @@ class FlowerDetails extends Component {
                             <Col>
                                 <Rating
                                     readonly="true"
-                                    initialRating={this.state.ratingVal}
+                                    initialRating={this.state.arrangementRate}
                                     emptySymbol="fa fa-star-o fa-2x"
                                     fullSymbol="fa fa-star fa-2x"
                                     fractions={2}
@@ -280,7 +286,7 @@ class FlowerDetails extends Component {
                         </div>
 
                         <ColoredLine color="black" />
-                        <Button variant="dark" size="lg" block onClick={this.orderArrangement} disabled = {this.state.formattedDate==null || this.state.formattedTime==null} >Order</Button>
+                        <Button variant="dark" size="lg" block onClick={this.orderArrangement} disabled={this.state.formattedDate == null || this.state.formattedTime == null} >Order</Button>
 
 
                     </div>

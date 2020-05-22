@@ -282,8 +282,8 @@ class Complaint extends Component {
          
             <div class="input-group mb-3" className="serviceComplaintButtons" >
                 <div class="input-group-prepend">
-                    <Button className="btn-lg btn-dark mr-5 ml-10"  onClick={this.onSolved}>Solved</Button>
-                    <Button className="btn-lg btn-dark mr-5 ml-10"   onClick={this.onReplied}>Replied</Button>
+                    <Button className="btn-lg btn-dark mr-5 ml-10"  onClick={this.onSolved} disabled = {this.state.complaint_status !== "Replied"}>Solved</Button>
+                    <Button className="btn-lg btn-dark mr-5 ml-10"   onClick={this.onReplied} disabled = {this.state.complaint_staus === "Waiting" || this.state.complaint_status ==="Replied" || this.state.complaint_status ==="Solved"}>Replied</Button>
 
                 </div>
             </div>

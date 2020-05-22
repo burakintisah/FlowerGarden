@@ -28,6 +28,11 @@ class SaleList  extends Component {
             sortable: true,
           },
           {
+            name: 'Courier Status',
+            selector: 'courier_status',
+            sortable: true,
+          },
+          {
             name: 'Desired Delivery Date',
             selector: 'desired_delivery_date',
             sortable: true,

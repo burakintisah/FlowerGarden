@@ -27,7 +27,7 @@ class CreateArrangement extends Component{
             selectedOccasions: [],
             flowers: [],
             totalCount: 0,
-            occasions: [{'name': 'Anniversary' }, {'name' : 'Congratulations'}, {'name' : 'Just Because'}],
+            occasions: [{'name': 'Anniversary' }, {'name' : 'Congratulations'}, {'name' : 'Just Because'},  {'name' : 'Birthday'}],
             redirectToReferrer: false
         }
     changeName = event => { event.preventDefault(); this.setState({ name: event.target.value }); console.log(this.state.name);  if(event.target.value.length===0) {this.setState({ name: null})} }

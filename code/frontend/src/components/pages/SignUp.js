@@ -40,11 +40,11 @@ class SignUp extends Component {
         {
             alert("Please fill the all required information!"); 
         }
-        else if((this.state.account_type === 1) && ( ( this.state.iban===null) ||(this.state.sellerAddress === null) ||(this.state.district_id === null) ))
+        else if((this.state.account_type === 2) && ( ( this.state.iban===null) ||(this.state.sellerAddress === null) ||(this.state.district_id === null) ))
         {
             alert("Please fill the all required information!"); 
         }
-        else if((this.state.account_type === 2) && ( ( this.state.iban===null) ||(this.state.courierVolume === null) ))
+        else if((this.state.account_type === 1) && ( ( this.state.iban===null) ||(this.state.courierVolume === null) ))
         {
             alert("Please fill the all required information!"); 
         }
@@ -55,11 +55,11 @@ class SignUp extends Component {
             {
                 data = { first_name: this.state.firstName, middle_name: this.state.middleName,last_name: this.state.lastName, email: this.state.email, password: this.state.password, phone: this.state.phone, account_type: this.state.account_type, }
             }
-            else if(this.state.account_type ===1 )
+            else if(this.state.account_type ===2 )
             {
                 data = { first_name: this.state.firstName, middle_name: this.state.middleName,last_name: this.state.lastName, email: this.state.email, password: this.state.password, phone: this.state.phone, account_type: this.state.account_type, district_id: this.state.district_id, address_text:this.state.sellerAddress , iban_no: this.state.iban }
             }
-            else if(this.state.account_type ===2 )
+            else if(this.state.account_type ===1 )
             {
                 data = { first_name: this.state.firstName, middle_name: this.state.middleName,last_name: this.state.lastName, email: this.state.email, password: this.state.password, phone: this.state.phone, account_type: this.state.account_type, max_volume: this.state.courierVolume, iban_no: this.state.iban }
             }
@@ -91,7 +91,7 @@ class SignUp extends Component {
     changeEmail = event => { event.preventDefault(); this.setState({ email: event.target.value }); if(event.target.value.length===0) {this.setState({ email: null})} }
     changePassword = event => { event.preventDefault(); this.setState({ password: event.target.value });  if(event.target.value.length===0) {this.setState({ password: null})}}
     changeRePassword = event => { event.preventDefault(); this.setState({ repassword: event.target.value }); if(event.target.value.length===0) {this.setState({ repassword: null})}}
-    changeTermsOfUse = event => { event.preventDefault(); this.setState({ termsOfUse: !(this.state.termsOfUse) }); if(event.target.value.length===0) {this.setState({ termsOfUse: null})} }
+    changeTermsOfUse = event => {this.setState({ termsOfUse: !(this.state.termsOfUse) }); if(event.target.value.length===0) {this.setState({ termsOfUse: null})} }
     changeIBAN = event => { event.preventDefault(); this.setState({ iban: event.target.value }); if(event.target.value.length===0) {this.setState({ iban: null})} }
     changeAddress = event => { event.preventDefault(); this.setState({ sellerAddress: event.target.value });if(event.target.value.length===0) {this.setState({ sellerAddress: null})} }
     changeVolume = event => { event.preventDefault(); this.setState({ courierVolume: event.target.value }); if(event.target.value.length===0) {this.setState({ courierVolume: null})} }
@@ -100,8 +100,8 @@ class SignUp extends Component {
     handleOptionChange = changeEvent => {
         this.setState({selectedOption: changeEvent.target.value});
         if (changeEvent.target.value === "customer") {this.setState({account_type: 0}); }
-        else if (changeEvent.target.value === "seller") {this.setState({account_type: 1}); }
-        else if (changeEvent.target.value === "courier") {this.setState({account_type: 2}); }
+        else if (changeEvent.target.value === "seller") {this.setState({account_type: 2}); }
+        else if (changeEvent.target.value === "courier") {this.setState({account_type: 1}); }
         else {this.setState({account_type: 7});}
     };
 
@@ -144,11 +144,11 @@ class SignUp extends Component {
             return <Redirect to={`/selectDistrict/accountid=${this.state.account_id}`} />
         }
         //courier
-        if (redirectToReferrer === true && this.state.account_type === 1) {
+        if (redirectToReferrer === true && this.state.account_type === 2) {
             return <Redirect to={`/select-district-working-hours/seller/accountid=${this.state.account_id}`} />
         }
         //seller
-        if (redirectToReferrer === true && this.state.account_type === 2) {
+        if (redirectToReferrer === true && this.state.account_type === 1) {
             return <Redirect to={`/select-district-and-working-hours/courier/accountid=${this.state.account_id}`} />
         }
         //customer service
