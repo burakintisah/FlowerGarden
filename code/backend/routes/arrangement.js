@@ -177,7 +177,7 @@ router.post('/create', async (req, res) => {
 
   var flowers = req.body.flowers;
   query = 'INSERT INTO composed_of (count, flower_id, arrangement_id) VALUES ( ?, ?, ? )';
-  for (i = 0; i < occasions.length; i++) {
+  for (i = 0; i < flowers.length; i++) {
     val = [flowers[i].count, flowers[i].flower_id, arrangement_id];
     let rows = await dbconnection.promise().query(query, val).catch((err) => {
       console.log('Error at: ' + err);
