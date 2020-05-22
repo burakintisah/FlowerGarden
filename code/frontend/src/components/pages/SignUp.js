@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Jumbotron } from 'reactstrap';
-import {  FormGroup, Label, Input } from 'reactstrap';
+import { FormGroup, Label, Input } from 'reactstrap';
 import Footer from '../layouts/Footer'
 import Select from 'react-select';
 import axios from 'axios'
@@ -40,7 +40,7 @@ class SignUp extends Component {
         {
             alert("Please fill the all required information!"); 
         }
-        else if((this.state.account_type === 1) && ( ( this.state.iban===null) ||(this.state.sellerAddress === null) ||(this.state.province_id === null) ||(this.state.district_id === null) ))
+        else if((this.state.account_type === 1) && ( ( this.state.iban===null) ||(this.state.sellerAddress === null) ||(this.state.district_id === null) ))
         {
             alert("Please fill the all required information!"); 
         }
@@ -48,10 +48,7 @@ class SignUp extends Component {
         {
             alert("Please fill the all required information!"); 
         }
-        else if( this.state.phone.length !== 11)
-        {
-            alert("Phone should be exactly 11 number"); 
-        }else
+        else
         {
             var data = null;
             if(this.state.account_type ===0 ||this.state.account_type ===7)
@@ -79,7 +76,7 @@ class SignUp extends Component {
                     this.setState({ redirectToReferrer: true })
                 }
                 else {
-                    alert("There is no such user");
+                    alert("Tty another email!");
                 }
 
             });
