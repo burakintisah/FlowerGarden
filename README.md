@@ -17,11 +17,11 @@ This webpage will be used to publish the documents of the term project of *CS353
 - [Munib Emre SEVİLGEN](https://github.com/emresevilgen)
 
 ## Project Documents
-[Project Proposal](https://burakintisah.github.io/FlowerGarden/docs/ProjectProposal.pdf)
+[Project Proposal](https://burakintisah.github.io/FlowerGarden/docs/ProjectProposal.pdf "Final Report")
 
-[Project Design Report](https://burakintisah.github.io/FlowerGarden/docs/DesignReport.pdf)
+[Project Design Report](https://burakintisah.github.io/FlowerGarden/docs/DesignReport.pdf "Final Report")
 
-[Project Final Report]()
+[Project Final Report](https://burakintisah.github.io/FlowerGarden/docs/FinalReport.pdf "Final Report")
 
 ## Project Website
 
