@@ -21,4 +21,4 @@ This webpage will be used to publish the documents of the term project of *CS353
 
 [Project Design Report](https://burakintisah.github.io/FlowerGarden/docs/DesignReport.pdf "DesignReport")
 
-[Project Final Report](https://burakintisah.github.io/FlowerGarden/docs/DesignReport.pdf "FinalReport")
+[Project Final Report](https://burakintisah.github.io/FlowerGarden/docs/FinalReport.pdf "FinalReport")
