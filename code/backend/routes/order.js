@@ -110,7 +110,7 @@ router.get('/customer/:id', async (req, res) => {
 });
 
 router.get('/seller/:id', async (req, res) => {
-    var query = 'SELECT O.order_id, F.arrangement_name, O.order_date, O.delivery_status, O.desired_delivery_date, O.desired_delivery_time, O.message, O.courier_id '
+    var query = 'SELECT O.order_id, F.arrangement_name, O.order_date, O.delivery_status, O.courier_status, O.desired_delivery_date, O.desired_delivery_time, O.message, O.courier_id '
         + 'FROM flowergarden.order as O NATURAL JOIN flower_arrangement as F WHERE O.seller_id = ?';
 
     var val = [req.params.id];
@@ -307,7 +307,7 @@ router.get('/:id/seller/reject', async (req, res) => {
 
 router.post('/:id/seller/assign', async (req, res) => {
 
-    var query = 'UPDATE flowergarden.order SET courier_status = "Pending", courier_id = ? WHERE order_id = ?';
+    var query = 'UPDATE flowergarden.order SET courier_status = "Pending", seller_status = "Assigned  to Courier", courier_id = ? WHERE order_id = ?';
 
     var val = [req.body.courier_id, req.params.id];
 

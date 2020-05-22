@@ -88,7 +88,7 @@ router.get('/account/:id', async (req, res) => {
     var query = 'SELECT C.complaint_id, C.complaint_date, C.complaint_status, O.order_id, A1.email as customer_email, '
         + ' A2.email as seller_email FROM complaint as C NATURAL JOIN flowergarden.order as O, '
         + ' account as A1, account as A2 WHERE O.customer_id = A1.account_id AND '
-        + ' O.seller_id = A2.account_id AND customer_service_id = 4';
+        + ' O.seller_id = A2.account_id AND customer_service_id = ?';
 
     let rows = await dbconnection.promise().query(query, val).catch((err) => {
         console.log('Error at: ' + err);
