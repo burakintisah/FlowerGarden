@@ -29,7 +29,7 @@ class FlowerCard extends Component {
 
         return (
             
-            <div className="mt-5">
+            <div className="mt-5" style={{ maxWidth: '350px', marginLeft:"40px" }}>
                 <Card >
                     <CardImg top width="100%" src="https://www.thespruce.com/thmb/3lsEN6GZna9lSnFiFS3aJl2u0Ts=/960x0/filters:no_upscale():max_bytes(150000):strip_icc()/Floom_Shus_DDG_0382_copy-5af06f0d8e1b6e0039e6e7c7.jpg" alt="ImageName" />
                     <CardBody>
