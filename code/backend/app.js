@@ -3,19 +3,35 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var mysql = require('mysql');
+var mysql = require('mysql2');
 var bodyParser = require('body-parser');
+var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var loginRouter = require('./routes/login');
+var signupRouter = require('./routes/signup');
+var provinceRouter = require('./routes/province');
+var districtRouter = require('./routes/district');
+var arrangementRouter = require('./routes/arrangement');
+var commentRouter = require('./routes/comment');
+var accountRouter = require('./routes/account');
+var ratingRouter = require('./routes/rating');
+var orderRouter = require('./routes/order');
+var flowerRouter = require('./routes/flower');
+var complaintRouter = require('./routes/complaint');
+var notificationRouter = require('./routes/notification');
+var reportRouter = require('./routes/report');
+
 
 var app = express();
+app.use(cors({ origin: '*' , credentials :  true}));
 
 global.dbconnection = mysql.createConnection({
   host      : "127.0.0.1",
   user      : "root",
   password  : "password",
-  database  : "flowergarden"
+  database  : "flowergarden",
+  dateStrings: true
 });
 
 dbconnection.connect(function(err){
@@ -27,6 +43,10 @@ dbconnection.connect(function(err){
   else
     console.log('Database connected.');
 });
+
+global.sendResponse = function sendResponse(res, status, message, data){
+  res.json({ status: status, message: message, data: data});
+};
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -47,6 +67,19 @@ app.use(bodyParser.json());
 
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
+app.use('/signup', signupRouter);
+app.use('/province', provinceRouter);
+app.use('/district', districtRouter);
+app.use('/arrangement', arrangementRouter);
+app.use('/comment', commentRouter);
+app.use('/account', accountRouter);
+app.use('/rating', ratingRouter);
+app.use('/order', orderRouter);
+app.use('/flower', flowerRouter);
+app.use('/complaint', complaintRouter);
+app.use('/notification', notificationRouter);
+app.use('/report', reportRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
