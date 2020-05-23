@@ -22,6 +22,7 @@ var complaintRouter = require('./routes/complaint');
 var notificationRouter = require('./routes/notification');
 var reportRouter = require('./routes/report');
 
+
 var app = express();
 app.use(cors({ origin: '*' , credentials :  true}));
 
